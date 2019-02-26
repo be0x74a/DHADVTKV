@@ -1,0 +1,27 @@
+# network size
+SIZE 10
+
+# parameters of periodic execution
+CYCLES 100
+CYCLE 1
+
+random.seed 1234567890
+network.size SIZE
+simulation.cycles CYCLE*CYCLES
+
+################### protocols ===========================
+
+protocol.type DHADVTKV.TypeProtocol
+protocol.2pc DHADVTKV.TwoPhaseCommitProtocol
+protocol.2pc.type_protocol type
+
+################### initialization ======================
+
+init.0 DHADVTKV.InitTypeProtocol
+init.0.type_protocol type
+init.0.ndatanodes 5
+init.0.nclients 3
+
+################ control ==============================
+
+
