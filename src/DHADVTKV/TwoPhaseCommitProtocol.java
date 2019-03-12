@@ -4,6 +4,11 @@ import peersim.cdsim.CDProtocol;
 import peersim.config.Configuration;
 import peersim.core.Node;
 
+/**
+ * Each type plays its part on the 2PC protocol
+ * @author diogofsvilela
+ *
+ */
 public class TwoPhaseCommitProtocol implements CDProtocol {
 
     private final int typePid;
