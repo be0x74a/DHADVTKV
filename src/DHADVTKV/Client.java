@@ -47,6 +47,8 @@ public class Client {
         transaction.getPuts().add(object);
     }
 
+
+    //TODO: I think we don't send partitions but instead we send the ObjectArrays!
     public void commit() {
         Set<Partition> putPartitions = new HashSet<>();
         Set<Partition> getPartitions = new HashSet<>();
@@ -107,11 +109,11 @@ public class Client {
     }
 
     private boolean enoughInformationToCommit() {
-        return false;
+        return false;  //TODO: This is obviously ONLY a placeholder!!!
     }
 
     private Partition partitionForKey(int key) {
-        return new Partition();
+        return new Partition(); //TODO: This is obviously ONLY a placeholder too!!!
     }
 
 }
