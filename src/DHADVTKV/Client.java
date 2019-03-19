@@ -1,6 +1,5 @@
 package DHADVTKV;
 
-import javax.xml.crypto.Data;
 import java.util.*;
 
 public class Client {
@@ -47,27 +46,39 @@ public class Client {
         transaction.getPuts().add(object);
     }
 
-
-    //TODO: I think we don't send partitions but instead we send the ObjectArrays!
     public void commit() {
-        Set<Partition> putPartitions = new HashSet<>();
-        Set<Partition> getPartitions = new HashSet<>();
+        Map<Partition, ArrayList<DataObject>> putPartitions = new HashMap<>();
+        Map<Partition, ArrayList<DataObject>> getPartitions = new HashMap<>();
         Set<Partition> partitions = new HashSet<>();
 
         for (DataObject object : transaction.getPuts()) {
-            putPartitions.add(partitionForKey(object.getKey()));
+            Partition partition = partitionForKey(object.getKey());
+
+            partitions.add(partition);
+            List<DataObject> res = putPartitions.putIfAbsent(partition, new ArrayList<>(Arrays.asList(object)));
+            if (res != null) {
+                res.add(object);
+            }
         }
 
         for (DataObject object : transaction.getGets()) {
-            getPartitions.add(partitionForKey(object.getKey()));
-        }
+            Partition partition = partitionForKey(object.getKey());
 
-        partitions.addAll(putPartitions);
-        partitions.addAll(getPartitions);
+            partitions.add(partition);
+            List<DataObject> res = getPartitions.putIfAbsent(partition, new ArrayList<>(Arrays.asList(object)));
+            if (res != null) {
+                res.add(object);
+            }
+        }
 
         for (Partition partition : partitions) {
-            partition.prepare(transaction.getId(), transaction.getSnapshot(), putPartitions, getPartitions);
+            partition.prepare(transaction.getId(), transaction.getSnapshot(), getPartitions.get(partition), putPartitions.get(partition), this);
         }
+    }
+
+
+    public void send_prepare_results(boolean conflicts, int commitTimestamp) {
+        onPrepareResult(conflicts, commitTimestamp);
     }
 
     public void onPrepareResult(boolean conflicts, int commitTimestamp) {
@@ -75,8 +86,8 @@ public class Client {
         transaction.setConflicts(transaction.hasConflicts() || conflicts);
 
         if (enoughInformationToCommit()) {
-            Map<Partition, ArrayList<DataObject>> putPartitions = new HashMap<>();
-            Map<Partition, ArrayList<DataObject>> getPartitions = new HashMap<>();
+            Map<Partition, List<DataObject>> putPartitions = new HashMap<>();
+            Map<Partition, List<DataObject>> getPartitions = new HashMap<>();
 
             for (DataObject object : transaction.getPuts()) {
                 Partition partition = partitionForKey(object.getKey());
@@ -94,15 +105,18 @@ public class Client {
                 }
             }
 
-            for (Map.Entry<Partition, ArrayList<DataObject>> entry : putPartitions.entrySet()) {
-                List<DataObject> gets = getPartitions.get(entry.getKey());
-                entry.getKey().commit(transaction.getId(), gets, entry.getValue(), transaction.hasConflicts(), transaction.getCommitTimestamp());
+            for (Map.Entry<Partition, List<DataObject>> entry : putPartitions.entrySet()) {
+                entry.getKey().commit(transaction.getId(), getPartitions.get(entry.getKey()), entry.getValue(), transaction.hasConflicts(), transaction.getCommitTimestamp(), this);
             }
         }
     }
 
+    public void send_commit_result() {
+        onCommitResult();
+    }
+
     public boolean onCommitResult() {
-        boolean result = transaction.hasConflicts() == false;
+        boolean result = !transaction.hasConflicts();
         clock = transaction.getCommitTimestamp();
         transaction = null;
         return result;
