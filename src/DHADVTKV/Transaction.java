@@ -10,27 +10,27 @@ public class Transaction {
 
     private ExtendedRandom randomGenerator = CommonState.r;
 
-    private int id = randomGenerator.nextInt();
-    private int snapshot = -1;
+    private long id = randomGenerator.nextLong();
+    private long snapshot = -1;
     private List<DataObject> puts = new ArrayList<>();
     private List<DataObject> gets = new ArrayList<>();
-    private int commitTimestamp = -1;
+    private long commitTimestamp = -1;
     private boolean conflicts = false;
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getSnapshot() {
+    public long getSnapshot() {
         return snapshot;
     }
 
-    public void setSnapshot(int snapshot) {
+    public void setSnapshot(long snapshot) {
         this.snapshot = snapshot;
     }
 
@@ -50,11 +50,11 @@ public class Transaction {
         this.gets = gets;
     }
 
-    public int getCommitTimestamp() {
+    public long getCommitTimestamp() {
         return commitTimestamp;
     }
 
-    public void setCommitTimestamp(int commitTimestamp) {
+    public void setCommitTimestamp(long commitTimestamp) {
         this.commitTimestamp = commitTimestamp;
     }
 

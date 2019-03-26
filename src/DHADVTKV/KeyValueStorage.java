@@ -5,11 +5,11 @@ import java.util.stream.Collectors;
 
 public class KeyValueStorage {
 
-    private Map<Integer, List<TransactionalDataObject>> tentativeVersions = new HashMap<> ();
-    private Map<Integer, List<TransactionalDataObject>> committedVersions = new HashMap<> ();
+    private Map<Long, List<TransactionalDataObject>> tentativeVersions = new HashMap<> ();
+    private Map<Long, List<TransactionalDataObject>> committedVersions = new HashMap<> ();
 
 
-    public void storeAsTentative(int transactionId, List<DataObject> objects) {
+    public void storeAsTentative(long transactionId, List<DataObject> objects) {
 
         for (DataObject object : objects) {
             TransactionalDataObject transactionalDataObject = new TransactionalDataObject(object, transactionId);
@@ -20,7 +20,7 @@ public class KeyValueStorage {
         }
     }
 
-    public List<DataObject> getTentativeVersions(int key) {
+    public List<DataObject> getTentativeVersions(long key) {
 
         return tentativeVersions
                 .get(key)
@@ -29,7 +29,7 @@ public class KeyValueStorage {
                 .collect(Collectors.toList());
     }
 
-    public List<DataObject> getCommittedVersions(int key) {
+    public List<DataObject> getCommittedVersions(long key) {
 
         return committedVersions
                 .get(key)
@@ -38,14 +38,14 @@ public class KeyValueStorage {
                 .collect(Collectors.toList());
     }
 
-    public void deleteTentativeVersions(int transactionId, List<DataObject> objects) {
+    public void deleteTentativeVersions(long transactionId, List<DataObject> objects) {
         for (DataObject object : objects) {
             tentativeVersions.get(object.getKey())
                     .removeIf(objectVersion -> objectVersion.getTransactionId() == transactionId);
         }
     }
 
-    public void commitTentativeVersions(int transactionId, List<DataObject> objects, int commitTimestamp) {
+    public void commitTentativeVersions(long transactionId, List<DataObject> objects, long commitTimestamp) {
         for (DataObject object : objects) {
             for (TransactionalDataObject transactionalDataObject : tentativeVersions.get(object.getKey())) {
                 if (transactionalDataObject.getTransactionId() == transactionId) {
@@ -64,9 +64,9 @@ public class KeyValueStorage {
     private class TransactionalDataObject {
 
         private DataObject object;
-        private int transactionId;
+        private long transactionId;
 
-        public TransactionalDataObject(DataObject object, int transactionId) {
+        public TransactionalDataObject(DataObject object, long transactionId) {
             this.object = object;
             this.transactionId = transactionId;
 
@@ -76,7 +76,7 @@ public class KeyValueStorage {
             return object;
         }
 
-        public int getTransactionId() {
+        public long getTransactionId() {
             return transactionId;
         }
     }

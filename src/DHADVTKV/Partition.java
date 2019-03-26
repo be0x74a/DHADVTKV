@@ -1,20 +1,21 @@
 package DHADVTKV;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Partition {
 
     private KeyValueStorage kv = new KeyValueStorage();
-    private int clock = 0;
-    private Map<Integer, Integer> latestObjectVersions;
+    private long clock = 0;
+    private Map<Long, Long> latestObjectVersions = new HashMap<>();
 
 
-    public DataObject transactionalGet(int key, int snapshot) {
+    public DataObject transactionalGet(long key, long snapshot) {
         return onClientTransactionGetRequest(key, snapshot);
     }
 
-    private DataObject onClientTransactionGetRequest(int key, int snapshot) {
+    private DataObject onClientTransactionGetRequest(long key, long snapshot) {
 
         List<DataObject> tentativeObjectVersions = kv.getTentativeVersions(key);
         List<DataObject> committedObjectVersions = kv.getCommittedVersions(key);
@@ -22,12 +23,12 @@ public class Partition {
         return selectSnapshotConsistentVersion(snapshot, tentativeObjectVersions, committedObjectVersions);
     }
 
-    public void prepare(int transactionId, int snapshot, List<DataObject> puts, List<DataObject> gets, Client client) {
+    public void prepare(long transactionId, long snapshot, List<DataObject> puts, List<DataObject> gets, Client client) {
         onPrepareRequest(transactionId, snapshot, gets, puts, client);
     }
 
-    private void onPrepareRequest(int transactionId, int snapshot, List<DataObject> gets, List<DataObject> puts, Client client) {
-        int commitTimestamp = generateCommitTimestamp(snapshot);
+    private void onPrepareRequest(long transactionId, long snapshot, List<DataObject> gets, List<DataObject> puts, Client client) {
+        long commitTimestamp = generateCommitTimestamp(snapshot);
         boolean locksAcquired = acquireLocks(gets, puts);
         boolean conflicts = true;
 
@@ -44,11 +45,11 @@ public class Partition {
         clock++;
     }
 
-    public void commit(int transactionId, List<DataObject> gets, List<DataObject> puts, boolean conflicts, int commitTimestamp, Client client) {
-        onCommitRequest(transactionId, gets, puts, conflicts, commitTimestamp, client);
+    public void commit(long transactionId, List<DataObject> puts, boolean conflicts, long commitTimestamp, Client client) {
+        onCommitRequest(transactionId, puts, conflicts, commitTimestamp, client);
     }
 
-    private void onCommitRequest(int transactionId, List<DataObject> gets, List<DataObject> puts, boolean conflicts, int commitTimestamp, Client client) {
+    private void onCommitRequest(long transactionId, List<DataObject> puts, boolean conflicts, long commitTimestamp, Client client) {
         if (clock < commitTimestamp) {
             clock = commitTimestamp + 1;
         }
@@ -65,7 +66,7 @@ public class Partition {
     }
 
 
-    private DataObject selectSnapshotConsistentVersion(int snapshot, List<DataObject> tentativeObjectVersions, List<DataObject> committedObjectVersions) {
+    private DataObject selectSnapshotConsistentVersion(long snapshot, List<DataObject> tentativeObjectVersions, List<DataObject> committedObjectVersions) {
 
         for (DataObject object : tentativeObjectVersions) {
             if (object.getVersion() <= snapshot) {
@@ -83,7 +84,7 @@ public class Partition {
         return null;
     }
 
-    private int generateCommitTimestamp(int snapshot) {
+    private long generateCommitTimestamp(long snapshot) {
         if (clock <= snapshot) {
             clock = snapshot + 1;
         }
@@ -91,7 +92,7 @@ public class Partition {
         return clock;
     }
 
-    private boolean checkConflicts(List<DataObject> gets, List<DataObject> puts, int snapshot) {
+    private boolean checkConflicts(List<DataObject> gets, List<DataObject> puts, long snapshot) {
         for (DataObject object : gets) {
             if (latestObjectVersions.get(object.getKey()) > snapshot) {
                 return true;
@@ -109,7 +110,7 @@ public class Partition {
 
 
 
-    private void updateLatestObjectVersions(List<DataObject> objects, int version) {
+    private void updateLatestObjectVersions(List<DataObject> objects, long version) {
         for (DataObject object : objects) {
             latestObjectVersions.put(object.getKey(), version);
         }

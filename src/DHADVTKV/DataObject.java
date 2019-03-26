@@ -2,37 +2,37 @@ package DHADVTKV;
 
 public class DataObject {
 
-    private int key;
-    private int value;
-    private int version;
+    private long key;
+    private long value;
+    private long version;
 
-    public DataObject(int cKey, int cValue, int cVersion) {
-        key = cKey;
-        value = cValue;
-        version = cVersion;
+    public DataObject(long key, long value, long version) {
+        this.key = key;
+        this.value = value;
+        this.version = version;
     }
 
-    public int getKey() {
+    public long getKey() {
         return key;
     }
 
-    public void setKey(int key) {
+    public void setKey(long key) {
         this.key = key;
     }
 
-    public int getValue() {
+    public long getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(long value) {
         this.value = value;
     }
 
-    public int getVersion() {
+    public long getVersion() {
         return version;
     }
 
-    public void setVersion(int version) {
+    public void setVersion(long version) {
         this.version = version;
     }
 }

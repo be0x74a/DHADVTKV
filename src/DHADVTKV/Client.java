@@ -5,15 +5,15 @@ import java.util.*;
 public class Client {
 
     private Transaction transaction = null;
-    private int clock = 0;
+    private long clock = 0;
 
     public void begin() {
         transaction = new Transaction();
     }
 
-    public DataObject get(int key) {
+    public DataObject get(long key) {
         Partition partition = partitionForKey(key);
-        int version = transaction.getSnapshot();
+        long version = transaction.getSnapshot();
         if (version == -1) {
             version = clock;
         }
@@ -37,8 +37,8 @@ public class Client {
         transaction = null;
     }
 
-    public void put(int key, int value) {
-        int tentativeVersion = transaction.getSnapshot();
+    public void put(long key, long value) {
+        long tentativeVersion = transaction.getSnapshot();
         if (tentativeVersion == -1) {
             tentativeVersion = clock;
         }
@@ -77,17 +77,16 @@ public class Client {
     }
 
 
-    public void send_prepare_results(boolean conflicts, int commitTimestamp) {
+    public void send_prepare_results(boolean conflicts, long commitTimestamp) {
         onPrepareResult(conflicts, commitTimestamp);
     }
 
-    public void onPrepareResult(boolean conflicts, int commitTimestamp) {
+    public void onPrepareResult(boolean conflicts, long commitTimestamp) {
         transaction.setCommitTimestamp(Math.max(transaction.getCommitTimestamp(), commitTimestamp));
         transaction.setConflicts(transaction.hasConflicts() || conflicts);
 
         if (enoughInformationToCommit()) {
             Map<Partition, List<DataObject>> putPartitions = new HashMap<>();
-            Map<Partition, List<DataObject>> getPartitions = new HashMap<>();
 
             for (DataObject object : transaction.getPuts()) {
                 Partition partition = partitionForKey(object.getKey());
@@ -97,16 +96,8 @@ public class Client {
                 }
             }
 
-            for (DataObject object : transaction.getGets()) {
-                Partition partition = partitionForKey(object.getKey());
-                List<DataObject> res = getPartitions.putIfAbsent(partition, new ArrayList<>(Arrays.asList(object)));
-                if (res != null) {
-                    res.add(object);
-                }
-            }
-
             for (Map.Entry<Partition, List<DataObject>> entry : putPartitions.entrySet()) {
-                entry.getKey().commit(transaction.getId(), getPartitions.get(entry.getKey()), entry.getValue(), transaction.hasConflicts(), transaction.getCommitTimestamp(), this);
+                entry.getKey().commit(transaction.getId(), entry.getValue(), transaction.hasConflicts(), transaction.getCommitTimestamp(), this);
             }
         }
     }
@@ -126,7 +117,7 @@ public class Client {
         return false;  //TODO: This is obviously ONLY a placeholder!!!
     }
 
-    private Partition partitionForKey(int key) {
+    private Partition partitionForKey(long key) {
         return new Partition(); //TODO: This is obviously ONLY a placeholder too!!!
     }
 
