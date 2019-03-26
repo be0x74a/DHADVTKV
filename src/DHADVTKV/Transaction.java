@@ -16,7 +16,7 @@ public class Transaction {
     private List<DataObject> gets = new ArrayList<>();
     private long commitTimestamp = -1;
     private boolean conflicts = false;
-
+    private List<Long> getQueue = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -65,4 +65,10 @@ public class Transaction {
     public void setConflicts(boolean conflicts) {
         this.conflicts = conflicts;
     }
+
+    public void addToGetQueue(long key) { getQueue.add(key); }
+
+    public void removeFromGetQueue(long key) { getQueue.remove(key); }
+
+    public int getSizeOfGetQueue() { return getQueue.size(); }
 }

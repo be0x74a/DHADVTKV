@@ -2,6 +2,7 @@ package DHADVTKV;
 
 import peersim.cdsim.CDProtocol;
 import peersim.config.Configuration;
+import peersim.core.Control;
 import peersim.core.Node;
 
 /**

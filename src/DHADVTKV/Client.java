@@ -1,5 +1,7 @@
 package DHADVTKV;
 
+import DHADVTKV.datatypes.*;
+
 import java.util.*;
 
 public class Client {
@@ -8,50 +10,56 @@ public class Client {
     private long clock = 0;
 
     public void begin() {
-        transaction = new Transaction();
-    }
-
-    public DataObject get(long key) {
-        Partition partition = partitionForKey(key);
-        long version = transaction.getSnapshot();
-        if (version == -1) {
-            version = clock;
-        }
-
-        DataObject object = partition.transactionalGet(key, version);
-
-        if (object == null) {
-            System.out.println("DataObject associated with key: " + key + " not found");
-            return null;
-        }
-
-        if (transaction.getSnapshot() == -1) {
-            transaction.setSnapshot(object.getVersion());
-        }
-
-        return object;
+        this.transaction = new Transaction();
     }
 
     public void abort() {
-        System.out.println("Transaction " + transaction.getId() + " was aborted");
-        transaction = null;
+        System.out.println("Transaction " + this.transaction.getId() + " was aborted");
+        this.transaction = null;
     }
 
     public void put(long key, long value) {
-        long tentativeVersion = transaction.getSnapshot();
+        long tentativeVersion = this.transaction.getSnapshot();
         if (tentativeVersion == -1) {
-            tentativeVersion = clock;
+            tentativeVersion = this.clock;
         }
         DataObject object = new DataObject(key, value, tentativeVersion + 1);
-        transaction.getPuts().add(object);
+        this.transaction.getPuts().add(object);
     }
 
-    public void commit() {
+    public TransactionalGetMessageRequest get(long key) {
+        Partition partition = partitionForKey(key);
+        long version = this.transaction.getSnapshot();
+        if (version == -1) {
+            version = this.clock;
+        }
+
+        this.transaction.addToGetQueue(key);
+        return new TransactionalGetMessageRequest(key, version);
+    }
+
+    public DataObject onTransactionalGetResponse(TransactionalGetMessageResponse message) {
+
+        if (message.getObject() == null) {
+            System.out.println("DataObject not found");
+            return null;
+        }
+
+        if (this.transaction.getSnapshot() == -1) {
+            this.transaction.setSnapshot(message.getObject().getVersion());
+        }
+
+        this.transaction.removeFromGetQueue(message.getObject().getKey());
+        return message.getObject();
+    }
+
+    public List<PrepareMessageRequest> commit() {
         Map<Partition, ArrayList<DataObject>> putPartitions = new HashMap<>();
         Map<Partition, ArrayList<DataObject>> getPartitions = new HashMap<>();
         Set<Partition> partitions = new HashSet<>();
+        List<PrepareMessageRequest> prepareMessageRequests = new ArrayList<>();
 
-        for (DataObject object : transaction.getPuts()) {
+        for (DataObject object : this.transaction.getPuts()) {
             Partition partition = partitionForKey(object.getKey());
 
             partitions.add(partition);
@@ -61,7 +69,7 @@ public class Client {
             }
         }
 
-        for (DataObject object : transaction.getGets()) {
+        for (DataObject object : this.transaction.getGets()) {
             Partition partition = partitionForKey(object.getKey());
 
             partitions.add(partition);
@@ -72,23 +80,23 @@ public class Client {
         }
 
         for (Partition partition : partitions) {
-            partition.prepare(transaction.getId(), transaction.getSnapshot(), getPartitions.get(partition), putPartitions.get(partition), this);
+            prepareMessageRequests.add(new PrepareMessageRequest(this.transaction.getId(), this.transaction.getSnapshot(),
+                    getPartitions.get(partition), putPartitions.get(partition)));
         }
+
+        return prepareMessageRequests;
     }
 
+    public List<CommitMessageRequest> onPrepareResponse(PrepareMessageResponse message) {
+        List<CommitMessageRequest> commitMessageRequests = new ArrayList<>();
 
-    public void send_prepare_results(boolean conflicts, long commitTimestamp) {
-        onPrepareResult(conflicts, commitTimestamp);
-    }
-
-    public void onPrepareResult(boolean conflicts, long commitTimestamp) {
-        transaction.setCommitTimestamp(Math.max(transaction.getCommitTimestamp(), commitTimestamp));
-        transaction.setConflicts(transaction.hasConflicts() || conflicts);
+        this.transaction.setCommitTimestamp(Math.max(this.transaction.getCommitTimestamp(), message.getCommitTimestamp()));
+        this.transaction.setConflicts(this.transaction.hasConflicts() || message.hasConflicts());
 
         if (enoughInformationToCommit()) {
             Map<Partition, List<DataObject>> putPartitions = new HashMap<>();
 
-            for (DataObject object : transaction.getPuts()) {
+            for (DataObject object : this.transaction.getPuts()) {
                 Partition partition = partitionForKey(object.getKey());
                 List<DataObject> res = putPartitions.putIfAbsent(partition, new ArrayList<>(Arrays.asList(object)));
                 if (res != null) {
@@ -97,28 +105,25 @@ public class Client {
             }
 
             for (Map.Entry<Partition, List<DataObject>> entry : putPartitions.entrySet()) {
-                entry.getKey().commit(transaction.getId(), entry.getValue(), transaction.hasConflicts(), transaction.getCommitTimestamp(), this);
+
+                commitMessageRequests.add(new CommitMessageRequest(this.transaction.getId(), entry.getValue(),
+                        this.transaction.hasConflicts(), this.transaction.getCommitTimestamp()));
             }
         }
+
+        return commitMessageRequests;
     }
 
-    public void send_commit_result() {
-        onCommitResult();
-    }
-
-    public boolean onCommitResult() {
-        boolean result = !transaction.hasConflicts();
-        clock = transaction.getCommitTimestamp();
-        transaction = null;
-        return result;
+    public void onCommitResult(CommitMessageResponse message) {
+        this.clock = this.transaction.getCommitTimestamp();
+        this.transaction = null;
     }
 
     private boolean enoughInformationToCommit() {
-        return false;  //TODO: This is obviously ONLY a placeholder!!!
+        return false;  //TODO: Its possible data has to be retrieved from transaction!!!
     }
 
     private Partition partitionForKey(long key) {
         return new Partition(); //TODO: This is obviously ONLY a placeholder too!!!
     }
-
 }

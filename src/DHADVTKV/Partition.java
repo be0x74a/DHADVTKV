@@ -1,5 +1,7 @@
 package DHADVTKV;
 
+import DHADVTKV.datatypes.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,59 +12,46 @@ public class Partition {
     private long clock = 0;
     private Map<Long, Long> latestObjectVersions = new HashMap<>();
 
+    public TransactionalGetMessageResponse transactionalGet(TransactionalGetMessageRequest message) {
+        List<DataObject> tentativeObjectVersions = kv.getTentativeVersions(message.getKey());
+        List<DataObject> committedObjectVersions = kv.getCommittedVersions(message.getKey());
 
-    public DataObject transactionalGet(long key, long snapshot) {
-        return onClientTransactionGetRequest(key, snapshot);
+        return new TransactionalGetMessageResponse(selectSnapshotConsistentVersion(message.getSnapshot(), tentativeObjectVersions, committedObjectVersions));
     }
 
-    private DataObject onClientTransactionGetRequest(long key, long snapshot) {
-
-        List<DataObject> tentativeObjectVersions = kv.getTentativeVersions(key);
-        List<DataObject> committedObjectVersions = kv.getCommittedVersions(key);
-
-        return selectSnapshotConsistentVersion(snapshot, tentativeObjectVersions, committedObjectVersions);
-    }
-
-    public void prepare(long transactionId, long snapshot, List<DataObject> puts, List<DataObject> gets, Client client) {
-        onPrepareRequest(transactionId, snapshot, gets, puts, client);
-    }
-
-    private void onPrepareRequest(long transactionId, long snapshot, List<DataObject> gets, List<DataObject> puts, Client client) {
-        long commitTimestamp = generateCommitTimestamp(snapshot);
-        boolean locksAcquired = acquireLocks(gets, puts);
+    public PrepareMessageResponse prepare(PrepareMessageRequest message) {
+        long commitTimestamp = generateCommitTimestamp(message.getSnapshot());
+        boolean locksAcquired = acquireLocks(message.getGets(), message.getPuts());
         boolean conflicts = true;
 
         if (locksAcquired) {
-            conflicts = checkConflicts(gets, puts, snapshot);
+            conflicts = checkConflicts(message.getGets(), message.getPuts(), message.getSnapshot());
         }
 
         if (!conflicts) {
-            kv.storeAsTentative(transactionId, puts);
+            kv.storeAsTentative(message.getTransactionId(), message.getPuts());
         }
-
-        client.send_prepare_results(conflicts, commitTimestamp);
 
         clock++;
+
+        return new PrepareMessageResponse(conflicts, commitTimestamp);
     }
 
-    public void commit(long transactionId, List<DataObject> puts, boolean conflicts, long commitTimestamp, Client client) {
-        onCommitRequest(transactionId, puts, conflicts, commitTimestamp, client);
-    }
-
-    private void onCommitRequest(long transactionId, List<DataObject> puts, boolean conflicts, long commitTimestamp, Client client) {
-        if (clock < commitTimestamp) {
-            clock = commitTimestamp + 1;
+    public CommitMessageResponse commit(CommitMessageRequest message) {
+        if (clock < message.getCommitTimestamp()) {
+            clock = message.getCommitTimestamp() + 1;
         }
 
-        if (conflicts) {
-            kv.deleteTentativeVersions(transactionId, puts);
+        if (message.hasConflicts()) {
+            kv.deleteTentativeVersions(message.getTransactionId(), message.getPuts());
         } else {
-            kv.commitTentativeVersions(transactionId, puts, commitTimestamp);
-            updateLatestObjectVersions(puts, commitTimestamp);
+            kv.commitTentativeVersions(message.getTransactionId(), message.getPuts(), message.getCommitTimestamp());
+            updateLatestObjectVersions(message.getPuts(), message.getCommitTimestamp());
         }
 
-        releaseLocks(puts);
-        client.send_commit_result();
+        releaseLocks(message.getPuts());
+
+        return new CommitMessageResponse();
     }
 
 
@@ -108,8 +97,6 @@ public class Partition {
         return false;
     }
 
-
-
     private void updateLatestObjectVersions(List<DataObject> objects, long version) {
         for (DataObject object : objects) {
             latestObjectVersions.put(object.getKey(), version);
@@ -129,5 +116,4 @@ public class Partition {
     private void waitUntilVersionIsCommitted() {
 
     }
-
 }
