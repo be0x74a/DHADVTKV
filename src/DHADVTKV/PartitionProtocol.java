@@ -36,8 +36,6 @@ public class PartitionProtocol implements EDProtocol {
 
         Object response;
 
-        System.out.println("Recebi evento");
-
         if (event instanceof TransactionalGetMessageRequest) {
             TransactionalGetMessageRequest message = (TransactionalGetMessageRequest) event;
             response = this.partition.transactionalGet(message);

@@ -21,7 +21,7 @@ public class Partition {
         List<DataObject> tentativeObjectVersions = kv.getTentativeVersions(message.getKey());
         List<DataObject> committedObjectVersions = kv.getCommittedVersions(message.getKey());
 
-        return new TransactionalGetMessageResponse(selectSnapshotConsistentVersion(message.getSnapshot(), tentativeObjectVersions, committedObjectVersions));
+        return new TransactionalGetMessageResponse(selectSnapshotConsistentVersion(message.getSnapshot(), tentativeObjectVersions, committedObjectVersions), message.getPartition(), message.getClient());
     }
 
     public PrepareMessageResponse prepare(PrepareMessageRequest message) {
@@ -39,7 +39,7 @@ public class Partition {
 
         clock++;
 
-        return new PrepareMessageResponse(conflicts, commitTimestamp);
+        return new PrepareMessageResponse(conflicts, commitTimestamp, message.getPartition(), message.getClient());
     }
 
     public CommitMessageResponse commit(CommitMessageRequest message) {
@@ -56,7 +56,7 @@ public class Partition {
 
         releaseLocks(message.getPuts());
 
-        return new CommitMessageResponse();
+        return new CommitMessageResponse(message.getPartition(), message.getClient());
     }
 
 

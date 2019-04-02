@@ -5,7 +5,6 @@ import peersim.cdsim.CDProtocol;
 import peersim.config.Configuration;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
-import peersim.edsim.EDSimulator;
 
 import static DHADVTKV.ProtocolMapperInit.*;
 

@@ -20,6 +20,7 @@ public class CommitMessageRequest {
         this.commitTimestamp = commitTimestamp;
         this.client = client;
         this.partition = partition;
+        System.out.println(String.format("%d:%s:%d", client, getClass().getSimpleName(), partition));
     }
 
     public long getTransactionId() {

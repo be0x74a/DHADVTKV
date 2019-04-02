@@ -98,8 +98,6 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
     }
 
     public void sendMessage(Node src, int partition, Object message, int pid) {
-        System.out.println("Tento enviar msg: "+message.getClass().getSimpleName());
-
         Node dst = Network.get(partition);
 
         ((Transport) src.getProtocol(FastConfig.getTransport(pid)))
