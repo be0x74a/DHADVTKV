@@ -1,43 +1,46 @@
 package DHADVTKV;
 
+import peersim.Simulator;
 import peersim.cdsim.CDProtocol;
 import peersim.config.Configuration;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
+import peersim.edsim.EDSimulator;
 
-import static example.capstone.ProtocolMapperInit.*;
+import static DHADVTKV.ProtocolMapperInit.*;
+
 
 public class ProtocolMapper implements CDProtocol, EDProtocol {
 
-    private final int brokerPid;
-    private final int datacenterPid;
+    private final int partitionPid;
+    private final int clientPid;
 
-    public ProtocolMapper(String Prefix) {
-        this.datacenterPid = Configuration.getPid("datacenter");
-        this.brokerPid = Configuration.getPid("broker");
+    public ProtocolMapper(String prefix) {
+        this.clientPid = Configuration.getPid("client");
+        this.partitionPid = Configuration.getPid("partition");
     }
 
     @Override
     public void nextCycle(Node node, int protocolID) {
         Type type = nodeType.get(node.getID());
-        // Only datacenters should start actions
-        if (type == Type.DATACENTER) {
-            DatacenterProtocol datacenter = (DatacenterProtocol) node.getProtocol(datacenterPid);
-            datacenter.nextCycle(node, protocolID);
+        // Only clients should start actions
+        if (type == Type.CLIENT) {
+            ClientProtocol client = (ClientProtocol) node.getProtocol(clientPid);
+            client.nextCycleCustom(node, protocolID);
         }
     }
 
     @Override
     public void processEvent(Node node, int pid, Object event) {
         Type type = nodeType.get(node.getID());
-        if (type == Type.DATACENTER) {
-            DatacenterProtocol datacenter = (DatacenterProtocol) node.getProtocol(datacenterPid);
-            datacenter.processEvent(node, pid, event);
-        } else if (type == Type.BROKER) {
-            BrokerProtocol broker = (BrokerProtocol) node.getProtocol(brokerPid);
-            broker.processEvent(node, pid, event);
+        if (type == Type.CLIENT) {
+            ClientProtocol client = (ClientProtocol) node.getProtocol(clientPid);
+            client.processEventCustom(node, pid, event);
+        } else if (type == Type.PARTITION) {
+            PartitionProtocol partition = (PartitionProtocol) node.getProtocol(partitionPid);
+            partition.processEventCustom(node, pid, event);
         } else {
-            throw new RuntimeException("Unknown brokerPid type.");
+            throw new RuntimeException("Unknown node type.");
         }
     }
 

@@ -17,6 +17,8 @@ public class Transaction {
     private long commitTimestamp = -1;
     private boolean conflicts = false;
     private List<Long> getQueue = new ArrayList<>();
+    private int prepareRequestsSent = 0;
+    private int prepareResponsesReceived = 0;
 
     public long getId() {
         return id;
@@ -66,9 +68,31 @@ public class Transaction {
         this.conflicts = conflicts;
     }
 
-    public void addToGetQueue(long key) { getQueue.add(key); }
+    public void addToGetQueue(long key) {
+        getQueue.add(key);
+    }
 
-    public void removeFromGetQueue(long key) { getQueue.remove(key); }
+    public void removeFromGetQueue(long key) {
+        getQueue.remove(key);
+    }
 
-    public int getSizeOfGetQueue() { return getQueue.size(); }
+    public int getSizeOfGetQueue() {
+        return getQueue.size();
+    }
+
+    public int getPrepareRequestsSent() {
+        return prepareRequestsSent;
+    }
+
+    public void setPrepareRequestsSent(int prepareRequestsSent) {
+        this.prepareRequestsSent = prepareRequestsSent;
+    }
+
+    public int getPrepareResponsesReceived() {
+        return prepareResponsesReceived;
+    }
+
+    public void addToPrepareResponsesReceived() {
+        prepareResponsesReceived++;
+    }
 }

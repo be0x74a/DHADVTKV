@@ -8,9 +8,14 @@ import java.util.Map;
 
 public class Partition {
 
-    private KeyValueStorage kv = new KeyValueStorage();
+    private KeyValueStorage kv;
     private long clock = 0;
     private Map<Long, Long> latestObjectVersions = new HashMap<>();
+
+    public Partition(long nodeId, int noPartitions, int keyValueStoreSize) {
+        this.kv = new KeyValueStorage(nodeId, noPartitions, keyValueStoreSize);
+    }
+
 
     public TransactionalGetMessageResponse transactionalGet(TransactionalGetMessageRequest message) {
         List<DataObject> tentativeObjectVersions = kv.getTentativeVersions(message.getKey());
@@ -21,7 +26,7 @@ public class Partition {
 
     public PrepareMessageResponse prepare(PrepareMessageRequest message) {
         long commitTimestamp = generateCommitTimestamp(message.getSnapshot());
-        boolean locksAcquired = acquireLocks(message.getGets(), message.getPuts());
+        boolean locksAcquired = acquireLocks(message.getPuts());
         boolean conflicts = true;
 
         if (locksAcquired) {
@@ -104,7 +109,7 @@ public class Partition {
     }
 
     //TODO: This is obviously ONLY a placeholder!!!
-    private boolean acquireLocks(List<DataObject> gets, List<DataObject> puts) {
+    private boolean acquireLocks(List<DataObject> puts) {
         return false;
     }
 
