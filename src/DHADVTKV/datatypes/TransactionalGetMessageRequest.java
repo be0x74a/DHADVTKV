@@ -4,10 +4,14 @@ public class TransactionalGetMessageRequest {
 
     private final long key;
     private final long snapshot;
+    private final int partition;
+    private final int client;
 
-    public TransactionalGetMessageRequest(long key, long snapshot) {
+    public TransactionalGetMessageRequest(long key, long snapshot, int client, int partition) {
         this.key = key;
         this.snapshot = snapshot;
+        this.client = client;
+        this.partition = partition;
     }
 
 
@@ -17,5 +21,13 @@ public class TransactionalGetMessageRequest {
 
     public long getSnapshot() {
         return snapshot;
+    }
+
+    public int getPartition() {
+        return partition;
+    }
+
+    public int getClient() {
+        return client;
     }
 }

@@ -10,12 +10,16 @@ public class PrepareMessageRequest {
     private final long snapshot;
     private final List<DataObject> puts;
     private final List<DataObject> gets;
+    private final int client;
+    private final int partition;
 
-    public PrepareMessageRequest(long transactionId, long snapshot, List<DataObject> puts, List<DataObject> gets) {
+    public PrepareMessageRequest(long transactionId, long snapshot, List<DataObject> puts, List<DataObject> gets, int client, int partition) {
         this.transactionId = transactionId;
         this.snapshot = snapshot;
         this.puts = puts;
         this.gets = gets;
+        this.client = client;
+        this.partition = partition;
     }
 
     public long getTransactionId() {
@@ -32,5 +36,13 @@ public class PrepareMessageRequest {
 
     public List<DataObject> getGets() {
         return gets;
+    }
+
+    public int getPartition() {
+        return partition;
+    }
+
+    public int getClient() {
+        return client;
     }
 }
