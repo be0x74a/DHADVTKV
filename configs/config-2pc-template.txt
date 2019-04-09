@@ -1,5 +1,7 @@
+################### TEMPLATE MEMBERS INITIALIZED ABOVE ^^^ ===========================
+
 # network size
-SIZE 188
+SIZE TEMPLATE_SIZE
 
 # number of partitions
 NPARTITIONS 8
@@ -17,10 +19,9 @@ partition partition
 
 protocol.link peersim.core.IdleProtocol
 
-
 protocol.urt UniformRandomTransport
-protocol.urt.mindelay 0
-protocol.urt.maxdelay 100
+protocol.urt.mindelay TEMPLATE_MIN_DELAY
+protocol.urt.maxdelay TEMPLATE_MAX_DELAY
 
 protocol.tr UnreliableTransport
 protocol.tr.transport urt
@@ -32,7 +33,7 @@ protocol.partition.transport urt
 protocol.partition.linkable link
 protocol.partition.keyvaluestoresize 1000
 protocol.partition.nopartitions NPARTITIONS
-protocol.partition.maxmsgcount 10
+protocol.partition.maxmsgcount TEMPLATE_MAX_MSG_COUNT
 protocol.partition.client client
 
 protocol.client DHADVTKV.ClientProtocol

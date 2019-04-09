@@ -32,6 +32,7 @@ protocol.partition.transport urt
 protocol.partition.linkable link
 protocol.partition.keyvaluestoresize 1000
 protocol.partition.nopartitions NPARTITIONS
+protocol.partition.maxmsgcount 10
 protocol.partition.client client
 
 protocol.client DHADVTKV.ClientProtocol
