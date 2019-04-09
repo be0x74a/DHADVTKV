@@ -25,3 +25,10 @@ hs_err_pid*
 # IntelliJ files
 .idea/
 Sim.iml
+
+# Test results
+tests/
+
+# Messed up peersim files
+out/production/peersim-1.0.5/
+peersim-1.0.4/
