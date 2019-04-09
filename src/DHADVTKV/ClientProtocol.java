@@ -74,7 +74,6 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
     }
 
     public void processEventCustom(Node node, int pid, Object event) {
-        System.out.println(String.format("Client received: %s",  event.getClass().getSimpleName()));
         if (event instanceof TransactionalGetMessageResponse) {
             TransactionalGetMessageResponse message = (TransactionalGetMessageResponse) event;
             this.client.onTransactionalGetResponse(message);

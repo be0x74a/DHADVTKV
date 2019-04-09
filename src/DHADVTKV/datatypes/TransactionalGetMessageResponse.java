@@ -12,9 +12,6 @@ public class TransactionalGetMessageResponse {
         this.object = object;
         this.partition = partition;
         this.client = client;
-
-        System.out.println(String.format("%d:%s:%d", partition, getClass().getSimpleName(), client));
-
     }
 
     public DataObject getObject() {

@@ -26,6 +26,11 @@ public class ProtocolMapper implements CDProtocol, EDProtocol {
         if (type == Type.CLIENT) {
             ClientProtocol client = (ClientProtocol) node.getProtocol(clientPid);
             client.nextCycleCustom(node, protocolID);
+        } else if (type == Type.PARTITION) {
+            PartitionProtocol partition = (PartitionProtocol) node.getProtocol(partitionPid);
+            partition.nextCycleCustom(node, protocolID);
+        } else {
+            throw new RuntimeException("Unknown node type.");
         }
     }
 

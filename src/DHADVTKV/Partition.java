@@ -21,10 +21,6 @@ public class Partition {
 
         DataObject obj = selectSnapshotConsistentVersion(message.getSnapshot(), tentativeObjectVersions, committedObjectVersions);
 
-        if (obj == null) {
-            System.out.println(String.format("Partition: %d\t key: %d\tsnapshot: %d", message.getPartition(), message.getKey(), message.getSnapshot()));
-        }
-
         return new TransactionalGetMessageResponse(obj, message.getPartition(), message.getClient());
     }
 
@@ -60,7 +56,7 @@ public class Partition {
 
         releaseLocks(message.getPuts());
         this.transactionsDone++;
-        System.out.println(String.format("Transactions done: %d", this.transactionsDone));
+        System.out.println(this.transactionsDone);
 
         return new CommitMessageResponse(message.getPartition(), message.getClient(), message.getTransactionId());
     }

@@ -13,9 +13,6 @@ public class PrepareMessageResponse {
         this.commitTimestamp = commitTimestamp;
         this.partition = partition;
         this.client = client;
-
-        System.out.println(String.format("%d:%s:%d", partition, getClass().getSimpleName(), client));
-
     }
 
     public boolean hasConflicts() {

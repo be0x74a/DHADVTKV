@@ -70,7 +70,6 @@ public class Client {
     public DataObject onTransactionalGetResponse(TransactionalGetMessageResponse message) {
 
         if (message.getObject() == null) {
-            System.out.println("DataObject not found");
             return null;
         }
 
@@ -126,10 +125,6 @@ public class Client {
 
     public List<CommitMessageRequest> onPrepareResponse(PrepareMessageResponse message) {
         List<CommitMessageRequest> commitMessageRequests = new ArrayList<>();
-
-        if (this.transaction == null) {
-            System.out.println("HEY");
-        }
 
         this.transaction.setCommitTimestamp(Math.max(this.transaction.getCommitTimestamp(), message.getCommitTimestamp()));
         this.transaction.setConflicts(this.transaction.hasConflicts() || message.hasConflicts());

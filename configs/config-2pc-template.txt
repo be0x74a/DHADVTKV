@@ -1,0 +1,62 @@
+# network size
+SIZE 188
+
+# number of partitions
+NPARTITIONS 8
+
+# parameters of periodic execution
+CYCLES 10000
+CYCLE 1
+
+network.size SIZE
+simulation.endtime CYCLE*CYCLES
+client client
+partition partition
+
+################### protocols ===========================
+
+protocol.link peersim.core.IdleProtocol
+
+
+protocol.urt UniformRandomTransport
+protocol.urt.mindelay 0
+protocol.urt.maxdelay 100
+
+protocol.tr UnreliableTransport
+protocol.tr.transport urt
+protocol.tr.drop 0
+
+protocol.partition DHADVTKV.PartitionProtocol
+protocol.partition.step CYCLE
+protocol.partition.transport urt
+protocol.partition.linkable link
+protocol.partition.keyvaluestoresize 1000
+protocol.partition.nopartitions NPARTITIONS
+protocol.partition.maxmsgcount 10
+protocol.partition.client client
+
+protocol.client DHADVTKV.ClientProtocol
+protocol.client.step CYCLE
+protocol.client.transport urt
+protocol.client.linkable link
+protocol.client.nopartitions NPARTITIONS
+protocol.client.partition partition
+
+protocol.mapper DHADVTKV.ProtocolMapper
+protocol.mapper.step CYCLE
+protocol.mapper.transport urt
+protocol.mapper.linkable link
+
+################### initialization ======================
+
+### Set node type
+init.0 DHADVTKV.ProtocolMapperInit
+init.0.nopartitions NPARTITIONS
+
+init.sch CDScheduler
+init.sch.protocol mapper
+init.sch.randstart
+
+################ control ==============================
+
+

@@ -10,8 +10,6 @@ public class CommitMessageResponse {
         this.partition = partition;
         this.client = client;
         this.transactionId = transactionId;
-
-        System.out.println(String.format("%d:%s:%d", partition, getClass().getSimpleName(), client));
     }
 
     public int getClient() {
