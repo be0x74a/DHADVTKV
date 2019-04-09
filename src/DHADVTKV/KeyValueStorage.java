@@ -7,6 +7,8 @@ public class KeyValueStorage {
 
     private Map<Long, List<TransactionalDataObject>> tentativeVersions = new HashMap<> ();
     private Map<Long, List<TransactionalDataObject>> committedVersions = new HashMap<> ();
+    private Map<Long, Long> latestObjectVersions = new HashMap<>();
+
 
     public KeyValueStorage(long id, int noKeyValueStores, int size) {
         for (int i = 0; i < size; i++) {
@@ -14,6 +16,7 @@ public class KeyValueStorage {
             list.add(new TransactionalDataObject(new DataObject(id+i*noKeyValueStores, id+i*noKeyValueStores, 0L), 0L));
             committedVersions.put(id+i*noKeyValueStores, list);
             tentativeVersions.put(id+i*noKeyValueStores, new ArrayList<>());
+            latestObjectVersions.put(id+i*noKeyValueStores, -1L);
         }
     }
 
@@ -67,6 +70,10 @@ public class KeyValueStorage {
         }
 
         deleteTentativeVersions(transactionId, objects);
+    }
+
+    public Map<Long, Long> getLatestObjectVersions() {
+        return latestObjectVersions;
     }
 
     private class TransactionalDataObject {

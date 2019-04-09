@@ -7,12 +7,12 @@ import peersim.config.FastConfig;
 import peersim.core.Network;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
-import peersim.edsim.EDSimulator;
 import peersim.transport.Transport;
 
 import java.util.List;
 
 import static DHADVTKV.Client.State.getSent;
+import static DHADVTKV.Client.State.waitingToFinish;
 import static DHADVTKV.ProtocolMapperInit.Type.CLIENT;
 import static DHADVTKV.ProtocolMapperInit.nodeType;
 
@@ -20,7 +20,6 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
 
     private Client client;
     private int noPartitions;
-    private long getKey;
     private int nodeId;
     private String prefix;
 
@@ -38,7 +37,6 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
         if (client == null) {
             int nodeId = Math.toIntExact(node.getID());
             this.nodeId = nodeId;
-            this.getKey = nodeId;
             this.client = new Client(noPartitions, nodeId);
         }
 
@@ -52,20 +50,21 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
                 this.client.begin();
                 break;
             case transactionCreated:
-                TransactionalGetMessageRequest getRequest = this.client.get(getKey += noPartitions);
-                sendMessage(node, getRequest.getPartition(), getRequest, pid);
+                this.client.setGetsSend(noPartitions);
+                for (int i = 0; i < noPartitions; i++) {
+                    TransactionalGetMessageRequest getRequest = this.client.get(nodeId * noPartitions + i);
+                    sendMessage(node, getRequest.getPartition(), getRequest, pid);
+                }
                 this.client.setState(getSent);
                 break;
             case getSent:
-                break;
-            case getGotten:
-                this.client.put(getKey, getKey);
                 break;
             case canCommit:
                 List<PrepareMessageRequest> prepareRequests = this.client.commit();
                 for (PrepareMessageRequest request : prepareRequests) {
                     sendMessage(node, request.getPartition(), request, pid);
                 }
+                this.client.setState(waitingToFinish);
                 break;
         }
     }
@@ -75,6 +74,7 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
     }
 
     public void processEventCustom(Node node, int pid, Object event) {
+        System.out.println(String.format("Client received: %s",  event.getClass().getSimpleName()));
         if (event instanceof TransactionalGetMessageResponse) {
             TransactionalGetMessageResponse message = (TransactionalGetMessageResponse) event;
             this.client.onTransactionalGetResponse(message);
@@ -86,7 +86,9 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
             }
         } else if (event instanceof CommitMessageResponse) {
             CommitMessageResponse message = (CommitMessageResponse) event;
-            this.client.onCommitResult(message);
+            if (message.getTransactionId() == this.client.getTransactionId()) {
+                this.client.onCommitResult(message);
+            }
         } else {
             throw new RuntimeException("Unknown message type: " + event.getClass().getSimpleName());
         }

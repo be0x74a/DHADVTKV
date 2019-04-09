@@ -2,15 +2,13 @@ package DHADVTKV;
 
 import DHADVTKV.datatypes.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Partition {
 
     private KeyValueStorage kv;
     private long clock = 0;
-    private Map<Long, Long> latestObjectVersions = new HashMap<>();
+    private int transactionsDone = 0;
 
     public Partition(long nodeId, int noPartitions, int keyValueStoreSize) {
         this.kv = new KeyValueStorage(nodeId, noPartitions, keyValueStoreSize);
@@ -21,7 +19,13 @@ public class Partition {
         List<DataObject> tentativeObjectVersions = kv.getTentativeVersions(message.getKey());
         List<DataObject> committedObjectVersions = kv.getCommittedVersions(message.getKey());
 
-        return new TransactionalGetMessageResponse(selectSnapshotConsistentVersion(message.getSnapshot(), tentativeObjectVersions, committedObjectVersions), message.getPartition(), message.getClient());
+        DataObject obj = selectSnapshotConsistentVersion(message.getSnapshot(), tentativeObjectVersions, committedObjectVersions);
+
+        if (obj == null) {
+            System.out.println(String.format("Partition: %d\t key: %d\tsnapshot: %d", message.getPartition(), message.getKey(), message.getSnapshot()));
+        }
+
+        return new TransactionalGetMessageResponse(obj, message.getPartition(), message.getClient());
     }
 
     public PrepareMessageResponse prepare(PrepareMessageRequest message) {
@@ -55,8 +59,10 @@ public class Partition {
         }
 
         releaseLocks(message.getPuts());
+        this.transactionsDone++;
+        System.out.println(String.format("Transactions done: %d", this.transactionsDone));
 
-        return new CommitMessageResponse(message.getPartition(), message.getClient());
+        return new CommitMessageResponse(message.getPartition(), message.getClient(), message.getTransactionId());
     }
 
 
@@ -87,15 +93,19 @@ public class Partition {
     }
 
     private boolean checkConflicts(List<DataObject> gets, List<DataObject> puts, long snapshot) {
-        for (DataObject object : gets) {
-            if (latestObjectVersions.get(object.getKey()) > snapshot) {
-                return true;
+        if (gets != null) {
+            for (DataObject object : gets) {
+                if (this.kv.getLatestObjectVersions().get(object.getKey()) > snapshot) {
+                    return true;
+                }
             }
         }
 
-        for (DataObject object : puts) {
-            if (latestObjectVersions.get(object.getKey()) > snapshot) {
-                return true;
+        if (puts != null) {
+            for (DataObject object : puts) {
+                if (this.kv.getLatestObjectVersions().get(object.getKey()) > snapshot) {
+                    return true;
+                }
             }
         }
 
@@ -104,13 +114,19 @@ public class Partition {
 
     private void updateLatestObjectVersions(List<DataObject> objects, long version) {
         for (DataObject object : objects) {
-            latestObjectVersions.put(object.getKey(), version);
+            this.kv.getLatestObjectVersions().put(object.getKey(), version);
         }
     }
 
+
+    public int getTransactionsDone() {
+        return transactionsDone;
+    }
+
+
     //TODO: This is obviously ONLY a placeholder!!!
     private boolean acquireLocks(List<DataObject> puts) {
-        return false;
+        return true;
     }
 
     //TODO: This is obviously ONLY a placeholder!!!
@@ -121,4 +137,5 @@ public class Partition {
     private void waitUntilVersionIsCommitted() {
 
     }
+
 }

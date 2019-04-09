@@ -6,12 +6,24 @@ import java.util.*;
 
 public class Client {
 
+    public void setGetsSend(int noPartitions) {
+        this.transaction.setGetsSent(noPartitions);
+        this.transaction.setGetsReceived(0);
+    }
+
+    public long getTransactionId() {
+        if (this.transaction == null) {
+            return -1L;
+        }
+        return this.transaction.getId();
+    }
+
     public enum State {
         initialState,
         transactionCreated,
         getSent,
-        getGotten,
-        canCommit
+        canCommit,
+        waitingToFinish
     }
 
     private Transaction transaction = null;
@@ -43,7 +55,6 @@ public class Client {
         }
         DataObject object = new DataObject(key, value, tentativeVersion + 1);
         this.transaction.getPuts().add(object);
-        this.state = State.canCommit;
     }
 
     public TransactionalGetMessageRequest get(long key) {
@@ -53,7 +64,6 @@ public class Client {
             version = this.clock;
         }
 
-        this.transaction.addToGetQueue(key);
         return new TransactionalGetMessageRequest(key, version, nodeId, partition);
     }
 
@@ -68,10 +78,14 @@ public class Client {
             this.transaction.setSnapshot(message.getObject().getVersion());
         }
 
-        this.transaction.removeFromGetQueue(message.getObject().getKey());
-        if (this.transaction.getSizeOfGetQueue() == 0) {
-            this.state = State.getGotten;
+        this.transaction.getGets().add(message.getObject());
+        this.put(message.getObject().getKey(), message.getObject().getValue());
+
+        this.transaction.addGetsReceived();
+        if (this.transaction.getGetsSent() == this.transaction.getGetsReceived()) {
+            this.state = State.canCommit;
         }
+
         return message.getObject();
     }
 
@@ -103,7 +117,7 @@ public class Client {
 
         for (Integer partition : partitions) {
             prepareMessageRequests.add(new PrepareMessageRequest(this.transaction.getId(), this.transaction.getSnapshot(),
-                    getPartitions.get(partition), putPartitions.get(partition), nodeId, partition));
+                    putPartitions.get(partition), getPartitions.get(partition), nodeId, partition));
         }
 
         this.transaction.setPrepareRequestsSent(prepareMessageRequests.size());

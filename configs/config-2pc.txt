@@ -1,11 +1,11 @@
 # network size
-SIZE 10
+SIZE 188
 
 # number of partitions
-NPARTITIONS 5
+NPARTITIONS 8
 
 # parameters of periodic execution
-CYCLES 100
+CYCLES 10000
 CYCLE 1
 
 network.size SIZE
@@ -18,7 +18,7 @@ partition partition
 protocol.link peersim.core.IdleProtocol
 
 
-protocol.urt DHADVTKV.common.PointToPointTransport
+protocol.urt UniformRandomTransport
 protocol.urt.mindelay 0
 protocol.urt.maxdelay 100
 
