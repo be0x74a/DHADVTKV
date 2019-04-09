@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 templateFill="TEMPLATE_MIN_DELAY $1\nTEMPLATE_MAX_DELAY $2\nTEMPLATE_MAX_MSG_COUNT $3\n"
 gnuplotScript="
 set title 'Min Delay: $1, Max delay: $2, Max messages/10 cycles: $3'\n
@@ -5,7 +6,7 @@ set xlabel 'Clients'\n
 set ylabel 'Tx'\n
 set xrange [80:280]\n
 set yrange [1000:6000]\n
-set xtics 20;
+set xtics 20\n
 plot 'tests/$1_$2_$3.dat' with linespoints linestyle 1\n
 pause -1 'Hit any key to continue'\n"
 
