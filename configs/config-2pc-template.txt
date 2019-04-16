@@ -7,7 +7,7 @@ SIZE TEMPLATE_SIZE
 NPARTITIONS 8
 
 # parameters of periodic execution
-CYCLES 10000
+CYCLES 250
 CYCLE 1
 
 network.size SIZE
@@ -15,17 +15,15 @@ simulation.endtime CYCLE*CYCLES
 client client
 partition partition
 
+################### channel =============================
+
+bandwidth TEMPLATE_MAX_MSG_COUNT
+mindelay TEMPLATE_MIN_DELAY
+maxdelay TEMPLATE_MAX_DELAY
+
 ################### protocols ===========================
 
 protocol.link peersim.core.IdleProtocol
-
-protocol.urt UniformRandomTransport
-protocol.urt.mindelay TEMPLATE_MIN_DELAY
-protocol.urt.maxdelay TEMPLATE_MAX_DELAY
-
-protocol.tr UnreliableTransport
-protocol.tr.transport urt
-protocol.tr.drop 0
 
 protocol.partition DHADVTKV.PartitionProtocol
 protocol.partition.step CYCLE
@@ -33,19 +31,16 @@ protocol.partition.transport urt
 protocol.partition.linkable link
 protocol.partition.keyvaluestoresize 1000
 protocol.partition.nopartitions NPARTITIONS
-protocol.partition.maxmsgcount TEMPLATE_MAX_MSG_COUNT
 protocol.partition.client client
 
 protocol.client DHADVTKV.ClientProtocol
 protocol.client.step CYCLE
-protocol.client.transport urt
 protocol.client.linkable link
 protocol.client.nopartitions NPARTITIONS
 protocol.client.partition partition
 
 protocol.mapper DHADVTKV.ProtocolMapper
 protocol.mapper.step CYCLE
-protocol.mapper.transport urt
 protocol.mapper.linkable link
 
 ################### initialization ======================

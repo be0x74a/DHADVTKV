@@ -1,14 +1,16 @@
 package DHADVTKV.datatypes;
 
-public class PrepareMessageResponse {
+public class PrepareMessageResponse extends Message {
 
     private final boolean conflicts;
     private final long commitTimestamp;
     private final int partition;
     private final int client;
+    private final static long LENGTH = 3;
 
 
     public PrepareMessageResponse(boolean conflicts, long commitTimestamp, int partition, int client) {
+        super(LENGTH);
         this.conflicts = conflicts;
         this.commitTimestamp = commitTimestamp;
         this.partition = partition;

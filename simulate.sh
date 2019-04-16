@@ -10,14 +10,14 @@ set xtics 20\n
 plot 'tests/$1_$2_$3.dat' with linespoints linestyle 1\n
 pause -1 'Hit any key to continue'\n"
 
-echo $gnuplotScript > temp.gnuscript
+echo -e $gnuplotScript > temp.gnuscript
 cat /dev/null > tests/$1_$2_$3.dat
 for i in `seq 88 20 288`;
 do
 	echo "Testing with `expr $i - 8` of 280 clients"
 	templateFillSize="TEMPLATE_SIZE $i\n"
-	echo "$templateFill$templateFillSize" | cat - configs/config-2pc-template.txt > temp.config
-	java -classpath ./out/production/Sim:./jep-2.3.0.jar:./djep-1.0.0.jar peersim.Simulator temp.config > temp.out 2>/dev/null
+	echo -e $templateFill$templateFillSize | cat - configs/config-2pc-template.txt > temp.config
+	java -classpath ./out/production/Sim:./jep-2.3.0.jar:./djep-1.0.0.jar peersim.Simulator temp.config > temp.out
 	echo "`expr $i - 8` $(tail -1 temp.out)" >> tests/$1_$2_$3.dat
 	rm temp.config
 	rm temp.out

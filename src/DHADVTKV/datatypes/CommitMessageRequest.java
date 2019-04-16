@@ -4,7 +4,7 @@ import DHADVTKV.DataObject;
 
 import java.util.List;
 
-public class CommitMessageRequest {
+public class CommitMessageRequest extends Message{
 
     private final long transactionId;
     private final List<DataObject> puts;
@@ -12,8 +12,10 @@ public class CommitMessageRequest {
     private final long commitTimestamp;
     private final int client;
     private final int partition;
+    private final static long LENGTH = 7;
 
     public CommitMessageRequest(long transactionId, List<DataObject> puts, boolean conflicts, long commitTimestamp, int client, int partition) {
+        super(LENGTH);
         this.transactionId = transactionId;
         this.puts = puts;
         this.conflicts = conflicts;

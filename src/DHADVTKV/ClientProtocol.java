@@ -1,5 +1,6 @@
 package DHADVTKV;
 
+import DHADVTKV.common.Channel;
 import DHADVTKV.datatypes.*;
 import peersim.cdsim.CDProtocol;
 import peersim.config.Configuration;
@@ -7,6 +8,7 @@ import peersim.config.FastConfig;
 import peersim.core.Network;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
+import peersim.edsim.EDSimulator;
 import peersim.transport.Transport;
 
 import java.util.List;
@@ -53,7 +55,7 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
                 this.client.setGetsSend(noPartitions);
                 for (int i = 0; i < noPartitions; i++) {
                     TransactionalGetMessageRequest getRequest = this.client.get(nodeId * noPartitions + i);
-                    sendMessage(node, getRequest.getPartition(), getRequest, pid);
+                    sendMessage(getRequest.getPartition(), getRequest, pid);
                 }
                 this.client.setState(getSent);
                 break;
@@ -62,7 +64,7 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
             case canCommit:
                 List<PrepareMessageRequest> prepareRequests = this.client.commit();
                 for (PrepareMessageRequest request : prepareRequests) {
-                    sendMessage(node, request.getPartition(), request, pid);
+                    sendMessage(request.getPartition(), request, pid);
                 }
                 this.client.setState(waitingToFinish);
                 break;
@@ -81,7 +83,7 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
             PrepareMessageResponse message = (PrepareMessageResponse) event;
             List<CommitMessageRequest> requests = this.client.onPrepareResponse(message);
             for (CommitMessageRequest request : requests) {
-                sendMessage(node, request.getPartition(), request, pid);
+                sendMessage(request.getPartition(), request, pid);
             }
         } else if (event instanceof CommitMessageResponse) {
             CommitMessageResponse message = (CommitMessageResponse) event;
@@ -98,11 +100,10 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
         return new ClientProtocol(prefix);
     }
 
-    public void sendMessage(Node src, int partition, Object message, int pid) {
+    public void sendMessage(int partition, Message message, int pid) {
         Node dst = Network.get(partition);
 
-        ((Transport) src.getProtocol(FastConfig.getTransport(pid)))
-                .send(src, dst, message, pid);
+        EDSimulator.add(Channel.putMessageInChannel(message.getLength()), message, dst, pid);
     }
 
 }
