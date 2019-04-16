@@ -12,11 +12,11 @@ public class PrepareMessageRequest extends Message {
     private final List<DataObject> gets;
     private final int client;
     private final int partition;
-    private static final long LENGTH = 9;
-
+    private static final long LENGTH = 2064;
+    private final static long CPU_TIME = 560;
 
     public PrepareMessageRequest(long transactionId, long snapshot, List<DataObject> puts, List<DataObject> gets, int client, int partition) {
-        super(LENGTH);
+        super(LENGTH, CPU_TIME);
         this.transactionId = transactionId;
         this.snapshot = snapshot;
         this.puts = puts;

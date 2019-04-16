@@ -7,7 +7,7 @@ SIZE TEMPLATE_SIZE
 NPARTITIONS 8
 
 # parameters of periodic execution
-CYCLES 250
+CYCLES 1000000
 CYCLE 1
 
 network.size SIZE

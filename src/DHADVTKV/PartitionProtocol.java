@@ -36,6 +36,17 @@ public class PartitionProtocol implements EDProtocol {
 
         Message response;
 
+        if (event instanceof Message)  {
+            if (!((Message) event).isForCPU()) {
+                ((Message) event).setForCPU(true);
+                EDSimulator.add(((Message) event).getCpuTime(), event, node, pid);
+                return;
+            }
+        } else {
+            throw new RuntimeException("Unknown message type: " + event.getClass().getSimpleName());
+        }
+
+
         if (event instanceof TransactionalGetMessageRequest) {
             TransactionalGetMessageRequest message = (TransactionalGetMessageRequest) event;
             response = this.partition.transactionalGet(message);
