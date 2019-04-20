@@ -1,6 +1,8 @@
-package DHADVTKV;
+package DHADVTKV.TPC;
 
-import DHADVTKV.datatypes.*;
+import DHADVTKV.common.DataObject;
+import DHADVTKV.common.Transaction;
+import DHADVTKV.messages.*;
 
 import java.util.*;
 

@@ -1,4 +1,4 @@
-package DHADVTKV;
+package DHADVTKV.common;
 
 import peersim.core.CommonState;
 import peersim.util.ExtendedRandom;

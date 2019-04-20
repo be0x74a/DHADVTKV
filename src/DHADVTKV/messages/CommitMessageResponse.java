@@ -1,4 +1,4 @@
-package DHADVTKV.datatypes;
+package DHADVTKV.messages;
 
 public class CommitMessageResponse extends Message {
 

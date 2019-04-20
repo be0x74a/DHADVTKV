@@ -1,20 +1,18 @@
-package DHADVTKV;
+package DHADVTKV.TPC;
 
 import DHADVTKV.common.Channel;
-import DHADVTKV.datatypes.*;
+import DHADVTKV.messages.*;
 import peersim.cdsim.CDProtocol;
 import peersim.config.Configuration;
-import peersim.config.FastConfig;
 import peersim.core.Network;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
 import peersim.edsim.EDSimulator;
-import peersim.transport.Transport;
 
 import java.util.List;
 
-import static DHADVTKV.Client.State.getSent;
-import static DHADVTKV.Client.State.waitingToFinish;
+import static DHADVTKV.TPC.Client.State.getSent;
+import static DHADVTKV.TPC.Client.State.waitingToFinish;
 import static DHADVTKV.ProtocolMapperInit.Type.CLIENT;
 import static DHADVTKV.ProtocolMapperInit.nodeType;
 

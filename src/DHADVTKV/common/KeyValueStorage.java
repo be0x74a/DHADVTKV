@@ -1,4 +1,4 @@
-package DHADVTKV;
+package DHADVTKV.common;
 
 import java.util.*;
 import java.util.stream.Collectors;

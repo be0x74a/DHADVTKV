@@ -1,6 +1,6 @@
-package DHADVTKV.datatypes;
+package DHADVTKV.messages;
 
-import DHADVTKV.DataObject;
+import DHADVTKV.common.DataObject;
 
 public class TransactionalGetMessageResponse extends Message {
 

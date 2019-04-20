@@ -1,6 +1,7 @@
 package DHADVTKV;
 
-import peersim.Simulator;
+import DHADVTKV.TPC.ClientProtocol;
+import DHADVTKV.TPC.PartitionProtocol;
 import peersim.cdsim.CDProtocol;
 import peersim.config.Configuration;
 import peersim.core.Node;

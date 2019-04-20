@@ -11,11 +11,11 @@ import java.util.Map;
 
 public class ProtocolMapperInit implements Control {
 
-    static Map<Long, Type> nodeType = new HashMap<>();
+    public static Map<Long, Type> nodeType = new HashMap<>();
 
     private int numberPartitions;
 
-    enum Type {
+    public enum Type {
         CLIENT,
         PARTITION
     }

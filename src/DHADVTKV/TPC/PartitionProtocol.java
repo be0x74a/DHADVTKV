@@ -1,7 +1,7 @@
-package DHADVTKV;
+package DHADVTKV.TPC;
 
 import DHADVTKV.common.Channel;
-import DHADVTKV.datatypes.*;
+import DHADVTKV.messages.*;
 import peersim.config.Configuration;
 import peersim.core.Network;
 import peersim.core.Node;

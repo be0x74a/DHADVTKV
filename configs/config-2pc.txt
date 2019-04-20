@@ -30,7 +30,7 @@ maxdelay TEMPLATE_MAX_DELAY
 
 protocol.link peersim.core.IdleProtocol
 
-protocol.partition DHADVTKV.PartitionProtocol
+protocol.partition DHADVTKV.TPC.PartitionProtocol
 protocol.partition.step CYCLE
 protocol.partition.transport urt
 protocol.partition.linkable link
@@ -38,7 +38,7 @@ protocol.partition.keyvaluestoresize 1000
 protocol.partition.nopartitions NPARTITIONS
 protocol.partition.client client
 
-protocol.client DHADVTKV.ClientProtocol
+protocol.client DHADVTKV.TPC.ClientProtocol
 protocol.client.step CYCLE
 protocol.client.linkable link
 protocol.client.nopartitions NPARTITIONS
