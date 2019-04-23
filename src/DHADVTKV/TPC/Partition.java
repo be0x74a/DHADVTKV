@@ -4,13 +4,16 @@ import DHADVTKV.common.DataObject;
 import DHADVTKV.common.KeyValueStorage;
 import DHADVTKV.messages.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Partition {
 
     private KeyValueStorage kv;
     private long clock = 0;
     private int transactionsDone = 0;
+    private Map<Long, Long> latestObjectVersions = new HashMap<>();
 
     public Partition(long nodeId, int noPartitions, int keyValueStoreSize) {
         this.kv = new KeyValueStorage(nodeId, noPartitions, keyValueStoreSize);
@@ -93,7 +96,7 @@ public class Partition {
     private boolean checkConflicts(List<DataObject> gets, List<DataObject> puts, long snapshot) {
         if (gets != null) {
             for (DataObject object : gets) {
-                if (this.kv.getLatestObjectVersions().get(object.getKey()) > snapshot) {
+                if (this.latestObjectVersions.getOrDefault(object.getKey(), -1L) > snapshot) {
                     return true;
                 }
             }
@@ -101,7 +104,7 @@ public class Partition {
 
         if (puts != null) {
             for (DataObject object : puts) {
-                if (this.kv.getLatestObjectVersions().get(object.getKey()) > snapshot) {
+                if (this.latestObjectVersions.getOrDefault(object.getKey(), -1L) > snapshot) {
                     return true;
                 }
             }
@@ -112,15 +115,9 @@ public class Partition {
 
     private void updateLatestObjectVersions(List<DataObject> objects, long version) {
         for (DataObject object : objects) {
-            this.kv.getLatestObjectVersions().put(object.getKey(), version);
+            this.latestObjectVersions.put(object.getKey(), version);
         }
     }
-
-
-    public int getTransactionsDone() {
-        return transactionsDone;
-    }
-
 
     //TODO: This is obviously ONLY a placeholder!!!
     private boolean acquireLocks(List<DataObject> puts) {
