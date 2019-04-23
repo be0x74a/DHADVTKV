@@ -20,6 +20,8 @@ public class Transaction {
     private int prepareResponsesReceived = 0;
     private int getsSent = 0;
     private int getsReceived = 0;
+    private int client;
+    private int partitionsChecked = 0;
 
     public long getId() {
         return id;
@@ -95,5 +97,21 @@ public class Transaction {
 
     public void addGetsReceived() {
         this.getsReceived++;
+    }
+
+    public int getClient() {
+        return client;
+    }
+
+    public void setClient(int client) {
+        this.client = client;
+    }
+
+    public int getPartitionsChecked() {
+        return partitionsChecked;
+    }
+
+    public void setPartitionsChecked(int partitionsChecked) {
+        this.partitionsChecked = partitionsChecked;
     }
 }
