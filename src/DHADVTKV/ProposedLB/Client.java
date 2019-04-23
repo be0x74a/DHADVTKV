@@ -22,8 +22,15 @@ public class Client {
         waitingToFinish
     }
 
+    public Client(int noPartitions, int nodeId) {
+        this.noPartitions = noPartitions;
+        this.nodeId = nodeId;
+        this.state = State.initialState;
+    }
+
     public void begin() {
         this.transaction = new Transaction();
+        this.transaction.setClient(nodeId);
         this.state = State.transactionCreated;
     }
 
@@ -95,19 +102,39 @@ public class Client {
 
         for (Integer partition : partitions) {
             validateAndCommitTransactionRequests.add(new ValidateAndCommitTransactionRequest(this.transaction.getId(), this.transaction.getSnapshot(),
-                    putPartitions.get(partition), getPartitions.get(partition), nodeId, partition));
+                    putPartitions.get(partition), getPartitions.get(partition), nodeId, partition, partitions.size()));
         }
 
         this.transaction.setPrepareRequestsSent(validateAndCommitTransactionRequests.size());
         return validateAndCommitTransactionRequests;
     }
 
-    public void onTransactionValidationResult(ValidateAndCommitTransactionResponse message) {
+    public void onTransactionValidationResult(ClientValidationResponse message) {
         this.clock = message.getCommitTimestamp();
         this.transaction = null;
         this.state = State.initialState;
     }
 
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public void setGetsSend(int noPartitions) {
+        this.transaction.setGetsSent(noPartitions);
+        this.transaction.setGetsReceived(0);
+    }
+
+    public long getTransactionId() {
+        if (this.transaction == null) {
+            return -1L;
+        }
+        return this.transaction.getId();
+    }
 
     private int partitionForKey(long key) {
         return (int) key % this.noPartitions;
