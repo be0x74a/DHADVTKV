@@ -1,4 +1,4 @@
-package DHADVTKV;
+package DHADVTKV.common;
 
 public class DataObject {
 

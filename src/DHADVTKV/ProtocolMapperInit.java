@@ -1,5 +1,6 @@
 package DHADVTKV;
 
+import DHADVTKV.common.Channel;
 import peersim.config.Configuration;
 import peersim.core.Control;
 import peersim.core.Network;
@@ -10,17 +11,18 @@ import java.util.Map;
 
 public class ProtocolMapperInit implements Control {
 
-    static Map<Long, Type> nodeType = new HashMap<>();
+    public static Map<Long, Type> nodeType = new HashMap<>();
 
     private int numberPartitions;
 
-    enum Type {
+    public enum Type {
         CLIENT,
         PARTITION
     }
 
     public ProtocolMapperInit(String prefix) {
         numberPartitions =  Configuration.getInt(prefix + "." + "nopartitions");
+        new Channel();
     }
 
     @Override

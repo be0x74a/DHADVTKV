@@ -1,47 +1,28 @@
-package DHADVTKV;
+package DHADVTKV.TPC;
 
-import DHADVTKV.datatypes.*;
-import peersim.cdsim.CDProtocol;
+import DHADVTKV.common.Channel;
+import DHADVTKV.messages.*;
 import peersim.config.Configuration;
-import peersim.config.FastConfig;
 import peersim.core.Network;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
 import peersim.edsim.EDSimulator;
-import peersim.transport.Transport;
 
-public class PartitionProtocol implements CDProtocol, EDProtocol {
+public class PartitionProtocol implements EDProtocol {
 
     private final int size;
     private final int noPartitions;
-    private final int maxMsgCount;
     private Partition partition;
     private int nodeId;
     private String prefix;
-    private int cycle = 0;
-    private int msgCount = 0;
 
     public PartitionProtocol(String prefix) {
         this.prefix = prefix;
         this.noPartitions = Configuration.getInt(prefix + "." + "nopartitions");
         this.size = Configuration.getInt(prefix + "." + "keyvaluestoresize");
-        this.maxMsgCount = Configuration.getInt(prefix + "." + "maxmsgcount");
     }
-
 
     @Override
-    public void nextCycle(Node node, int protocolID) {
-    }
-
-    public void nextCycleCustom(Node node, int protocolID) {
-        this.cycle++;
-
-        if (cycle % 10 == 0) {
-            this.msgCount = 0;
-        }
-    }
-
-        @Override
     public void processEvent(Node node, int pid, Object event) {
     }
 
@@ -53,27 +34,31 @@ public class PartitionProtocol implements CDProtocol, EDProtocol {
             partition = new Partition(nodeId, this.noPartitions, size);
         }
 
-        if (msgCount > maxMsgCount) {
-            EDSimulator.add(1, event, node, pid);
-            return;
+        Message response;
+
+        if (event instanceof Message)  {
+            if (!((Message) event).isForCPU()) {
+                ((Message) event).setForCPU(true);
+                EDSimulator.add(((Message) event).getCpuTime(), event, node, pid);
+                return;
+            }
         } else {
-            msgCount += 1;
+            throw new RuntimeException("Unknown message type: " + event.getClass().getSimpleName());
         }
 
-        Object response;
 
         if (event instanceof TransactionalGetMessageRequest) {
             TransactionalGetMessageRequest message = (TransactionalGetMessageRequest) event;
             response = this.partition.transactionalGet(message);
-            sendMessage(node, message.getClient(), response, pid);
+            sendMessage(message.getClient(), response, pid);
         } else if (event instanceof PrepareMessageRequest) {
             PrepareMessageRequest message = (PrepareMessageRequest) event;
             response = this.partition.prepare(message);
-            sendMessage(node, message.getClient(), response, pid);
+            sendMessage(message.getClient(), response, pid);
         } else if (event instanceof CommitMessageRequest) {
             CommitMessageRequest message = (CommitMessageRequest) event;
             response = this.partition.commit(message);
-            sendMessage(node, message.getClient(), response, pid);
+            sendMessage(message.getClient(), response, pid);
         } else {
             throw new RuntimeException("Unknown message type: " + event.getClass().getSimpleName());
         }
@@ -86,11 +71,11 @@ public class PartitionProtocol implements CDProtocol, EDProtocol {
     }
 
 
-    public void sendMessage(Node src, int client, Object message, int pid) {
+    public void sendMessage(int client, Message message, int pid) {
 
         Node dst = Network.get(client);
 
-        ((Transport) src.getProtocol(FastConfig.getTransport(pid)))
-                .send(src, dst, message, pid);
+        EDSimulator.add(Channel.putMessageInChannel(message.getLength()), message, dst, pid);
+
     }
 }
