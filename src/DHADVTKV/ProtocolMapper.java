@@ -7,7 +7,7 @@ import peersim.config.Configuration;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
 
-import static DHADVTKV.ProtocolMapperInit.*;
+import static DHADVTKV.TPC.ProtocolMapperInit.*;
 
 
 public class ProtocolMapper implements CDProtocol, EDProtocol {

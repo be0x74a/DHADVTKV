@@ -12,8 +12,8 @@ import peersim.edsim.EDSimulator;
 import java.util.List;
 
 import static DHADVTKV.ProposedLB.Client.State.*;
-import static DHADVTKV.ProtocolMapperInit.Type.CLIENT;
-import static DHADVTKV.ProtocolMapperInit.nodeType;
+import static DHADVTKV.ProposedLB.ProtocolMapperInit.Type.CLIENT;
+import static DHADVTKV.ProposedLB.ProtocolMapperInit.nodeType;
 
 public class ClientProtocol implements CDProtocol, EDProtocol {
 

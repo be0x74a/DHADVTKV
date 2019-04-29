@@ -1,4 +1,4 @@
-package DHADVTKV;
+package DHADVTKV.ProposedLB;
 
 import DHADVTKV.common.Channel;
 import peersim.config.Configuration;
@@ -17,7 +17,8 @@ public class ProtocolMapperInit implements Control {
 
     public enum Type {
         CLIENT,
-        PARTITION
+        PARTITION,
+        VALIDATOR
     }
 
     public ProtocolMapperInit(String prefix) {
@@ -27,12 +28,16 @@ public class ProtocolMapperInit implements Control {
 
     @Override
     public boolean execute() {
+        Node node = Network.get(numberPartitions);
+        nodeType.put(node.getID(), Type.VALIDATOR);
+
         for (int i = 0; i < numberPartitions; i++) {
-            Node node = Network.get(i);
+            node = Network.get(i);
             nodeType.put(node.getID(), Type.PARTITION);
         }
-        for (int i = numberPartitions; i < Network.size(); i++) {
-            Node node = Network.get(i);
+
+        for (int i = numberPartitions + 1; i < Network.size(); i++) {
+            node = Network.get(i);
             nodeType.put(node.getID(), Type.CLIENT);
         }
 

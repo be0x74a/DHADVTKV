@@ -51,7 +51,7 @@ protocol.mapper.linkable link
 ################### initialization ======================
 
 ### Set node type
-init.0 DHADVTKV.ProtocolMapperInit
+init.0 DHADVTKV.TPC.ProtocolMapperInit
 init.0.nopartitions NPARTITIONS
 
 init.sch CDScheduler

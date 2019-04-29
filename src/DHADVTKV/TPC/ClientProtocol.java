@@ -13,8 +13,8 @@ import java.util.List;
 
 import static DHADVTKV.TPC.Client.State.getSent;
 import static DHADVTKV.TPC.Client.State.waitingToFinish;
-import static DHADVTKV.ProtocolMapperInit.Type.CLIENT;
-import static DHADVTKV.ProtocolMapperInit.nodeType;
+import static DHADVTKV.TPC.ProtocolMapperInit.Type.CLIENT;
+import static DHADVTKV.TPC.ProtocolMapperInit.nodeType;
 
 public class ClientProtocol implements CDProtocol, EDProtocol {
 
