@@ -39,7 +39,7 @@ protocol.client.linkable link
 protocol.client.nopartitions NPARTITIONS
 protocol.client.partition partition
 
-protocol.mapper DHADVTKV.ProtocolMapper
+protocol.mapper DHADVTKV.TPC.ProtocolMapper
 protocol.mapper.step CYCLE
 protocol.mapper.linkable link
 
