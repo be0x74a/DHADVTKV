@@ -1,6 +1,13 @@
 package DHADVTKV.messages;
 
 public class Message {
+
+    static int LENGTH_LONG = 8;
+    static int LENGTH_INT = 4;
+    static int LENGTH_BOOL = 1;
+    static int LENGTH_OBJ = 1024;
+
+
     private final long length;
     private final long cpuTime;
     private boolean forCPU = false;

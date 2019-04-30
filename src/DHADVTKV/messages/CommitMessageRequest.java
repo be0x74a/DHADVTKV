@@ -12,11 +12,10 @@ public class CommitMessageRequest extends Message{
     private final long commitTimestamp;
     private final int client;
     private final int partition;
-    private final static long LENGTH = 1041;
     private final static long CPU_TIME = 60;
 
     public CommitMessageRequest(long transactionId, List<DataObject> puts, boolean conflicts, long commitTimestamp, int client, int partition) {
-        super(LENGTH, CPU_TIME);
+        super(2 * LENGTH_LONG + puts.size() * LENGTH_OBJ + LENGTH_BOOL, CPU_TIME);
         this.transactionId = transactionId;
         this.puts = puts;
         this.conflicts = conflicts;

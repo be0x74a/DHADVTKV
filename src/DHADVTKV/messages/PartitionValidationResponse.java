@@ -12,11 +12,11 @@ public class PartitionValidationResponse extends Message {
     private final boolean conflicts;
     private final long commitTimestamp;
     private final int partition;
-    private static final long LENGTH = 8;
     private static final long CPU_TIME = 0;
 
     public PartitionValidationResponse(long transactionId, List<DataObject> gets, List<DataObject> puts, boolean conflicts, long commitTimestamp, int partition) {
-        super(LENGTH, CPU_TIME);
+        //super(2 * LENGTH_LONG + (puts.size() + gets.size()) * LENGTH_OBJ + LENGTH_BOOL, CPU_TIME);
+        super(0, CPU_TIME);
         this.transactionId = transactionId;
         this.gets = gets;
         this.puts = puts;

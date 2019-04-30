@@ -74,10 +74,21 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
     }
 
     public void processEventCustom(Node node, int pid, Object event) {
+
+        Message response;
+
+        if (event instanceof Message)  {
+            if ((!((Message) event).isForCPU())) {
+                ((Message) event).setForCPU(true);
+                EDSimulator.add(100, event, node, pid);
+                return;
+            }
+        }
+
         if (event instanceof TransactionalGetMessageResponse) {
             TransactionalGetMessageResponse message = (TransactionalGetMessageResponse) event;
             this.client.onTransactionalGetResponse(message);
-        } else if (event instanceof PrepareMessageResponse) {
+            } else if (event instanceof PrepareMessageResponse) {
             PrepareMessageResponse message = (PrepareMessageResponse) event;
             List<CommitMessageRequest> requests = this.client.onPrepareResponse(message);
             for (CommitMessageRequest request : requests) {

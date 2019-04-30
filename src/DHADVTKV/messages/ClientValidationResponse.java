@@ -6,11 +6,10 @@ public class ClientValidationResponse extends Message {
     private final long commitTimestamp;
     private final int client;
     private final long transactionId;
-    private static final long LENGTH = 8;
     private static final long CPU_TIME = 0;
 
     public ClientValidationResponse(boolean conflicts, long commitTimestamp, int client, long transactionId) {
-        super(LENGTH, CPU_TIME);
+        super(LENGTH_BOOL + LENGTH_LONG, CPU_TIME);
         this.conflicts = conflicts;
         this.commitTimestamp = commitTimestamp;
         this.client = client;

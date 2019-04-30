@@ -1,8 +1,0 @@
-set title 'Min Delay: 0, Max delay: 3, Throughput: 2000, CPU: false'
- set xlabel 'Clients'
- set ylabel 'Tx'
- set xrange [80:280]
- set xtics 20
- plot 'tests/0_3_2000_false.dat' with linespoints linestyle 1
- pause -1 'Hit any key to continue'
-

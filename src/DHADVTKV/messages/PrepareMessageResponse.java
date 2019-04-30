@@ -6,11 +6,10 @@ public class PrepareMessageResponse extends Message {
     private final long commitTimestamp;
     private final int partition;
     private final int client;
-    private final static long LENGTH = 9;
     private final static long CPU_TIME = 0;
 
     public PrepareMessageResponse(boolean conflicts, long commitTimestamp, int partition, int client) {
-        super(LENGTH, CPU_TIME);
+        super(LENGTH_BOOL + LENGTH_LONG, CPU_TIME);
         this.conflicts = conflicts;
         this.commitTimestamp = commitTimestamp;
         this.partition = partition;

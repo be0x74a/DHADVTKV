@@ -13,11 +13,10 @@ public class ValidateAndCommitTransactionRequest extends Message{
     private final int client;
     private final int partition;
     private final int noPartitionsTouched;
-    private static final long LENGTH = 2064;
     private final static long CPU_TIME = 560;
 
     public ValidateAndCommitTransactionRequest(long transactionId, long snapshot, List<DataObject> puts, List<DataObject> gets, int client, int partition, int noPartitionsTouched) {
-        super(LENGTH, CPU_TIME);
+        super(2 * LENGTH_LONG + (puts.size() + gets.size()) * LENGTH_OBJ + LENGTH_INT, CPU_TIME);
         this.transactionId = transactionId;
         this.snapshot = snapshot;
         this.puts = puts;

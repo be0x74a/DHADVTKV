@@ -6,11 +6,10 @@ public class TransactionalGetMessageRequest extends Message {
     private final long snapshot;
     private final int partition;
     private final int client;
-    private final static long LENGTH = 16;
     private final static long CPU_TIME = 200;
 
     public TransactionalGetMessageRequest(long key, long snapshot, int client, int partition) {
-        super(LENGTH, CPU_TIME);
+        super(2 * LENGTH_LONG, CPU_TIME);
         this.key = key;
         this.snapshot = snapshot;
         this.client = client;
