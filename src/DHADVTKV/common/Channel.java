@@ -22,9 +22,17 @@ public class Channel {
     }
 
     public static long putMessageInChannel(long messageLength) {
-        //messageLength += range==1?min:min + CommonState.r.nextLong(range);
-        float nextAvailable = Math.max(Channel.getNextAvailableStep(), CommonState.getTime());
-        Channel.nextAvailableStep = nextAvailable + messageLength/bandwidth;
+        //System.out.println("Common time: " + CommonState.getTime());
+
+        float messageTime = messageLength/bandwidth;
+        //System.out.println("Message time: " + messageTime);
+
+        float nextAvailable = Math.max(Channel.nextAvailableStep, CommonState.getTime());
+        //System.out.println("Next available: " + Math.max(Channel.nextAvailableStep, CommonState.getTime()));
+
+        Channel.nextAvailableStep = nextAvailable + Math.max(messageTime , 1);
+
+        //System.out.println("Time sent: " + Math.max((long) Channel.nextAvailableStep - CommonState.getTime(), 1));
 
         return Math.max((long) Channel.nextAvailableStep - CommonState.getTime(), 1);
     }

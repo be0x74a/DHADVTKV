@@ -7,7 +7,7 @@ SIZE TEMPLATE_SIZE
 NPARTITIONS 8
 
 # parameters of periodic execution
-CYCLES 1000000
+CYCLES 10000
 CYCLE 1
 
 network.size SIZE
@@ -29,13 +29,14 @@ protocol.partition.transport urt
 protocol.partition.linkable link
 protocol.partition.keyvaluestoresize 1000
 protocol.partition.nopartitions NPARTITIONS
-protocol.partition.client client
+protocol.partition.countcpu TEMPLATE_COUNT_CPU
 
-protocol.client DHADVTKV.TCP.ClientProtocol
+
+protocol.client DHADVTKV.TPC.ClientProtocol
 protocol.client.step CYCLE
 protocol.client.linkable link
 protocol.client.nopartitions NPARTITIONS
-protocol.client.partition partition
+protocol.client.countcpu TEMPLATE_COUNT_CPU
 
 protocol.mapper DHADVTKV.TPC.ProtocolMapper
 protocol.mapper.step CYCLE
