@@ -1,7 +1,8 @@
 TEMPLATE_MIN_DELAY 0
 TEMPLATE_MAX_DELAY 3
-TEMPLATE_MAX_MSG_COUNT 85
+TEMPLATE_MAX_MSG_COUNT 300000
 TEMPLATE_SIZE 88
+TEMPLATE_COUNT_CPU false
 
 ################### TEMPLATE MEMBERS INITIALIZED ABOVE ^^^ ===========================
 
@@ -17,8 +18,6 @@ CYCLE 1
 
 network.size SIZE
 simulation.endtime CYCLE*CYCLES
-client client
-partition partition
 
 ################### channel =============================
 
@@ -36,17 +35,20 @@ protocol.partition.transport urt
 protocol.partition.linkable link
 protocol.partition.keyvaluestoresize 1000
 protocol.partition.nopartitions NPARTITIONS
-protocol.partition.client client
+protocol.partition.countcpu TEMPLATE_COUNT_CPU
+
 
 protocol.client DHADVTKV.TPC.ClientProtocol
 protocol.client.step CYCLE
 protocol.client.linkable link
 protocol.client.nopartitions NPARTITIONS
-protocol.client.partition partition
+protocol.client.countcpu TEMPLATE_COUNT_CPU
 
 protocol.mapper DHADVTKV.TPC.ProtocolMapper
 protocol.mapper.step CYCLE
 protocol.mapper.linkable link
+protocol.mapper.client client
+protocol.mapper.partition partition
 
 ################### initialization ======================
 

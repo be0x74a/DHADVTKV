@@ -1,3 +1,9 @@
+TEMPLATE_MIN_DELAY 0
+TEMPLATE_MAX_DELAY 3
+TEMPLATE_MAX_MSG_COUNT 85
+TEMPLATE_SIZE 89
+TEMPLATE_COUNT_CPU false
+
 ################### TEMPLATE MEMBERS INITIALIZED ABOVE ^^^ ===========================
 
 # network size
@@ -23,30 +29,37 @@ maxdelay TEMPLATE_MAX_DELAY
 
 protocol.link peersim.core.IdleProtocol
 
-protocol.partition DHADVTKV.TPC.PartitionProtocol
+protocol.partition DHADVTKV.ProposedLB.PartitionProtocol
 protocol.partition.step CYCLE
 protocol.partition.transport urt
 protocol.partition.linkable link
 protocol.partition.keyvaluestoresize 1000
 protocol.partition.nopartitions NPARTITIONS
-protocol.partition.client client
+protocol.partition.countcpu TEMPLATE_COUNT_CPU
 
-protocol.client DHADVTKV.TCP.ClientProtocol
+protocol.client DHADVTKV.ProposedLB.ClientProtocol
 protocol.client.step CYCLE
 protocol.client.linkable link
 protocol.client.nopartitions NPARTITIONS
-protocol.client.partition partition
+protocol.client.countcpu TEMPLATE_COUNT_CPU
 
-protocol.mapper DHADVTKV.TPC.ProtocolMapper
+protocol.validator DHADVTKV.ProposedLB.ValidatorProtocol
+protocol.validator.step CYCLE
+protocol.validator.linkable link
+protocol.validator.nopartitions NPARTITIONS
+protocol.validator.countcpu TEMPLATE_COUNT_CPU
+
+protocol.mapper DHADVTKV.ProposedLB.ProtocolMapper
 protocol.mapper.step CYCLE
 protocol.mapper.linkable link
 protocol.mapper.client client
 protocol.mapper.partition partition
+protocol.mapper.validator validator
 
 ################### initialization ======================
 
 ### Set node type
-init.0 DHADVTKV.TPC.ProtocolMapperInit
+init.0 DHADVTKV.ProposedLB.ProtocolMapperInit
 init.0.nopartitions NPARTITIONS
 
 init.sch CDScheduler

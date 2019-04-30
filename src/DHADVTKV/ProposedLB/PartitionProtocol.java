@@ -12,6 +12,7 @@ public class PartitionProtocol implements EDProtocol {
 
     private final int size;
     private final int noPartitions;
+    private final boolean countCPU;
     private Partition partition;
     private String prefix;
 
@@ -19,6 +20,7 @@ public class PartitionProtocol implements EDProtocol {
         this.prefix = prefix;
         this.noPartitions = Configuration.getInt(prefix + "." + "nopartitions");
         this.size = Configuration.getInt(prefix + "." + "keyvaluestoresize");
+        this.countCPU = Configuration.getBoolean(prefix + "." + "countcpu");
     }
 
     @Override
@@ -35,7 +37,7 @@ public class PartitionProtocol implements EDProtocol {
         Message response;
 
         if (event instanceof Message)  {
-            if (!((Message) event).isForCPU()) {
+            if ((!((Message) event).isForCPU()) && countCPU) {
                 ((Message) event).setForCPU(true);
                 EDSimulator.add(((Message) event).getCpuTime(), event, node, pid);
                 return;

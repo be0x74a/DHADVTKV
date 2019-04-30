@@ -13,12 +13,14 @@ import java.util.List;
 public class ValidatorProtocol implements EDProtocol {
 
     private final int noPartitions;
+    private final boolean countCPU;
     private Validator validator;
     private String prefix;
 
     public ValidatorProtocol(String prefix) {
         this.prefix = prefix;
         this.noPartitions = Configuration.getInt(prefix + "." + "nopartitions");
+        this.countCPU = Configuration.getBoolean(prefix + "." + "countcpu");
     }
 
     @Override
@@ -32,7 +34,7 @@ public class ValidatorProtocol implements EDProtocol {
         }
 
         if (event instanceof Message)  {
-            if (!((Message) event).isForCPU()) {
+            if ((!((Message) event).isForCPU()) && countCPU) {
                 ((Message) event).setForCPU(true);
                 EDSimulator.add(((Message) event).getCpuTime(), event, node, pid);
                 return;

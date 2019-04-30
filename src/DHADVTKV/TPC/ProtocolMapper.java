@@ -10,12 +10,14 @@ import static DHADVTKV.TPC.ProtocolMapperInit.*;
 
 public class ProtocolMapper implements CDProtocol, EDProtocol {
 
+    private final String prefix;
     private final int partitionPid;
     private final int clientPid;
 
     public ProtocolMapper(String prefix) {
-        this.clientPid = Configuration.getPid("client");
-        this.partitionPid = Configuration.getPid("partition");
+        this.prefix = prefix;
+        this.clientPid = Configuration.getPid(prefix + "." + "client");
+        this.partitionPid = Configuration.getPid(prefix + "." + "partition");
     }
 
     @Override
@@ -48,6 +50,6 @@ public class ProtocolMapper implements CDProtocol, EDProtocol {
 
     @Override
     public Object clone() {
-        return new ProtocolMapper(null);
+        return new ProtocolMapper(prefix);
     }
 }

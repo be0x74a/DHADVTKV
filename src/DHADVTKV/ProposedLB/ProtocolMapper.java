@@ -10,14 +10,16 @@ import static DHADVTKV.ProposedLB.ProtocolMapperInit.*;
 
 public class ProtocolMapper implements CDProtocol, EDProtocol {
 
+    private final String prefix;
     private final int partitionPid;
     private final int clientPid;
     private final int validatorPid;
 
     public ProtocolMapper(String prefix) {
-        this.clientPid = Configuration.getPid("client");
-        this.partitionPid = Configuration.getPid("partition");
-        this.validatorPid = Configuration.getPid("validator");
+        this.prefix = prefix;
+        this.clientPid = Configuration.getPid(prefix + "." + "client");
+        this.partitionPid = Configuration.getPid(prefix + "." + "partition");
+        this.validatorPid = Configuration.getPid(prefix + "." + "validator");
     }
 
     @Override
@@ -55,6 +57,6 @@ public class ProtocolMapper implements CDProtocol, EDProtocol {
 
     @Override
     public Object clone() {
-        return new ProtocolMapper(null);
+        return new ProtocolMapper(prefix);
     }
 }
