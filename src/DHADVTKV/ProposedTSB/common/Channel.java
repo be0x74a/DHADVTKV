@@ -1,6 +1,6 @@
-package DHADVTKV.ProposedLB.common;
+package DHADVTKV.ProposedTSB.common;
 
-import DHADVTKV.ProposedLB.messages.Message;
+import DHADVTKV.ProposedTSB.messages.Message;
 import DHADVTKV.common.Settings;
 import peersim.core.CommonState;
 import peersim.core.Network;

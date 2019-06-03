@@ -1,11 +1,11 @@
-package DHADVTKV.ProposedLB;
+package DHADVTKV.ProposedTSB;
 
 import peersim.cdsim.CDProtocol;
 import peersim.config.Configuration;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
 
-import static DHADVTKV.ProposedLB.ProtocolMapperInit.*;
+import static DHADVTKV.ProposedTSB.ProtocolMapperInit.*;
 
 
 public class ProtocolMapper implements CDProtocol, EDProtocol {

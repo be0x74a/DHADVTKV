@@ -1,4 +1,4 @@
-package DHADVTKV.ProposedLB;
+package DHADVTKV.ProposedTSB;
 
 import DHADVTKV.common.Channel;
 import DHADVTKV.messages.*;

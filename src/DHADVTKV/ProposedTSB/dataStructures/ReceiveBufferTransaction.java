@@ -1,6 +1,6 @@
-package DHADVTKV.ProposedLB.dataStructures;
+package DHADVTKV.ProposedTSB.dataStructures;
 
-import DHADVTKV.ProposedLB.messages.Transaction;
+import DHADVTKV.ProposedTSB.messages.Transaction;
 import DHADVTKV.common.DataObject;
 
 import java.util.ArrayList;

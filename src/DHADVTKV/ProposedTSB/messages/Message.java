@@ -1,4 +1,4 @@
-package DHADVTKV.ProposedLB.messages;
+package DHADVTKV.ProposedTSB.messages;
 
 public abstract class Message {
     static int LENGTH_LONG = 8;

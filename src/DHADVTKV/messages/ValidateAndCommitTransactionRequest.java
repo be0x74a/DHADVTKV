@@ -9,14 +9,14 @@ public class ValidateAndCommitTransactionRequest extends Message{
     private final long transactionId;
     private final long snapshot;
     private final List<DataObject> puts;
-    private final List<DataObject> gets;
+    private final List<Long> gets;
     private final int client;
     private final int partition;
     private final int noPartitionsTouched;
     private final static long CPU_TIME = 560;
 
-    public ValidateAndCommitTransactionRequest(long transactionId, long snapshot, List<DataObject> puts, List<DataObject> gets, int client, int partition, int noPartitionsTouched) {
-        super(2 * LENGTH_LONG + (puts.size() + gets.size()) * LENGTH_OBJ + LENGTH_INT, CPU_TIME);
+    public ValidateAndCommitTransactionRequest(long transactionId, long snapshot, List<Long> gets, List<DataObject> puts, int noPartitionsTouched, int client, int partition) {
+        super((2 + gets.size()) * LENGTH_LONG + puts.size() * LENGTH_OBJ + LENGTH_INT, CPU_TIME);
         this.transactionId = transactionId;
         this.snapshot = snapshot;
         this.puts = puts;
@@ -38,7 +38,7 @@ public class ValidateAndCommitTransactionRequest extends Message{
         return puts;
     }
 
-    public List<DataObject> getGets() {
+    public List<Long> getGets() {
         return gets;
     }
 

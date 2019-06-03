@@ -21,10 +21,7 @@ public class KeyValueStorage {
 
         for (DataObject object : objects) {
             TransactionalDataObject transactionalDataObject = new TransactionalDataObject(object, transactionId);
-            List<TransactionalDataObject> res = tentativeVersions.putIfAbsent(object.getKey(), new ArrayList<>(Arrays.asList(transactionalDataObject)));
-            if (res != null) {
-                res.add(0, transactionalDataObject);
-            }
+            tentativeVersions.computeIfAbsent(object.getKey(), k -> new ArrayList<>()).add(0, transactionalDataObject);
         }
     }
 
@@ -46,18 +43,18 @@ public class KeyValueStorage {
                 .collect(Collectors.toList());
     }
 
-    public void deleteTentativeVersions(long transactionId, List<DataObject> objects) {
-        for (DataObject object : objects) {
-            tentativeVersions.get(object.getKey())
+    public void deleteTentativeVersions(long transactionId, List<Long> objectKeys) {
+        for (Long key : objectKeys) {
+            tentativeVersions.get(key)
                     .removeIf(objectVersion -> objectVersion.getTransactionId() == transactionId);
         }
     }
 
-    public void commitTentativeVersions(long transactionId, List<DataObject> objects, long commitTimestamp) {
-        for (DataObject object : objects) {
-            for (TransactionalDataObject transactionalDataObject : tentativeVersions.get(object.getKey())) {
+    public void commitTentativeVersions(long transactionId, List<Long> objectKeys, long lsn) {
+        for (Long key: objectKeys) {
+            for (TransactionalDataObject transactionalDataObject : tentativeVersions.get(key)) {
                 if (transactionalDataObject.getTransactionId() == transactionId) {
-                    transactionalDataObject.getObject().setVersion(commitTimestamp);
+                    transactionalDataObject.getObject().setVersion(lsn);
                     List<TransactionalDataObject> res = committedVersions.putIfAbsent(transactionalDataObject.getObject().getKey(), new ArrayList<>(Arrays.asList(transactionalDataObject)));
                     if (res != null) {
                         res.add(0, transactionalDataObject);

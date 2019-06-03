@@ -1,15 +1,27 @@
 package DHADVTKV.common;
 
+import java.util.Map;
+
 public class DataObject {
 
+    private int node;
     private long key;
     private long value;
-    private long version;
+    private Map<String, Long> metadata;
 
-    public DataObject(long key, long value, long version) {
+    public DataObject(int node, long key, long value, Map<String, Long> metadata) {
+        this.node = node;
         this.key = key;
         this.value = value;
-        this.version = version;
+        this.metadata = metadata;
+    }
+
+    public int getNode() {
+        return node;
+    }
+
+    public void setNode(int node) {
+        this.node = node;
     }
 
     public long getKey() {
@@ -28,11 +40,11 @@ public class DataObject {
         this.value = value;
     }
 
-    public long getVersion() {
-        return version;
+    public Map<String, Long> getMetadata() {
+        return metadata;
     }
 
-    public void setVersion(long version) {
-        this.version = version;
+    public void setMetadata(Map<String, Long> metadata) {
+        this.metadata = metadata;
     }
 }

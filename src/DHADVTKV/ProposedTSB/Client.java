@@ -1,7 +1,6 @@
-package DHADVTKV.ProposedLB;
+package DHADVTKV.ProposedTSB;
 
 import DHADVTKV.common.DataObject;
-import DHADVTKV.common.Settings;
 import DHADVTKV.messages.*;
 import peersim.core.CommonState;
 

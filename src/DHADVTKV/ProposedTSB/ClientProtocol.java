@@ -1,4 +1,4 @@
-package DHADVTKV.ProposedLB;
+package DHADVTKV.ProposedTSB;
 
 import DHADVTKV.common.Channel;
 import DHADVTKV.messages.*;
@@ -11,9 +11,9 @@ import peersim.edsim.EDSimulator;
 
 import java.util.List;
 
-import static DHADVTKV.ProposedLB.Client.State.*;
-import static DHADVTKV.ProposedLB.ProtocolMapperInit.Type.CLIENT;
-import static DHADVTKV.ProposedLB.ProtocolMapperInit.nodeType;
+import static DHADVTKV.ProposedTSB.Client.State.*;
+import static DHADVTKV.ProposedTSB.ProtocolMapperInit.Type.CLIENT;
+import static DHADVTKV.ProposedTSB.ProtocolMapperInit.nodeType;
 
 public class ClientProtocol implements CDProtocol, EDProtocol {
 
