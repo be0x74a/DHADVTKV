@@ -9,9 +9,12 @@ import peersim.edsim.EDSimulator;
 
 public class ValidatorProtocol implements EDProtocol {
 
+    private final String prefix;
     private Validator validator;
 
-    public ValidatorProtocol(String prefix) {}
+    public ValidatorProtocol(String prefix) {
+        this.prefix = prefix;
+    }
 
     void nextCycleCustom(Node node, int pid) {
         if (validator == null) {
@@ -55,6 +58,6 @@ public class ValidatorProtocol implements EDProtocol {
 
     @Override
     public Object clone() {
-        return new ValidatorProtocol(null);
+        return new ValidatorProtocol(prefix);
     }
 }
