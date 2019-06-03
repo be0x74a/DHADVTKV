@@ -10,13 +10,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static DHADVTKV.common.Settings.UNDEFINED;
+
 public class Partition {
 
-    private KeyValueStorage kv;
-    private int transactionsDone = 0;
-    private static final long UNDEFINED = -1;
+    private final int nodeID;
+    private final KeyValueStorage kv;
+    private final Map<Long, List<TransactionalGet>> pendingTransactionalGets;
+    private int transactionsDone;
 
-    private Map<Long, List<TransactionalGet>> pendingTransactionalGets = new HashMap<>();
+    Partition(int nodeID) {
+        this.nodeID = nodeID;
+        this.kv = new KeyValueStorage(nodeID);
+        this.pendingTransactionalGets = new HashMap<>();
+    }
 
     private void transactionalGet(TransactionalGet request) {
         List<DataObject> objectVersions = kv.getCommittedVersions(request.getKey());
@@ -42,7 +49,7 @@ public class Partition {
     }
 
     public void commitTransaction(CommitTransaction request) {
-        Channel.sendMessage(new ValidateAndCommit(request.getTo(), request.getTo(), request.getTransactionID(), request.getSnapshot(), request.getGetKeys(), request.getPuts(), request.getnValidations(), request.getFrom()));
+        Channel.sendMessage(new ValidateAndCommit(nodeID, nodeID, request.getTransactionID(), request.getSnapshot(), request.getGetKeys(), request.getPuts(), request.getnValidations(), request.getFrom()));
         kv.storeAsTentative(request.getTransactionID(), request.getPuts());
     }
 
@@ -52,7 +59,7 @@ public class Partition {
         }
     }
 
-    public void transactionValidation(TransactionValidation request) {
+    void transactionValidation(TransactionValidation request) {
         if (request.isConflicts()) {
             kv.deleteTentativeVersions(request.getTransactionID(), request.getPutKeys());
         } else {
