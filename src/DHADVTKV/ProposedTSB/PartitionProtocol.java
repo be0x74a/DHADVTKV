@@ -25,9 +25,7 @@ public class PartitionProtocol implements EDProtocol {
             int nodeID = Math.toIntExact(node.getID());
             partition = new Partition(nodeID);
         }
-
-        Message response;
-
+        
         if (event instanceof Message) {
             if ((!((Message) event).isCpuReady()) && Settings.ADD_CPU_DELAY) {
                 ((Message) event).setCpuReady(true);
