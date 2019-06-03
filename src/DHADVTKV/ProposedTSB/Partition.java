@@ -12,7 +12,7 @@ import java.util.Map;
 
 import static DHADVTKV.common.Settings.UNDEFINED;
 
-public class Partition {
+class Partition {
 
     private final int nodeID;
     private final KeyValueStorage kv;
@@ -25,7 +25,7 @@ public class Partition {
         this.pendingTransactionalGets = new HashMap<>();
     }
 
-    private void transactionalGet(TransactionalGet request) {
+    void transactionalGet(TransactionalGet request) {
         List<DataObject> objectVersions = kv.getCommittedVersions(request.getKey());
         objectVersions.addAll(kv.getTentativeVersions(request.getKey()));
 
@@ -48,12 +48,12 @@ public class Partition {
         }
     }
 
-    public void commitTransaction(CommitTransaction request) {
+    void commitTransaction(CommitTransaction request) {
         Channel.sendMessage(new ValidateAndCommit(nodeID, nodeID, request.getTransactionID(), request.getSnapshot(), request.getGetKeys(), request.getPuts(), request.getnValidations(), request.getFrom()));
         kv.storeAsTentative(request.getTransactionID(), request.getPuts());
     }
 
-    public void transactionValidationBatch(TransactionValidationBatch batch) {
+    void transactionValidationBatch(TransactionValidationBatch batch) {
         for (TransactionValidation request : batch.getTransactionValidationBatch()) {
             transactionValidation(request);
         }
