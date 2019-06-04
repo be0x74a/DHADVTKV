@@ -53,6 +53,7 @@ public class PartitionProtocol implements EDProtocol {
         }
     }
 
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
     public Object clone() {
         return new PartitionProtocol(prefix);

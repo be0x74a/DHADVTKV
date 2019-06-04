@@ -16,7 +16,7 @@ public class ValidatorProtocol implements EDProtocol {
         this.prefix = prefix;
     }
 
-    void nextCycleCustom(Node node, int pid) {
+    void nextCycleCustom(Node node) {
         if (validator == null) {
             validator = new Validator(Math.toIntExact(node.getID()));
         }
@@ -56,6 +56,7 @@ public class ValidatorProtocol implements EDProtocol {
         }
     }
 
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
     public Object clone() {
         return new ValidatorProtocol(prefix);
