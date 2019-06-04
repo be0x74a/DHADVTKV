@@ -1,15 +1,16 @@
 package DHADVTKV.ProposedTSB;
 
+import DHADVTKV.ProposedTSB.common.Channel;
 import DHADVTKV.common.DataObject;
-import DHADVTKV.messages.*;
+import DHADVTKV.ProposedTSB.messages.*;
 import peersim.core.CommonState;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Client {
+import static DHADVTKV.common.Settings.UNDEFINED;
 
-    private static final long UNDEFINED = -1;
+class Client {
 
     private long clock;
     private long transactionID;
@@ -19,7 +20,7 @@ public class Client {
     private List<DataObject> puts;
     private boolean inTransaction;
 
-    public Client (int nodeId) {
+    Client(int nodeId) {
         this.clock = 0;
         this.transactionID = UNDEFINED;
         this.snapshot = UNDEFINED;
@@ -29,60 +30,47 @@ public class Client {
         this.inTransaction = false;
     }
 
-    public boolean beginTransaction() {
-        if (this.inTransaction) return false;
-
+    void beginTransaction() {
+        if (this.inTransaction) throw new RuntimeException("Trying to start transaction when it's already in course");
         this.inTransaction = true;
         this.transactionID = CommonState.r.nextLong();
-        return true;
     }
 
-    public TransactionalGetMessageRequest get(int node, long key) {
+    void get(int node, long key) {
         long version = this.snapshot;
         if (version == UNDEFINED) {
             version = this.clock;
         }
-
-        return new TransactionalGetMessageRequest(key, version, nodeId, node);
+        Channel.sendMessage(new TransactionalGet(nodeId, node, key, version));
     }
 
-    public DataObject onTransactionalGetResponse(TransactionalGetMessageResponse response) {
-        long version = response.getObject().getMetadata().getOrDefault("version", UNDEFINED);
-        if (version != UNDEFINED) {
-            this.snapshot = Math.max(version, clock);
-        }
-
+    DataObject onTransactionalGetResponse(TransactionalGetResponse response) {
+        maybeSetSnapshot(response);
         gets.add(response.getObject());
-
-        if (version > snapshot) {
+        if (checkGetConflict(response)) {
             cleanState();
             return null;
         }
-
         return response.getObject();
     }
 
-    public void put(int partition, long key, long value) {
-
-        Map <String, Long> metadata = new HashMap<>();
-        metadata.put("transactionID", this.transactionID);
-        if (this.snapshot == UNDEFINED) {
-            metadata.put("tentativeVersion", this.clock + 1);
+    void put(int partition, long key, long value) {
+        DataObject object;
+        if (snapshot == UNDEFINED) {
+           object = createObject(partition, key, value, transactionID, clock + 1);
         } else {
-            metadata.put("tentativeVersion", this.snapshot + 1);
+            object = createObject(partition, key, value, transactionID, snapshot + 1);
         }
-        this.puts.add(new DataObject(partition, key, value, metadata));
+        puts.add(object);
     }
 
-    public List<ValidateAndCommitTransactionRequest> commit() {
-
+    void commit() {
         Map<Integer, List<DataObject>> nodeGets = new HashMap<>();
         Map<Integer, List<DataObject>> nodePuts = new HashMap<>();
 
         for (DataObject dataObject : gets) {
             nodeGets.computeIfAbsent(dataObject.getNode(), k -> new ArrayList<>()).add(dataObject);
         }
-
         for (DataObject dataObject : puts) {
             nodePuts.computeIfAbsent(dataObject.getNode(), k -> new ArrayList<>()).add(dataObject);
         }
@@ -91,23 +79,41 @@ public class Client {
         nodes.addAll(nodeGets.keySet());
         nodes.addAll(nodePuts.keySet());
 
-        return nodes.stream()
-                .map(node ->
-                        new ValidateAndCommitTransactionRequest(
-                                this.transactionID,
-                                this.snapshot,
-                                nodeGets.getOrDefault(node, new ArrayList<>()).stream().map(DataObject::getKey).collect(Collectors.toList()),
-                                nodePuts.getOrDefault(node, new ArrayList<>()),
-                                nodes.size(),
-                                this.nodeId,
-                                node)
-                ).collect(Collectors.toList());
+        for (Integer node : nodes) {
+            Channel.sendMessage(new CommitTransaction(
+                    nodeId,
+                    node,
+                    transactionID,
+                    snapshot == UNDEFINED ? clock : snapshot,
+                    nodeGets.getOrDefault(node, new ArrayList<>()).stream().map(DataObject::getKey).collect(Collectors.toList()),
+                    nodePuts.getOrDefault(node, new ArrayList<>()),
+                    nodes.size()
+            ));
+        }
     }
 
-    public boolean onClientValidationResponse(ClientValidationResponse response) {
-        this.clock = response.getCommitTimestamp();
-        cleanState();
-        return !response.hasConflicts();
+    boolean onTransactionCommitResult(TransactionCommitResult response) {
+            this.clock = response.getLsn();
+            cleanState();
+            return !response.isConflicts();
+    }
+
+    private void maybeSetSnapshot(TransactionalGetResponse response) {
+        long objectVersion = response.getObject().getMetadata().getOrDefault("version", UNDEFINED);
+        if (snapshot == UNDEFINED && objectVersion != UNDEFINED) {
+            snapshot = Math.max(objectVersion, clock);
+        }
+    }
+
+    private boolean checkGetConflict(TransactionalGetResponse response) {
+        return response.getObject().getMetadata().getOrDefault("version", UNDEFINED) > snapshot;
+    }
+
+    private DataObject createObject(int node, long key, long value, long transactionID, long tentativeVersion) {
+        Map<String, Long> metadata = new HashMap<>();
+        metadata.put("transactionID", transactionID);
+        metadata.put("tentativeVersion", tentativeVersion);
+        return new DataObject(node, key, value, metadata);
     }
 
     private void cleanState() {
