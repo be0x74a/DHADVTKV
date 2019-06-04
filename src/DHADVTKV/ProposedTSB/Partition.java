@@ -21,7 +21,7 @@ class Partition {
 
     Partition(int nodeID) {
         this.nodeID = nodeID;
-        this.kv = new KeyValueStorage(nodeID);
+        this.kv = new KeyValueStorage();
         this.pendingTransactionalGets = new HashMap<>();
     }
 
@@ -50,7 +50,7 @@ class Partition {
 
     void commitTransaction(CommitTransaction request) {
         Channel.sendMessage(new ValidateAndCommit(nodeID, nodeID, request.getTransactionID(), request.getSnapshot(), request.getGetKeys(), request.getPuts(), request.getnValidations(), request.getFrom()));
-        kv.storeAsTentative(request.getTransactionID(), request.getPuts());
+        kv.storeAsTentative(request.getPuts());
     }
 
     void transactionValidationBatch(TransactionValidationBatch batch) {
