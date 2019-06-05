@@ -1,7 +1,7 @@
 package dhadvtkv.proposed_tsb;
 
 import dhadvtkv.proposed_tsb.messages.BatchValidate;
-import dhadvtkv.proposed_tsb.messages.Message;
+import dhadvtkv.messages.Message;
 import dhadvtkv.proposed_tsb.messages.ValidateAndCommit;
 import dhadvtkv.common.Configurations;
 import peersim.core.CommonState;

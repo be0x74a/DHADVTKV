@@ -1,5 +1,7 @@
 package dhadvtkv.proposed_tsb.messages;
 
+import dhadvtkv.messages.Message;
+
 public class TransactionCommitResult extends Message {
 
   private final long transactionID;

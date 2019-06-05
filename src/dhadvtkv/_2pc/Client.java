@@ -1,203 +1,216 @@
 package dhadvtkv._2pc;
 
+import static dhadvtkv.common.Configurations.UNDEFINED;
+
+import dhadvtkv._2pc.messages.CommitResult;
+import dhadvtkv._2pc.messages.CommitTransaction;
+import dhadvtkv._2pc.messages.PrepareCommitResult;
+import dhadvtkv._2pc.messages.PrepareCommitTransaction;
+import dhadvtkv._2pc.messages.PrepareResult;
+import dhadvtkv._2pc.messages.PrepareTransaction;
+import dhadvtkv.common.Channel;
 import dhadvtkv.common.DataObject;
-import dhadvtkv.messages.CommitMessageRequest;
-import dhadvtkv.messages.CommitMessageResponse;
-import dhadvtkv.messages.PrepareMessageRequest;
-import dhadvtkv.messages.PrepareMessageResponse;
-import dhadvtkv.messages.TransactionalGetMessageRequest;
-import dhadvtkv.messages.TransactionalGetMessageResponse;
+import dhadvtkv.messages.TransactionalGet;
+import dhadvtkv.messages.TransactionalGetResponse;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import peersim.core.CommonState;
 
-public class Client {
+class Client {
 
-  public void setGetsSend(int noPartitions) {
-    this.transaction.setGetsSent(noPartitions);
-    this.transaction.setGetsReceived(0);
-  }
-
-  public long getTransactionId() {
-    if (this.transaction == null) {
-      return -1L;
-    }
-    return this.transaction.getId();
-  }
-
-  public enum State {
-    initialState,
-    transactionCreated,
-    getSent,
-    canCommit,
-    waitingToFinish
-  }
-
-  private Transaction transaction = null;
-  private long clock = 0;
-  private State state;
-  private int noPartitions;
+  private long clock;
+  private long transactionID;
+  private long snapshot;
   private int nodeId;
+  private List<DataObject> gets;
+  private List<DataObject> puts;
+  private boolean inTransaction;
+  // Committer fsm
+  private Set<Integer> nodes;
+  private Map<Integer, List<DataObject>> nodeGets;
+  private Map<Integer, List<DataObject>> nodePuts;
+  private PrepareResult prepareResult;
+  private int receivedPrepareResults;
+  private int receivedCommitResults;
 
-  public Client(int noPartitions, int nodeId) {
-    this.noPartitions = noPartitions;
+  Client(int nodeId) {
+    this.clock = 0;
+    this.transactionID = UNDEFINED;
+    this.snapshot = UNDEFINED;
     this.nodeId = nodeId;
-    this.state = State.initialState;
+    this.gets = new ArrayList<>();
+    this.puts = new ArrayList<>();
+    this.inTransaction = false;
+    this.nodes = new HashSet<>();
+    this.nodeGets = new HashMap<>();
+    this.nodePuts = new HashMap<>();
+    this.prepareResult = null;
+    this.receivedPrepareResults = 0;
+    this.receivedCommitResults = 0;
   }
 
-  public void begin() {
-    this.transaction = new Transaction();
-    this.state = State.transactionCreated;
+  void beginTransaction() {
+    if (this.inTransaction)
+      throw new RuntimeException("Trying to start transaction when it's already in course");
+    cleanState();
+    this.inTransaction = true;
+    this.transactionID = CommonState.r.nextLong();
   }
 
-  public void abort() {
-    this.transaction = null;
-    this.state = State.initialState;
-  }
-
-  public void put(long key, long value) {
-    long tentativeVersion = this.transaction.getSnapshot();
-    if (tentativeVersion == -1) {
-      tentativeVersion = this.clock;
-    }
-    DataObject object = new DataObject(key, value, tentativeVersion + 1);
-    this.transaction.getPuts().add(object);
-  }
-
-  public TransactionalGetMessageRequest get(long key) {
-    int partition = partitionForKey(key);
-    long version = this.transaction.getSnapshot();
-    if (version == -1) {
+  void get(int node, long key) {
+    long version = this.snapshot;
+    if (version == UNDEFINED) {
       version = this.clock;
     }
-
-    return new TransactionalGetMessageRequest(key, version, nodeId, partition);
+    Channel.sendMessage(new TransactionalGet(nodeId, node, key, version));
   }
 
-  public DataObject onTransactionalGetResponse(TransactionalGetMessageResponse message) {
-
-    if (message.getObject() == null) {
+  DataObject onTransactionalGetResponse(TransactionalGetResponse response) {
+    maybeSetSnapshot(response);
+    gets.add(response.getObject());
+    if (checkGetConflict(response)) {
+      cleanState();
       return null;
     }
-
-    if (this.transaction.getSnapshot() == -1) {
-      this.transaction.setSnapshot(message.getObject().getVersion());
-    }
-
-    this.transaction.getGets().add(message.getObject());
-    this.put(message.getObject().getKey(), message.getObject().getValue());
-
-    this.transaction.addGetsReceived();
-    if (this.transaction.getGetsSent() == this.transaction.getGetsReceived()) {
-      this.state = State.canCommit;
-    }
-
-    return message.getObject();
+    return response.getObject();
   }
 
-  public List<PrepareMessageRequest> commit() {
-    Map<Integer, ArrayList<DataObject>> putPartitions = new HashMap<>();
-    Map<Integer, ArrayList<DataObject>> getPartitions = new HashMap<>();
-    Set<Integer> partitions = new HashSet<>();
-    List<PrepareMessageRequest> prepareMessageRequests = new ArrayList<>();
-
-    for (DataObject object : this.transaction.getPuts()) {
-      int partition = partitionForKey(object.getKey());
-
-      partitions.add(partition);
-      List<DataObject> res =
-          putPartitions.putIfAbsent(partition, new ArrayList<>(Arrays.asList(object)));
-      if (res != null) {
-        res.add(object);
-      }
+  void put(int partition, long key, long value) {
+    DataObject object;
+    if (snapshot == UNDEFINED) {
+      object = createObject(partition, key, value, transactionID, clock + 1);
+    } else {
+      object = createObject(partition, key, value, transactionID, snapshot + 1);
     }
-
-    for (DataObject object : this.transaction.getGets()) {
-      int partition = partitionForKey(object.getKey());
-
-      partitions.add(partition);
-      List<DataObject> res =
-          getPartitions.putIfAbsent(partition, new ArrayList<>(Arrays.asList(object)));
-      if (res != null) {
-        res.add(object);
-      }
-    }
-
-    for (Integer partition : partitions) {
-      prepareMessageRequests.add(
-          new PrepareMessageRequest(
-              this.transaction.getId(),
-              this.transaction.getSnapshot(),
-              putPartitions.get(partition),
-              getPartitions.get(partition),
-              nodeId,
-              partition));
-    }
-
-    this.transaction.setPrepareRequestsSent(prepareMessageRequests.size());
-    return prepareMessageRequests;
+    puts.add(object);
   }
 
-  public List<CommitMessageRequest> onPrepareResponse(PrepareMessageResponse message) {
-    List<CommitMessageRequest> commitMessageRequests = new ArrayList<>();
+  void commit() {
+    nodeGets = new HashMap<>();
+    nodePuts = new HashMap<>();
 
-    this.transaction.setCommitTimestamp(
-        Math.max(this.transaction.getCommitTimestamp(), message.getCommitTimestamp()));
-    this.transaction.setConflicts(this.transaction.hasConflicts() || message.hasConflicts());
-    this.transaction.addToPrepareResponsesReceived();
+    for (DataObject dataObject : gets) {
+      nodeGets.computeIfAbsent(dataObject.getNode(), k -> new ArrayList<>()).add(dataObject);
+    }
+    for (DataObject dataObject : puts) {
+      nodePuts.computeIfAbsent(dataObject.getNode(), k -> new ArrayList<>()).add(dataObject);
+    }
 
-    if (enoughInformationToCommit()) {
-      Map<Integer, List<DataObject>> putPartitions = new HashMap<>();
+    nodes = new HashSet<>();
+    nodes.addAll(nodeGets.keySet());
+    nodes.addAll(nodePuts.keySet());
 
-      for (DataObject object : this.transaction.getPuts()) {
-        int partition = partitionForKey(object.getKey());
-        List<DataObject> res =
-            putPartitions.putIfAbsent(partition, new ArrayList<>(Arrays.asList(object)));
-        if (res != null) {
-          res.add(object);
-        }
-      }
+    if (nodes.size() == 1) {
+      prepare();
+    } else {
+      prepareCommit();
+    }
+  }
 
-      for (Map.Entry<Integer, List<DataObject>> entry : putPartitions.entrySet()) {
+  void onPrepareResult(PrepareResult result) {
 
-        commitMessageRequests.add(
-            new CommitMessageRequest(
-                this.transaction.getId(),
-                entry.getValue(),
-                this.transaction.hasConflicts(),
-                this.transaction.getCommitTimestamp(),
+    if (prepareResult == null) {
+      prepareResult = result;
+    } else {
+      prepareResult.setAborted(prepareResult.isAborted() || result.isAborted());
+      prepareResult.setTimestamp(Math.max(prepareResult.getTimestamp(), result.getTimestamp()));
+    }
+
+    if (++receivedPrepareResults == nodes.size()) {
+      for (Integer node : nodes) {
+        Channel.sendMessage(
+            new CommitTransaction(
                 nodeId,
-                entry.getKey()));
+                node,
+                transactionID,
+                nodeGets.getOrDefault(node, new ArrayList<>()).stream()
+                    .map(DataObject::getKey)
+                    .collect(Collectors.toList()),
+                nodePuts.getOrDefault(node, new ArrayList<>()).stream()
+                    .map(DataObject::getKey)
+                    .collect(Collectors.toList()),
+                prepareResult.isAborted(),
+                prepareResult.getTimestamp()));
       }
     }
-
-    return commitMessageRequests;
   }
 
-  public void onCommitResult(CommitMessageResponse message) {
-    this.clock = this.transaction.getCommitTimestamp();
-    this.transaction = null;
-    this.state = State.initialState;
+  boolean onPrepareCommitResult(PrepareCommitResult result) {
+    cleanState();
+    return result.isSuccess();
   }
 
-  private boolean enoughInformationToCommit() {
-    return this.transaction.getPrepareRequestsSent()
-        == this.transaction.getPrepareResponsesReceived();
+  @SuppressWarnings({"unused", "UnusedReturnValue"})
+  boolean onCommitResult(CommitResult result) {
+    if (++receivedCommitResults == nodes.size()) {
+      cleanState();
+      return true;
+    }
+    return false;
   }
 
-  private int partitionForKey(long key) {
-    return (int) key % this.noPartitions;
+  private void prepare() {
+    for (Integer node : nodes) {
+      Channel.sendMessage(
+          new PrepareTransaction(
+              nodeId,
+              node,
+              snapshot == UNDEFINED ? clock : snapshot,
+              nodeGets.getOrDefault(node, new ArrayList<>()).stream()
+                  .map(DataObject::getKey)
+                  .collect(Collectors.toList()),
+              nodePuts.getOrDefault(node, new ArrayList<>())));
+    }
   }
 
-  public State getState() {
-    return state;
+  private void prepareCommit() {
+    int node = nodes.iterator().next();
+    Channel.sendMessage(
+        new PrepareCommitTransaction(
+            nodeId,
+            node,
+            snapshot == UNDEFINED ? clock : snapshot,
+            nodeGets.getOrDefault(node, new ArrayList<>()).stream()
+                .map(DataObject::getKey)
+                .collect(Collectors.toList()),
+            nodePuts.getOrDefault(node, new ArrayList<>())));
   }
 
-  public void setState(State state) {
-    this.state = state;
+  private void maybeSetSnapshot(TransactionalGetResponse response) {
+    long objectVersion = response.getObject().getMetadata().getOrDefault("version", UNDEFINED);
+    if (snapshot == UNDEFINED && objectVersion != UNDEFINED) {
+      snapshot = Math.max(objectVersion, clock);
+    }
+  }
+
+  private boolean checkGetConflict(TransactionalGetResponse response) {
+    return response.getObject().getMetadata().getOrDefault("version", UNDEFINED) > snapshot;
+  }
+
+  private DataObject createObject(
+      int node, long key, long value, long transactionID, long tentativeVersion) {
+    Map<String, Long> metadata = new HashMap<>();
+    metadata.put("transactionID", transactionID);
+    metadata.put("tentativeVersion", tentativeVersion);
+    return new DataObject(node, key, value, metadata);
+  }
+
+  private void cleanState() {
+    this.transactionID = UNDEFINED;
+    this.snapshot = UNDEFINED;
+    this.gets = new ArrayList<>();
+    this.puts = new ArrayList<>();
+    this.inTransaction = false;
+    this.nodes = new HashSet<>();
+    this.nodeGets = new HashMap<>();
+    this.nodePuts = new HashMap<>();
+    this.prepareResult = null;
+    this.receivedPrepareResults = 0;
+    this.receivedCommitResults = 0;
   }
 }

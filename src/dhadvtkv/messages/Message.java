@@ -1,34 +1,40 @@
 package dhadvtkv.messages;
 
-public class Message {
-
+public abstract class Message {
   static int LENGTH_LONG = 8;
   static int LENGTH_INT = 4;
   static int LENGTH_BOOL = 1;
   static int LENGTH_OBJ = 1024;
 
-  private final long length;
-  private final long cpuTime;
-  private boolean forCPU = false;
+  private final int from;
+  private final int to;
+  private final long size;
+  private boolean cpuReady;
 
-  public Message(long length, long cpuTime) {
-    this.length = length;
-    this.cpuTime = cpuTime;
+  public Message(int from, int to, long size) {
+    this.from = from;
+    this.to = to;
+    this.size = size;
+    this.cpuReady = false;
   }
 
-  public long getLength() {
-    return length;
+  public int getFrom() {
+    return from;
   }
 
-  public long getCpuTime() {
-    return cpuTime;
+  public int getTo() {
+    return to;
   }
 
-  public boolean isForCPU() {
-    return forCPU;
+  public long getSize() {
+    return size;
   }
 
-  public void setForCPU(boolean forCPU) {
-    this.forCPU = forCPU;
+  public boolean isCpuReady() {
+    return cpuReady;
+  }
+
+  public void setCpuReady(boolean cpuReady) {
+    this.cpuReady = cpuReady;
   }
 }

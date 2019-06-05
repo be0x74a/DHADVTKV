@@ -1,5 +1,6 @@
 package dhadvtkv.proposed_tsb.messages;
 
+import dhadvtkv.messages.Message;
 import java.util.List;
 
 public class BatchValidate extends Message {

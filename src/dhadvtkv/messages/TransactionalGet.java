@@ -1,4 +1,4 @@
-package dhadvtkv.proposed_tsb.messages;
+package dhadvtkv.messages;
 
 public class TransactionalGet extends Message {
 

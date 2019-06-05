@@ -1,8 +1,8 @@
 package dhadvtkv.proposed_tsb;
 
-import dhadvtkv.proposed_tsb.messages.Message;
+import dhadvtkv.messages.Message;
 import dhadvtkv.proposed_tsb.messages.TransactionCommitResult;
-import dhadvtkv.proposed_tsb.messages.TransactionalGetResponse;
+import dhadvtkv.messages.TransactionalGetResponse;
 import dhadvtkv.common.Configurations;
 import peersim.cdsim.CDProtocol;
 import peersim.core.Node;

@@ -1,10 +1,10 @@
 package dhadvtkv.proposed_tsb;
 
 import dhadvtkv.proposed_tsb.messages.CommitTransaction;
-import dhadvtkv.proposed_tsb.messages.Message;
+import dhadvtkv.messages.Message;
 import dhadvtkv.proposed_tsb.messages.TransactionValidation;
 import dhadvtkv.proposed_tsb.messages.TransactionValidationBatch;
-import dhadvtkv.proposed_tsb.messages.TransactionalGet;
+import dhadvtkv.messages.TransactionalGet;
 import dhadvtkv.common.Configurations;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;

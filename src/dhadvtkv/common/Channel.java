@@ -1,6 +1,6 @@
 package dhadvtkv.common;
 
-import dhadvtkv.proposed_tsb.messages.Message;
+import dhadvtkv.messages.Message;
 import java.util.HashMap;
 import java.util.Map;
 import peersim.core.CommonState;

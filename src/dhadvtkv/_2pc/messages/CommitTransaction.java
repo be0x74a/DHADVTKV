@@ -1,51 +1,50 @@
-package dhadvtkv.proposed_tsb.messages;
+package dhadvtkv._2pc.messages;
 
-import dhadvtkv.common.DataObject;
 import dhadvtkv.messages.Message;
 import java.util.List;
 
 public class CommitTransaction extends Message {
 
   private final long transactionID;
-  private final long snapshot;
   private final List<Long> getKeys;
-  private final List<DataObject> puts;
-  private final int nValidations;
+  private final List<Long> putKeys;
+  private final boolean aborted;
+  private final long timestamp;
 
   public CommitTransaction(
       int from,
       int to,
       long transactionID,
-      long snapshot,
       List<Long> getKeys,
-      List<DataObject> puts,
-      int nValidations) {
+      List<Long> putKeys,
+      boolean aborted,
+      long timestamp) {
     super(from, to, 0);
 
     this.transactionID = transactionID;
-    this.snapshot = snapshot;
     this.getKeys = getKeys;
-    this.puts = puts;
-    this.nValidations = nValidations;
+    this.putKeys = putKeys;
+    this.aborted = aborted;
+    this.timestamp = timestamp;
   }
 
   public long getTransactionID() {
     return transactionID;
   }
 
-  public long getSnapshot() {
-    return snapshot;
-  }
-
   public List<Long> getGetKeys() {
     return getKeys;
   }
 
-  public List<DataObject> getPuts() {
-    return puts;
+  public List<Long> getPutKeys() {
+    return putKeys;
   }
 
-  public int getnValidations() {
-    return nValidations;
+  public boolean isAborted() {
+    return aborted;
+  }
+
+  public long getTimestamp() {
+    return timestamp;
   }
 }
