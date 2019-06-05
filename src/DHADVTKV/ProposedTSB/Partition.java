@@ -1,6 +1,6 @@
 package DHADVTKV.ProposedTSB;
 
-import DHADVTKV.ProposedTSB.common.Channel;
+import DHADVTKV.common.Channel;
 import DHADVTKV.ProposedTSB.messages.*;
 import DHADVTKV.common.DataObject;
 import DHADVTKV.common.KeyValueStorage;

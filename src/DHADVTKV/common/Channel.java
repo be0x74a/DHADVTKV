@@ -1,32 +1,55 @@
 package DHADVTKV.common;
 
-import peersim.config.Configuration;
+import DHADVTKV.ProposedTSB.messages.Message;
 import peersim.core.CommonState;
+import peersim.core.Network;
+import peersim.core.Node;
+import peersim.edsim.EDSimulator;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Channel {
 
-    static float bandwidth = (float) Configuration.getLong("bandwidth");
-    static long min = Configuration.getLong("mindelay");
-    static long range = Configuration.getLong("maxdelay") - min + 1;
-    static float nextAvailableStep = 0;
+    private static double nextAvailableStep;
+    private static Map<String, Double> deliveryTimes;
+    private static Map<Integer, Coordinate> nodesPositions;
 
     public Channel() {
-        bandwidth = (float) Configuration.getLong("bandwidth");
-        min = Configuration.getLong("mindelay");
-        range = Configuration.getLong("maxdelay") - min + 1;
         nextAvailableStep = 0;
+        deliveryTimes = new HashMap<>();
+        nodesPositions = new HashMap<>();
     }
 
-    public static float getNextAvailableStep() {
-        return nextAvailableStep;
+    public static void sendMessage(Message message) {
+        Node dst = Network.get(message.getTo());
+
+        if (message.getFrom() == message.getTo()) {
+            EDSimulator.add(0, message, dst, Configurations.PID);
+            return;
+        }
+
+        double nextAvailable = Math.max(nextAvailableStep, CommonState.getTime());
+        double lastMessageDelivery = deliveryTimes.getOrDefault(message.getFrom() + "->" + message.getTo(), 0d);
+        nextAvailableStep = nextAvailable + message.getSize()/ Configurations.BANDWIDTH;
+
+        double min = Math.max((lastMessageDelivery - nextAvailableStep) * 1000, Configurations.MIN);
+        double deliveryTime =  message.getSize()/ Configurations.BANDWIDTH +
+                ((Configurations.RANGE==1?min:min + CommonState.r.nextLong(Configurations.RANGE))/1000) +
+                (getDistance(message.getFrom(), message.getTo()) * Configurations.DELAY_PER_DISTANCE / 1000);
+
+        deliveryTimes.put(message.getFrom() + "->" + message.getTo(), deliveryTime);
+
+        EDSimulator.add((long) deliveryTime - CommonState.getTime(), message, dst, Configurations.PID);
     }
 
-    public static long putMessageInChannel(long messageLength) {
-        float nextAvailable = Math.max(Channel.getNextAvailableStep(), CommonState.getTime());
-        Channel.nextAvailableStep = nextAvailable + messageLength/bandwidth + ((range==1?min:min + CommonState.r.nextLong(range))/1000);
-
-        //System.out.println("Message delay: " + Math.max((long) Channel.nextAvailableStep - CommonState.getTime(), 1));
-        return Math.max((long) Channel.nextAvailableStep - CommonState.getTime(), 1);
+    public static void setPositions(Map<Integer, Coordinate> nodesPositions) {
+        Channel.nodesPositions = nodesPositions;
     }
 
+    private static Double getDistance(int node0, int node1) {
+        Coordinate pos0 = nodesPositions.get(node0);
+        Coordinate pos1 = nodesPositions.get(node1);
+        return pos0.distance(pos1);
+    }
 }

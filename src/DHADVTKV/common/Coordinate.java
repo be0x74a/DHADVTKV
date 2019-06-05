@@ -1,6 +1,5 @@
-package DHADVTKV.ProposedTSB.common;
+package DHADVTKV.common;
 
-import DHADVTKV.common.Configurations;
 import peersim.core.CommonState;
 
 public class Coordinate {

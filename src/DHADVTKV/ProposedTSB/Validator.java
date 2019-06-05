@@ -1,6 +1,6 @@
 package DHADVTKV.ProposedTSB;
 
-import DHADVTKV.ProposedTSB.common.Channel;
+import DHADVTKV.common.Channel;
 import DHADVTKV.ProposedTSB.dataStructures.ReceiveBufferTransaction;
 import DHADVTKV.ProposedTSB.dataStructures.WaitingStabilityTransaction;
 import DHADVTKV.common.DataObject;

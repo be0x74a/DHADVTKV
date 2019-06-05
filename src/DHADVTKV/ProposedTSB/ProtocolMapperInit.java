@@ -1,7 +1,7 @@
 package DHADVTKV.ProposedTSB;
 
-import DHADVTKV.ProposedTSB.common.Channel;
-import DHADVTKV.ProposedTSB.common.Coordinate;
+import DHADVTKV.common.Channel;
+import DHADVTKV.common.Coordinate;
 import DHADVTKV.common.Configurations;
 import peersim.config.Configuration;
 import peersim.core.Control;

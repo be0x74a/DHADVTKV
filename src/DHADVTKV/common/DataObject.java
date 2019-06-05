@@ -44,7 +44,4 @@ public class DataObject {
         return metadata;
     }
 
-    public void setMetadata(Map<String, Long> metadata) {
-        this.metadata = metadata;
-    }
 }

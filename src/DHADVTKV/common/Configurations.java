@@ -5,14 +5,14 @@ public class Configurations {
     public static final long UNDEFINED = -1;
     public static int ROOT_ID;
     public static int BATCH_SIZE;
-    public static int PID;
-    public static double BANDWIDTH;
-    public static long MIN;
-    public static long RANGE;
     public static long CPU_DELAY;
     public static boolean ADD_CPU_DELAY;
     public static long BATCH_TIMEOUT;
-    public static long DELAY_PER_DISTANCE;
+    static int PID;
+    static double BANDWIDTH;
+    static long MIN;
+    static long RANGE;
+    static long DELAY_PER_DISTANCE;
 
     public Configurations(int rootID, int batchSize, int pid, double bandwidth, long min, long range, long cpuDelay, boolean addCPUDelay, long batchTimeout, long delayPerDistance) {
         ROOT_ID = rootID;

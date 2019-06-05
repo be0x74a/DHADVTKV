@@ -1,7 +1,6 @@
 package DHADVTKV.TPC;
 
 import DHADVTKV.common.DataObject;
-import DHADVTKV.common.Transaction;
 import DHADVTKV.messages.*;
 
 import java.util.*;
