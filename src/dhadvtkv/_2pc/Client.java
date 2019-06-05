@@ -142,13 +142,14 @@ class Client {
 
   boolean onPrepareCommitResult(PrepareCommitResult result) {
     cleanState();
+    clock = result.getTimestamp();
     return result.isSuccess();
   }
 
-  @SuppressWarnings({"unused", "UnusedReturnValue"})
   boolean onCommitResult(CommitResult result) {
     if (++receivedCommitResults == nodes.size()) {
       cleanState();
+      clock = result.getTimestamp();
       return true;
     }
     return false;
