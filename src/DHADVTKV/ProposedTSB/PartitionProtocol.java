@@ -1,6 +1,6 @@
 package DHADVTKV.ProposedTSB;
 
-import DHADVTKV.common.Settings;
+import DHADVTKV.common.Configurations;
 import DHADVTKV.ProposedTSB.messages.*;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
@@ -27,9 +27,9 @@ public class PartitionProtocol implements EDProtocol {
         }
 
         if (event instanceof Message) {
-            if ((!((Message) event).isCpuReady()) && Settings.ADD_CPU_DELAY) {
+            if ((!((Message) event).isCpuReady()) && Configurations.ADD_CPU_DELAY) {
                 ((Message) event).setCpuReady(true);
-                EDSimulator.add(Settings.CPU_DELAY, event, node, pid);
+                EDSimulator.add(Configurations.CPU_DELAY, event, node, pid);
                 return;
             }
         } else {

@@ -5,7 +5,7 @@ import DHADVTKV.ProposedTSB.dataStructures.ReceiveBufferTransaction;
 import DHADVTKV.ProposedTSB.dataStructures.WaitingStabilityTransaction;
 import DHADVTKV.common.DataObject;
 import DHADVTKV.ProposedTSB.messages.*;
-import DHADVTKV.common.Settings;
+import DHADVTKV.common.Configurations;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -116,7 +116,7 @@ class Validator {
 
     /* Committer */
     private void commit(long transactionID, long snapshot, List<Long> gets, List<DataObject> puts, int nValidations, int client, boolean conflicts, long lsn, boolean informClient) {
-        if (validatorID != Settings.ROOT_ID) {
+        if (validatorID != Configurations.ROOT_ID) {
             leafCommit(transactionID, snapshot, gets, puts, nValidations, client, conflicts, lsn);
         } else {
             rootCommit(transactionID, puts, client, conflicts, lsn, informClient);
@@ -130,7 +130,7 @@ class Validator {
             Channel.sendMessage(new TransactionCommitResult(validatorID, client, transactionID, conflicts, lsn));
             sendValidationResultToVNodes(transactionID, lsn, puts, conflicts);
             if (!conflicts) {
-                Transaction transaction = new Transaction(validatorID, Settings.ROOT_ID, transactionID, snapshot, gets, puts, nValidations, client, conflicts, lsn);
+                Transaction transaction = new Transaction(validatorID, Configurations.ROOT_ID, transactionID, snapshot, gets, puts, nValidations, client, conflicts, lsn);
                 leafAddToBatch(transaction);
             }
         } else {
@@ -138,7 +138,7 @@ class Validator {
                 Channel.sendMessage(new TransactionCommitResult(validatorID, client, transactionID, conflicts, lsn));
             }
 
-            Transaction transaction = new Transaction(validatorID, Settings.ROOT_ID, transactionID, snapshot, gets, puts, nValidations, client, conflicts, lsn);
+            Transaction transaction = new Transaction(validatorID, Configurations.ROOT_ID, transactionID, snapshot, gets, puts, nValidations, client, conflicts, lsn);
             leafAddToBatch(transaction);
         }
     }
@@ -181,13 +181,13 @@ class Validator {
     }
 
     private void sendBatch() {
-        if (currentBatchSize >= Settings.BATCH_SIZE) {
+        if (currentBatchSize >= Configurations.BATCH_SIZE) {
             doSendBatch();
         }
     }
 
     void doSendBatch() {
-        if (validatorID != Settings.ROOT_ID) {
+        if (validatorID != Configurations.ROOT_ID) {
             leafBatchSend();
         } else {
             rootBatchSend();
@@ -198,7 +198,7 @@ class Validator {
 
     private void leafBatchSend() {
         if (leafBatch.size() > 0) {
-            Channel.sendMessage(new BatchValidate(validatorID, Settings.ROOT_ID, leafBatch));
+            Channel.sendMessage(new BatchValidate(validatorID, Configurations.ROOT_ID, leafBatch));
             leafBatch = new ArrayList<>();
         }
     }

@@ -1,6 +1,6 @@
 package DHADVTKV.ProposedTSB;
 
-import DHADVTKV.common.Settings;
+import DHADVTKV.common.Configurations;
 import DHADVTKV.ProposedTSB.messages.*;
 import peersim.core.CommonState;
 import peersim.core.Node;
@@ -9,8 +9,8 @@ import peersim.edsim.EDSimulator;
 
 public class ValidatorProtocol implements EDProtocol {
 
-    private final String prefix;
     private Validator validator;
+    private final String prefix;
 
     public ValidatorProtocol(String prefix) {
         this.prefix = prefix;
@@ -21,7 +21,7 @@ public class ValidatorProtocol implements EDProtocol {
             validator = new Validator(Math.toIntExact(node.getID()));
         }
 
-        if (CommonState.getTime() % Settings.BATCH_TIMEOUT == 0) {
+        if (CommonState.getTime() % Configurations.BATCH_TIMEOUT == 0) {
             validator.doSendBatch();
         }
     }
@@ -36,9 +36,9 @@ public class ValidatorProtocol implements EDProtocol {
         }
 
         if (event instanceof Message)  {
-            if ((!((Message) event).isCpuReady()) && Settings.ADD_CPU_DELAY) {
+            if ((!((Message) event).isCpuReady()) && Configurations.ADD_CPU_DELAY) {
                 ((Message) event).setCpuReady(true);
-                EDSimulator.add(Settings.CPU_DELAY, event, node, pid);
+                EDSimulator.add(Configurations.CPU_DELAY, event, node, pid);
                 return;
             }
         } else {

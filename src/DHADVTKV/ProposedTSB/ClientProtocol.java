@@ -1,46 +1,31 @@
 package DHADVTKV.ProposedTSB;
 
-import DHADVTKV.common.Channel;
-import DHADVTKV.messages.*;
+import DHADVTKV.ProposedTSB.messages.Message;
+import DHADVTKV.ProposedTSB.messages.TransactionCommitResult;
+import DHADVTKV.ProposedTSB.messages.TransactionalGetResponse;
+import DHADVTKV.common.Configurations;
 import peersim.cdsim.CDProtocol;
-import peersim.config.Configuration;
-import peersim.core.Network;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
 import peersim.edsim.EDSimulator;
 
-import java.util.List;
-
-import static DHADVTKV.ProposedTSB.Client.State.*;
-import static DHADVTKV.ProposedTSB.ProtocolMapperInit.Type.CLIENT;
-import static DHADVTKV.ProposedTSB.ProtocolMapperInit.nodeType;
-
 public class ClientProtocol implements CDProtocol, EDProtocol {
 
     private Client client;
-    private int noPartitions;
-    private int nodeId;
     private String prefix;
 
     public ClientProtocol(String prefix) {
         this.prefix = prefix;
-        this.noPartitions = Configuration.getInt(prefix + "." + "nopartitions");
     }
 
     @Override
     public void nextCycle(Node node, int pid) {
     }
 
-    public void nextCycleCustom(Node node, int pid) {
+    void nextCycleCustom(Node node, int pid) {
 
         if (client == null) {
-            int nodeId = Math.toIntExact(node.getID());
-            this.nodeId = nodeId;
-            this.client = new Client(noPartitions, nodeId);
-        }
-
-        if (nodeType.get(node.getID()) != CLIENT) {
-            return;
+            this.client = new Client(Math.toIntExact(node.getID()));
         }
 
         switch (this.client.getState()) {
@@ -69,41 +54,37 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
     }
 
     @Override
-    public void processEvent(Node node, int pid, Object event) {
-    }
+    public void processEvent(Node node, int pid, Object event) {}
 
-    public void processEventCustom(Node node, int pid, Object event) {
+    void processEventCustom(Node node, int pid, Object event) {
+
+        if (client == null) {
+            this.client = new Client(Math.toIntExact(node.getID()));
+        }
 
         if (event instanceof Message)  {
-            if ((!((Message) event).isForCPU())) {
-                ((Message) event).setForCPU(true);
-                EDSimulator.add(100, event, node, pid);
+            if ((!((Message) event).isCpuReady())) {
+                ((Message) event).setCpuReady(true);
+                EDSimulator.add(Configurations.CPU_DELAY, event, node, pid);
                 return;
             }
         }
 
-        if (event instanceof TransactionalGetMessageResponse) {
-            TransactionalGetMessageResponse message = (TransactionalGetMessageResponse) event;
-            this.client.onTransactionalGetResponse(message);
-        } else if (event instanceof ClientValidationResponse) {
-            ClientValidationResponse message = (ClientValidationResponse) event;
-            if (message.getTransactionId() == this.client.getTransactionId()) {
-                this.client.onTransactionValidationResult(message);
-            }
+        if (event instanceof TransactionalGetResponse) {
+            TransactionalGetResponse message = (TransactionalGetResponse) event;
+            client.onTransactionalGetResponse(message);
+        } else if (event instanceof TransactionCommitResult) {
+            TransactionCommitResult message = (TransactionCommitResult) event;
+            client.onTransactionCommitResult(message);
         } else {
             throw new RuntimeException("Unknown message type: " + event.getClass().getSimpleName());
         }
     }
 
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
     public Object clone() {
         return new ClientProtocol(prefix);
-    }
-
-    public void sendMessage(int partition, Message message, int pid) {
-        Node dst = Network.get(partition);
-
-        EDSimulator.add(Channel.putMessageInChannel(message.getLength()), message, dst, pid);
     }
 
 }

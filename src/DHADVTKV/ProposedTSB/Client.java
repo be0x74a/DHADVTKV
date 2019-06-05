@@ -8,7 +8,7 @@ import peersim.core.CommonState;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static DHADVTKV.common.Settings.UNDEFINED;
+import static DHADVTKV.common.Configurations.UNDEFINED;
 
 class Client {
 
