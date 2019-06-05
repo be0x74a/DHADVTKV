@@ -1,19 +1,20 @@
 package DHADVTKV.common;
 
-public class Settings {
+public class Configurations {
 
-    public static long UNDEFINED = -1;
+    public static final long UNDEFINED = -1;
     public static int ROOT_ID;
     public static int BATCH_SIZE;
     public static int PID;
-    public static float BANDWIDTH;
+    public static double BANDWIDTH;
     public static long MIN;
     public static long RANGE;
     public static long CPU_DELAY;
     public static boolean ADD_CPU_DELAY;
-    public static long BATCH_TIMEOUT = ;
+    public static long BATCH_TIMEOUT;
+    public static long DELAY_PER_DISTANCE;
 
-    public Settings(int rootID, int batchSize, int pid, float bandwidth, long min, long range, long cpuDelay, boolean addCPUDelay, long batchTimeout) {
+    public Configurations(int rootID, int batchSize, int pid, double bandwidth, long min, long range, long cpuDelay, boolean addCPUDelay, long batchTimeout, long delayPerDistance) {
         ROOT_ID = rootID;
         BATCH_SIZE = batchSize;
         PID = pid;
@@ -23,5 +24,6 @@ public class Settings {
         CPU_DELAY = cpuDelay;
         ADD_CPU_DELAY = addCPUDelay;
         BATCH_TIMEOUT = batchTimeout;
+        DELAY_PER_DISTANCE = delayPerDistance;
     }
 }
