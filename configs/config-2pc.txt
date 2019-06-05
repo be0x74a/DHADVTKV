@@ -29,7 +29,7 @@ maxdelay TEMPLATE_MAX_DELAY
 
 protocol.link peersim.core.IdleProtocol
 
-protocol.partition DHADVTKV.TPC.PartitionProtocol
+protocol.partition dhadvtkv._2pc.PartitionProtocol
 protocol.partition.step CYCLE
 protocol.partition.transport urt
 protocol.partition.linkable link
@@ -38,13 +38,13 @@ protocol.partition.nopartitions NPARTITIONS
 protocol.partition.countcpu TEMPLATE_COUNT_CPU
 
 
-protocol.client DHADVTKV.TPC.ClientProtocol
+protocol.client dhadvtkv._2pc.ClientProtocol
 protocol.client.step CYCLE
 protocol.client.linkable link
 protocol.client.nopartitions NPARTITIONS
 protocol.client.countcpu TEMPLATE_COUNT_CPU
 
-protocol.mapper DHADVTKV.TPC.ProtocolMapper
+protocol.mapper dhadvtkv._2pc.ProtocolMapper
 protocol.mapper.step CYCLE
 protocol.mapper.linkable link
 protocol.mapper.client client
@@ -53,7 +53,7 @@ protocol.mapper.partition partition
 ################### initialization ======================
 
 ### Set node type
-init.0 DHADVTKV.TPC.ProtocolMapperInit
+init.0 dhadvtkv._2pc.ProtocolMapperInit
 init.0.nopartitions NPARTITIONS
 
 init.sch CDScheduler
