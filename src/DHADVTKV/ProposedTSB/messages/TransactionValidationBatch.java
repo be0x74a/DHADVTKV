@@ -4,15 +4,16 @@ import java.util.List;
 
 public class TransactionValidationBatch extends Message {
 
-    private final List<TransactionValidation> transactionValidationBatch;
+  private final List<TransactionValidation> transactionValidationBatch;
 
-    public TransactionValidationBatch(int from, int to, List<TransactionValidation> transactionValidationBatch) {
-        super(from, to, 0);
+  public TransactionValidationBatch(
+      int from, int to, List<TransactionValidation> transactionValidationBatch) {
+    super(from, to, 0);
 
-        this.transactionValidationBatch = transactionValidationBatch;
-    }
+    this.transactionValidationBatch = transactionValidationBatch;
+  }
 
-    public List<TransactionValidation> getTransactionValidationBatch() {
-        return transactionValidationBatch;
-    }
+  public List<TransactionValidation> getTransactionValidationBatch() {
+    return transactionValidationBatch;
+  }
 }
