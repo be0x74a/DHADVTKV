@@ -6,8 +6,6 @@ import dhadvtkv.messages.CommitMessageRequest;
 import dhadvtkv.messages.CommitMessageResponse;
 import dhadvtkv.messages.PrepareMessageRequest;
 import dhadvtkv.messages.PrepareMessageResponse;
-import dhadvtkv.messages.TransactionalGetMessageRequest;
-import dhadvtkv.messages.TransactionalGetMessageResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
