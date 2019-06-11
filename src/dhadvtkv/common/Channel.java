@@ -35,7 +35,8 @@ public class Channel {
 
     double min = Math.max((lastMessageDelivery - nextAvailableStep) * 1000, Configurations.MIN);
     double deliveryTime =
-        message.getSize() / Configurations.BANDWIDTH
+        nextAvailable
+            + message.getSize() / Configurations.BANDWIDTH
             + ((Configurations.RANGE == 1
                     ? min
                     : min + CommonState.r.nextLong(Configurations.RANGE))

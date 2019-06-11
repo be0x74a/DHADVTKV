@@ -12,9 +12,19 @@ public class KeyValueStorage {
   private Map<Long, List<DataObject>> tentativeVersions;
   private Map<Long, List<DataObject>> committedVersions;
 
-  public KeyValueStorage() {
+  public KeyValueStorage(int nodeID) {
     this.tentativeVersions = new HashMap<>();
     this.committedVersions = new HashMap<>();
+
+    for (int i = 0; i < 1000; i++) {
+      List<DataObject> list = new ArrayList<>();
+      HashMap<String, Long> metadata = new HashMap<>();
+      metadata.put("version", 0L);
+      list.add(new DataObject(nodeID, nodeID+i*Configurations.NO_PARTITIONS, nodeID+i*Configurations.NO_PARTITIONS, metadata));
+      committedVersions.put((long)nodeID+i*Configurations.NO_PARTITIONS, list);
+      tentativeVersions.put((long)nodeID+i*Configurations.NO_PARTITIONS, new ArrayList<>());
+    }
+
   }
 
   public void storeAsTentative(List<DataObject> objects) {

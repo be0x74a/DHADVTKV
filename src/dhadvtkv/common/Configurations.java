@@ -3,6 +3,7 @@ package dhadvtkv.common;
 public class Configurations {
 
   public static final long UNDEFINED = -1;
+  public static int NO_PARTITIONS;
   public static int ROOT_ID;
   public static int BATCH_SIZE;
   public static long CPU_DELAY;
@@ -25,7 +26,7 @@ public class Configurations {
       boolean addCPUDelay,
       long batchTimeout,
       long delayPerDistance) {
-    ROOT_ID = rootID;
+    ROOT_ID = NO_PARTITIONS =  rootID;
     BATCH_SIZE = batchSize;
     PID = pid;
     BANDWIDTH = bandwidth;
