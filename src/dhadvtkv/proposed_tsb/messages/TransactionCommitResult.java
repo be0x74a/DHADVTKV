@@ -10,7 +10,7 @@ public class TransactionCommitResult extends Message {
 
   public TransactionCommitResult(
       int from, int to, long transactionID, boolean conflicts, long lsn) {
-    super(from, to, 0);
+    super(from, to, 2 * LENGTH_LONG + LENGTH_BOOL);
 
     this.transactionID = transactionID;
     this.conflicts = conflicts;

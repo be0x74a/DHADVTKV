@@ -20,7 +20,7 @@ public class CommitTransaction extends Message {
       List<Long> getKeys,
       List<DataObject> puts,
       int nValidations) {
-    super(from, to, 0);
+    super(from, to, (2 + getKeys.size()) * LENGTH_LONG + puts.size() * LENGTH_OBJ + LENGTH_INT);
 
     this.transactionID = transactionID;
     this.snapshot = snapshot;

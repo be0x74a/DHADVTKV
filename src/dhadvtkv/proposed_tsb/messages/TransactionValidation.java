@@ -12,7 +12,7 @@ public class TransactionValidation extends Message {
 
   public TransactionValidation(
       int from, int to, long transactionID, List<Long> putKeys, boolean conflicts, long lsn) {
-    super(from, to, 0);
+    super(from, to, (2 + putKeys.size()) * LENGTH_LONG + LENGTH_BOOL);
 
     this.transactionID = transactionID;
     this.putKeys = putKeys;

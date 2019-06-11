@@ -9,7 +9,7 @@ public class TransactionValidationBatch extends Message {
 
   public TransactionValidationBatch(
       int from, int to, List<TransactionValidation> transactionValidationBatch) {
-    super(from, to, 0);
+    super(from, to, transactionValidationBatch.stream().mapToLong(TransactionValidation::getSize).sum());
 
     this.transactionValidationBatch = transactionValidationBatch;
   }

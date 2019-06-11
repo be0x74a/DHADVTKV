@@ -4,7 +4,7 @@ import dhadvtkv.common.DataObject;
 import dhadvtkv.messages.Message;
 import java.util.List;
 
-public class ValidateAndCommit extends Message {
+public class ValidateAndCommit extends ValidatorMessage {
 
   private final long transactionID;
   private final long snapshot;
@@ -22,7 +22,7 @@ public class ValidateAndCommit extends Message {
       List<DataObject> puts,
       int nValidations,
       int client) {
-    super(from, to, 0);
+    super(from, to, (2 + getKeys.size()) * LENGTH_LONG + puts.size() * LENGTH_OBJ + 2 * LENGTH_INT);
 
     this.transactionID = transactionID;
     this.snapshot = snapshot;

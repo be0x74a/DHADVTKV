@@ -1,5 +1,10 @@
 package dhadvtkv.proposed_tsb.messages;
 
-public class ValidatorMessage {
+import dhadvtkv.messages.Message;
 
+public abstract class ValidatorMessage extends Message {
+
+  ValidatorMessage(int from, int to, long size) {
+    super(from, to, size);
+  }
 }

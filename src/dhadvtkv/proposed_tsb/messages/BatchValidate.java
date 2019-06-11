@@ -1,14 +1,13 @@
 package dhadvtkv.proposed_tsb.messages;
 
-import dhadvtkv.messages.Message;
 import java.util.List;
 
-public class BatchValidate extends Message {
+public class BatchValidate extends ValidatorMessage {
 
   private final List<Transaction> transactionsBatch;
 
   public BatchValidate(int from, int to, List<Transaction> transactionsBatch) {
-    super(from, to, 0);
+    super(from, to, transactionsBatch.stream().mapToLong(Transaction::getSize).sum());
 
     this.transactionsBatch = transactionsBatch;
   }

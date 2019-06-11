@@ -1,10 +1,10 @@
 package dhadvtkv.messages;
 
 public abstract class Message {
-  static int LENGTH_LONG = 8;
-  static int LENGTH_INT = 4;
-  static int LENGTH_BOOL = 1;
-  static int LENGTH_OBJ = 1024;
+  protected static int LENGTH_LONG = 8;
+  protected static int LENGTH_INT = 4;
+  protected static int LENGTH_BOOL = 1;
+  protected static int LENGTH_OBJ = 1024;
 
   private final int from;
   private final int to;
