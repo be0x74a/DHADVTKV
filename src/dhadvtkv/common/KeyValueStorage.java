@@ -20,11 +20,15 @@ public class KeyValueStorage {
       List<DataObject> list = new ArrayList<>();
       HashMap<String, Long> metadata = new HashMap<>();
       metadata.put("version", 0L);
-      list.add(new DataObject(nodeID, nodeID+i*Configurations.NO_PARTITIONS, nodeID+i*Configurations.NO_PARTITIONS, metadata));
-      committedVersions.put((long)nodeID+i*Configurations.NO_PARTITIONS, list);
-      tentativeVersions.put((long)nodeID+i*Configurations.NO_PARTITIONS, new ArrayList<>());
+      list.add(
+          new DataObject(
+              nodeID,
+              nodeID + i * Configurations.NO_PARTITIONS,
+              nodeID + i * Configurations.NO_PARTITIONS,
+              metadata));
+      committedVersions.put((long) nodeID + i * Configurations.NO_PARTITIONS, list);
+      tentativeVersions.put((long) nodeID + i * Configurations.NO_PARTITIONS, new ArrayList<>());
     }
-
   }
 
   public void storeAsTentative(List<DataObject> objects) {

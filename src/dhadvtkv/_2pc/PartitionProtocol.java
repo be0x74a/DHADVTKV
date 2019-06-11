@@ -38,16 +38,15 @@ public class PartitionProtocol implements EDProtocol {
       throw new RuntimeException("Unknown message type: " + event.getClass().getSimpleName());
     }
 
+    logEvent(event);
+
     if (event instanceof TransactionalGet) {
-      System.out.println("Received message: TransactionalGet");
       TransactionalGet message = (TransactionalGet) event;
       partition.transactionalGet(message);
     } else if (event instanceof PrepareTransaction) {
-      System.out.println("Received message: PrepareTransaction");
       PrepareTransaction message = (PrepareTransaction) event;
       partition.prepareTransaction(message);
     } else if (event instanceof CommitTransaction) {
-      System.out.println("Received message: CommitTransaction");
       CommitTransaction message = (CommitTransaction) event;
       partition.commit(message);
     } else {
@@ -59,5 +58,13 @@ public class PartitionProtocol implements EDProtocol {
   @Override
   public Object clone() {
     return new PartitionProtocol(prefix);
+  }
+
+  private void logEvent(Object obj) {
+    if (Configurations.DEBUG) {
+      System.err.println(
+          String.format(
+              "Received %s @ %s", obj.getClass().getSimpleName(), this.getClass().getSimpleName()));
+    }
   }
 }

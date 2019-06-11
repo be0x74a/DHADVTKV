@@ -25,8 +25,9 @@ class Partition {
 
   Partition(int nodeID) {
     this.nodeID = nodeID;
-    this.kv = new KeyValueStorage();
+    this.kv = new KeyValueStorage(nodeID);
     this.pendingTransactionalGets = new HashMap<>();
+    this.transactionsDone = 0;
   }
 
   void transactionalGet(TransactionalGet request) {

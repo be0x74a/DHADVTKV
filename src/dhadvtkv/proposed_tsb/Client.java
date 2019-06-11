@@ -22,7 +22,7 @@ class Client {
   private long clock;
   private long transactionID;
   private long snapshot;
-  private int nodeId;
+  private int nodeID;
   private List<DataObject> gets;
   private List<DataObject> puts;
   private boolean inTransaction;
@@ -31,7 +31,7 @@ class Client {
     this.clock = 0;
     this.transactionID = UNDEFINED;
     this.snapshot = UNDEFINED;
-    this.nodeId = nodeId;
+    this.nodeID = nodeId;
     this.gets = new ArrayList<>();
     this.puts = new ArrayList<>();
     this.inTransaction = false;
@@ -49,7 +49,7 @@ class Client {
     if (version == UNDEFINED) {
       version = this.clock;
     }
-    Channel.sendMessage(new TransactionalGet(nodeId, node, key, version));
+    Channel.sendMessage(new TransactionalGet(nodeID, node, key, version));
   }
 
   DataObject onTransactionalGetResponse(TransactionalGetResponse response) {
@@ -90,7 +90,7 @@ class Client {
     for (Integer node : nodes) {
       Channel.sendMessage(
           new CommitTransaction(
-              nodeId,
+              nodeID,
               node,
               transactionID,
               snapshot == UNDEFINED ? clock : snapshot,
@@ -133,5 +133,13 @@ class Client {
     this.snapshot = UNDEFINED;
     this.gets = new ArrayList<>();
     this.puts = new ArrayList<>();
+  }
+
+  long getTransactionID() {
+    return  transactionID;
+  }
+
+  int getNodeID() {
+    return nodeID;
   }
 }

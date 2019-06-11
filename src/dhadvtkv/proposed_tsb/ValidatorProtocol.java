@@ -47,6 +47,8 @@ public class ValidatorProtocol implements EDProtocol {
       throw new RuntimeException("Unknown message type: " + event.getClass().getSimpleName());
     }
 
+    logEvent(event);
+
     if (event instanceof ValidateAndCommit) {
       ValidateAndCommit message = (ValidateAndCommit) event;
       validator.validateAndCommit(message);
@@ -62,5 +64,13 @@ public class ValidatorProtocol implements EDProtocol {
   @Override
   public Object clone() {
     return new ValidatorProtocol(prefix);
+  }
+
+  private void logEvent(Object obj) {
+    if (Configurations.DEBUG) {
+      System.err.println(
+          String.format(
+              "Received %s @ %s", obj.getClass().getSimpleName(), this.getClass().getSimpleName()));
+    }
   }
 }

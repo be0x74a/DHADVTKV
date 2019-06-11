@@ -83,21 +83,19 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
       throw new RuntimeException("Unknown message type: " + event.getClass().getSimpleName());
     }
 
+    logEvent(event);
+
     if (event instanceof TransactionalGetResponse) {
-      System.out.println("Received message: TransactionalGetResponse");
       TransactionalGetResponse message = (TransactionalGetResponse) event;
       client.onTransactionalGetResponse(message);
       getsReceived++;
     } else if (event instanceof PrepareResult) {
-      System.out.println("Received message: PrepareResult");
       PrepareResult message = (PrepareResult) event;
       client.onPrepareResult(message);
     } else if (event instanceof PrepareCommitResult) {
-      System.out.println("Received message: PrepareCommitResult");
       PrepareCommitResult message = (PrepareCommitResult) event;
       client.onPrepareCommitResult(message);
     } else if (event instanceof CommitResult) {
-      System.out.println("Received message: CommitResult");
       CommitResult message = (CommitResult) event;
       if (message.getTransactionID() == client.getTransactionID()) {
         if (client.onCommitResult(message)) {
@@ -121,5 +119,13 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
     getSent,
     canCommit,
     waitingToFinish
+  }
+
+  private void logEvent(Object obj) {
+    if (Configurations.DEBUG) {
+      System.err.println(
+          String.format(
+              "Received %s @ %s", obj.getClass().getSimpleName(), this.getClass().getSimpleName()));
+    }
   }
 }

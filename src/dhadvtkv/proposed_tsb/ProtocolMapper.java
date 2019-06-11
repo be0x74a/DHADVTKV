@@ -3,6 +3,7 @@ package dhadvtkv.proposed_tsb;
 import static dhadvtkv.proposed_tsb.ProtocolMapperInit.Type;
 import static dhadvtkv.proposed_tsb.ProtocolMapperInit.nodeType;
 
+import dhadvtkv.proposed_tsb.messages.ValidatorMessage;
 import peersim.cdsim.CDProtocol;
 import peersim.config.Configuration;
 import peersim.core.Node;
@@ -24,15 +25,17 @@ public class ProtocolMapper implements CDProtocol, EDProtocol {
 
   @Override
   public void nextCycle(Node node, int protocolID) {
+
     Type type = nodeType.get(node.getID());
-    // Only clients should start actions
     if (type == Type.CLIENT) {
       ClientProtocol client = (ClientProtocol) node.getProtocol(clientPid);
       client.nextCycleCustom(node, protocolID);
     } else if (type == Type.PARTITION) {
-      return;
+      ValidatorProtocol validator = (ValidatorProtocol) node.getProtocol(validatorPid);
+      validator.nextCycleCustom(node);
     } else if (type == Type.VALIDATOR) {
-      return;
+      ValidatorProtocol validator = (ValidatorProtocol) node.getProtocol(validatorPid);
+      validator.nextCycleCustom(node);
     } else {
       throw new RuntimeException("Unknown node type.");
     }
@@ -45,16 +48,22 @@ public class ProtocolMapper implements CDProtocol, EDProtocol {
       ClientProtocol client = (ClientProtocol) node.getProtocol(clientPid);
       client.processEventCustom(node, pid, event);
     } else if (type == Type.PARTITION) {
-      PartitionProtocol partition = (PartitionProtocol) node.getProtocol(partitionPid);
-      partition.processEventCustom(node, pid, event);
+      if (event instanceof ValidatorMessage) {
+        ValidatorProtocol validator = (ValidatorProtocol) node.getProtocol(validatorPid);
+        validator.processEventCustom(node, pid, event);
+      } else {
+        PartitionProtocol partition = (PartitionProtocol) node.getProtocol(partitionPid);
+        partition.processEventCustom(node, pid, event);
+      }
     } else if (type == Type.VALIDATOR) {
       ValidatorProtocol validator = (ValidatorProtocol) node.getProtocol(validatorPid);
       validator.processEventCustom(node, pid, event);
-    } else {
+    }  else {
       throw new RuntimeException("Unknown node type.");
     }
   }
 
+  @SuppressWarnings("MethodDoesntCallSuperMethod")
   @Override
   public Object clone() {
     return new ProtocolMapper(prefix);

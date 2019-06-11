@@ -319,6 +319,7 @@ class Validator {
       if (rootBatch.get(node).size() > 0) {
         Channel.sendMessage(new TransactionValidationBatch(validatorID, node, rootBatch.get(node)));
       }
+      rootBatch.put(node, new ArrayList<>());
     }
   }
 

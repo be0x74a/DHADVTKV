@@ -34,16 +34,16 @@ public class ProtocolMapperInit implements Control {
   public boolean execute() {
     try {
       new Configurations(
-          Configuration.getInt(prefix + "." + "rootID"),
-          Configuration.getInt(prefix + "." + "batchSize"),
+          Configuration.getInt(prefix + "." + "noPartitions", 8),
+          Configuration.getInt(prefix + "." + "batchSize", 1),
           Configuration.getPid(prefix + "." + "protocolMapper"),
-          Configuration.getDouble(prefix + "." + "bandwidth"),
-          Configuration.getLong(prefix + "." + "min"),
-          Configuration.getLong(prefix + "." + "range"),
-          Configuration.getLong(prefix + "." + "cpuDelay"),
-          Configuration.getBoolean(prefix + "." + "addCPUDelay"),
-          Configuration.getLong(prefix + "." + "batchTimeout"),
-          Configuration.getLong(prefix + "." + "delayPerDistance"));
+          Configuration.getDouble(prefix + "." + "bandwidth", 1),
+          Configuration.getLong(prefix + "." + "min", 0),
+          Configuration.getLong(prefix + "." + "range", 1),
+          Configuration.getLong(prefix + "." + "cpuDelay", 1),
+          Configuration.getBoolean(prefix + "." + "addCPUDelay", true),
+          Configuration.getLong(prefix + "." + "batchTimeout", 500),
+          Configuration.getLong(prefix + "." + "delayPerDistance", 1));
       new Channel();
 
       String latenciesInfoFilePath = Configuration.getString(prefix + "." + "latenciesFile");
@@ -96,7 +96,7 @@ public class ProtocolMapperInit implements Control {
 
         Coordinate[] square = squares.get(squareIndex);
         nodesPositions.put(i, Coordinate.getPoint(square[0], square[1]));
-        if (percentages.get(squareIndex) > (i * 100.0) / Network.size()) {
+        if (percentages.get(squareIndex) < (i * 100.0) / Network.size()) {
           squareIndex++;
         }
       }
@@ -105,6 +105,7 @@ public class ProtocolMapperInit implements Control {
 
       return false;
     } catch (Exception e) {
+      e.printStackTrace();
       return true;
     }
   }
