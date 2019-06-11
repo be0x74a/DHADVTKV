@@ -82,8 +82,11 @@ class Partition {
             request.getPuts().stream().map(DataObject::getKey).collect(Collectors.toList()));
 
     if (!lockConflicts) {
-      boolean versionConflicts = checkVersionConflicts(request.getSnapshot(), request.getGetKeys(),
-          request.getPuts().stream().map(DataObject::getKey).collect(Collectors.toList()));
+      boolean versionConflicts =
+          checkVersionConflicts(
+              request.getSnapshot(),
+              request.getGetKeys(),
+              request.getPuts().stream().map(DataObject::getKey).collect(Collectors.toList()));
       if (versionConflicts) {
         conflicts = true;
       } else {
@@ -142,7 +145,7 @@ class Partition {
 
       if (consistent == null && objectVersion <= snapshot) {
         consistent = object;
-      } else if (consistent != null){
+      } else if (consistent != null) {
         long consistentVersion = consistent.getMetadata().getOrDefault("version", UNDEFINED);
         if (consistentVersion == UNDEFINED) {
           consistentVersion = consistent.getMetadata().getOrDefault("tentativeVersion", UNDEFINED);

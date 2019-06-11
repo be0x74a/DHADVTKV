@@ -96,7 +96,6 @@ public class ProtocolMapperInit implements Control {
 
       return false;
     } catch (Exception e) {
-      e.printStackTrace();
       return true;
     }
   }
