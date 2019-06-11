@@ -19,7 +19,7 @@ public class CommitTransaction extends Message {
       List<Long> putKeys,
       boolean aborted,
       long timestamp) {
-    super(from, to, 0);
+    super(from, to, (2 + getKeys.size() + putKeys.size()) * LENGTH_LONG + LENGTH_BOOL);
 
     this.transactionID = transactionID;
     this.getKeys = getKeys;

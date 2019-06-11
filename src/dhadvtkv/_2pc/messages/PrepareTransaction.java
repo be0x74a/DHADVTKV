@@ -12,7 +12,7 @@ public class PrepareTransaction extends Message {
 
   public PrepareTransaction(
       int from, int to, long snapshot, List<Long> getKeys, List<DataObject> puts) {
-    super(from, to, 0);
+    super(from, to, (1 + getKeys.size()) * LENGTH_LONG + puts.size() * LENGTH_OBJ);
 
     this.snapshot = snapshot;
     this.getKeys = getKeys;

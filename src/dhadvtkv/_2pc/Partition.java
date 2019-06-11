@@ -1,140 +1,202 @@
 package dhadvtkv._2pc;
 
+import static dhadvtkv.common.Configurations.UNDEFINED;
+
+import dhadvtkv._2pc.messages.CommitResult;
+import dhadvtkv._2pc.messages.CommitTransaction;
+import dhadvtkv._2pc.messages.PrepareResult;
+import dhadvtkv._2pc.messages.PrepareTransaction;
+import dhadvtkv.common.Channel;
 import dhadvtkv.common.DataObject;
 import dhadvtkv.common.KeyValueStorage;
-import dhadvtkv.messages.CommitMessageRequest;
-import dhadvtkv.messages.CommitMessageResponse;
-import dhadvtkv.messages.PrepareMessageRequest;
-import dhadvtkv.messages.PrepareMessageResponse;
+import dhadvtkv.messages.TransactionalGet;
+import dhadvtkv.messages.TransactionalGetResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-public class Partition {
+class Partition {
 
-  private KeyValueStorage kv;
-  private long clock = 0;
-  private int transactionsDone = 0;
-  private Map<Long, Long> latestObjectVersions = new HashMap<>();
+  private final int nodeID;
+  private final KeyValueStorage kv;
+  private final Map<Long, List<TransactionalGet>> pendingTransactionalGets;
+  private final Map<Long, Long> latestObjectVersions;
+  private final Set<Long> lockSet;
+  private int transactionsDone;
+  private long clock;
 
-  public Partition(long nodeId, int noPartitions, int keyValueStoreSize) {
-    this.kv = new KeyValueStorage(nodeId, noPartitions, keyValueStoreSize);
+  Partition(int nodeID) {
+    this.nodeID = nodeID;
+    this.kv = new KeyValueStorage(nodeID);
+    this.pendingTransactionalGets = new HashMap<>();
+    this.latestObjectVersions = new HashMap<>();
+    this.lockSet = new HashSet<>();
+    this.transactionsDone = 0;
+    this.clock = 0;
   }
 
-  public TransactionalGetMessageResponse transactionalGet(TransactionalGetMessageRequest message) {
-    List<DataObject> tentativeObjectVersions = kv.getTentativeVersions(message.getKey());
-    List<DataObject> committedObjectVersions = kv.getCommittedVersions(message.getKey());
+  void transactionalGet(TransactionalGet request) {
+    List<DataObject> objectVersions = kv.getCommittedVersions(request.getKey());
+    objectVersions.addAll(kv.getTentativeVersions(request.getKey()));
 
-    DataObject obj =
-        selectSnapshotConsistentVersion(
-            message.getSnapshot(), tentativeObjectVersions, committedObjectVersions);
+    DataObject snapshotConsistentContent =
+        selectSnapshotConsistentVersion(objectVersions, request.getSnapshot());
 
-    return new TransactionalGetMessageResponse(obj, message.getPartition(), message.getClient());
+    if (snapshotConsistentContent == null) {
+      return;
+    }
+
+    long version = snapshotConsistentContent.getMetadata().getOrDefault("version", UNDEFINED);
+
+    if (version == UNDEFINED) {
+      long tentativeVersion =
+          snapshotConsistentContent.getMetadata().getOrDefault("tentativeVersion", UNDEFINED);
+      if (tentativeVersion <= request.getSnapshot()) {
+        long transactionID =
+            snapshotConsistentContent.getMetadata().getOrDefault("transactionID", UNDEFINED);
+        this.pendingTransactionalGets
+            .computeIfAbsent(transactionID, k -> new ArrayList<>())
+            .add(request);
+      }
+    } else {
+      Channel.sendMessage(
+          new TransactionalGetResponse(
+              request.getTo(), request.getFrom(), snapshotConsistentContent));
+    }
+
+    moveClockForward(request.getSnapshot());
   }
 
-  public PrepareMessageResponse prepare(PrepareMessageRequest message) {
-    long commitTimestamp = generateCommitTimestamp(message.getSnapshot());
-    boolean locksAcquired = acquireLocks(message.getPuts());
-    boolean conflicts = true;
+  void prepareTransaction(PrepareTransaction request) {
 
-    if (locksAcquired) {
-      conflicts = checkConflicts(message.getGets(), message.getPuts(), message.getSnapshot());
+    long timestamp = clock > request.getSnapshot() ? clock : request.getSnapshot() + 1;
+    moveClockForward(timestamp);
+    boolean conflicts;
+    boolean lockConflicts =
+        checkLockConflicts(
+            request.getGetKeys(),
+            request.getPuts().stream().map(DataObject::getKey).collect(Collectors.toList()));
+
+    if (!lockConflicts) {
+      boolean versionConflicts = checkVersionConflicts(request.getSnapshot(), request.getGetKeys(),
+          request.getPuts().stream().map(DataObject::getKey).collect(Collectors.toList()));
+      if (versionConflicts) {
+        conflicts = true;
+      } else {
+        lockSet.addAll(request.getGetKeys());
+        lockSet.addAll(
+            request.getPuts().stream().map(DataObject::getKey).collect(Collectors.toList()));
+        conflicts = false;
+      }
+    } else {
+      conflicts = true;
     }
 
     if (!conflicts) {
-      kv.storeAsTentative(message.getTransactionId(), message.getPuts());
+      kv.storeAsTentative(request.getPuts());
     }
 
-    clock++;
-
-    return new PrepareMessageResponse(
-        conflicts, commitTimestamp, message.getPartition(), message.getClient());
+    Channel.sendMessage(new PrepareResult(nodeID, request.getFrom(), conflicts, timestamp));
   }
 
-  public CommitMessageResponse commit(CommitMessageRequest message) {
-    if (clock < message.getCommitTimestamp()) {
-      clock = message.getCommitTimestamp() + 1;
+  void commit(CommitTransaction request) {
+    if (!request.isAborted()) {
+      for (Long key : request.getPutKeys()) {
+        latestObjectVersions.put(key, request.getTimestamp());
+      }
+      moveClockForward(request.getTimestamp());
     }
 
-    if (message.hasConflicts()) {
-      kv.deleteTentativeVersions(message.getTransactionId(), message.getPuts());
+    lockSet.removeAll(request.getGetKeys());
+    lockSet.removeAll(request.getPutKeys());
+
+    if (request.isAborted()) {
+      kv.deleteTentativeVersions(request.getTransactionID(), request.getPutKeys());
     } else {
-      kv.commitTentativeVersions(
-          message.getTransactionId(), message.getPuts(), message.getCommitTimestamp());
-      updateLatestObjectVersions(message.getPuts(), message.getCommitTimestamp());
+      kv.commitTentativeVersions(request.getTransactionID(), request.getPutKeys(), clock);
     }
 
-    releaseLocks(message.getPuts());
-    this.transactionsDone++;
-    System.out.println(this.transactionsDone);
+    for (TransactionalGet getRequest :
+        pendingTransactionalGets.getOrDefault(request.getTransactionID(), new ArrayList<>())) {
+      transactionalGet(getRequest);
+    }
 
-    return new CommitMessageResponse(
-        message.getPartition(), message.getClient(), message.getTransactionId());
+    Channel.sendMessage(new CommitResult(nodeID, request.getFrom(), request.getTransactionID()));
+    logTransaction();
+    pendingTransactionalGets.remove(request.getTransactionID());
   }
 
-  private DataObject selectSnapshotConsistentVersion(
-      long snapshot,
-      List<DataObject> tentativeObjectVersions,
-      List<DataObject> committedObjectVersions) {
+  private DataObject selectSnapshotConsistentVersion(List<DataObject> objects, long snapshot) {
 
-    for (DataObject object : tentativeObjectVersions) {
-      if (object.getVersion() <= snapshot) {
-        waitUntilVersionIsCommitted();
-        return object;
+    DataObject consistent = null;
+
+    for (DataObject object : objects) {
+      long objectVersion = object.getMetadata().getOrDefault("version", UNDEFINED);
+      if (objectVersion == UNDEFINED) {
+        objectVersion = object.getMetadata().getOrDefault("tentativeVersion", UNDEFINED);
       }
-    }
 
-    for (DataObject object : committedObjectVersions) {
-      if (object.getVersion() <= snapshot) {
-        return object;
-      }
-    }
+      if (consistent == null && objectVersion <= snapshot) {
+        consistent = object;
+      } else if (consistent != null){
+        long consistentVersion = consistent.getMetadata().getOrDefault("version", UNDEFINED);
+        if (consistentVersion == UNDEFINED) {
+          consistentVersion = consistent.getMetadata().getOrDefault("tentativeVersion", UNDEFINED);
+        }
 
-    return null;
-  }
-
-  private long generateCommitTimestamp(long snapshot) {
-    if (clock <= snapshot) {
-      clock = snapshot + 1;
-    }
-
-    return clock;
-  }
-
-  private boolean checkConflicts(List<DataObject> gets, List<DataObject> puts, long snapshot) {
-    if (gets != null) {
-      for (DataObject object : gets) {
-        if (this.latestObjectVersions.getOrDefault(object.getKey(), -1L) > snapshot) {
-          return true;
+        if (objectVersion > consistentVersion && objectVersion <= snapshot) {
+          consistent = object;
         }
       }
     }
 
-    if (puts != null) {
-      for (DataObject object : puts) {
-        if (this.latestObjectVersions.getOrDefault(object.getKey(), -1L) > snapshot) {
-          return true;
-        }
+    return consistent;
+  }
+
+  private boolean checkLockConflicts(List<Long> getKeys, List<Long> putKeys) {
+    for (Long key : getKeys) {
+      if (lockSet.contains(key)) {
+        return true;
+      }
+    }
+
+    for (Long key : putKeys) {
+      if (lockSet.contains(key)) {
+        return true;
       }
     }
 
     return false;
   }
 
-  private void updateLatestObjectVersions(List<DataObject> objects, long version) {
-    for (DataObject object : objects) {
-      this.latestObjectVersions.put(object.getKey(), version);
+  private boolean checkVersionConflicts(long snapshot, List<Long> getKeys, List<Long> putKeys) {
+    for (Long key : getKeys) {
+      if (latestObjectVersions.getOrDefault(key, UNDEFINED) > snapshot) {
+        return true;
+      }
+    }
+
+    for (Long key : putKeys) {
+      if (latestObjectVersions.getOrDefault(key, UNDEFINED) > snapshot) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private void moveClockForward(long timestamp) {
+    if (clock <= timestamp) {
+      clock = timestamp + 1;
     }
   }
 
-  // TODO: This is obviously ONLY a placeholder!!!
-  private boolean acquireLocks(List<DataObject> puts) {
-    return true;
+  private void logTransaction() {
+    this.transactionsDone++;
+    System.out.println(this.transactionsDone);
   }
-
-  // TODO: This is obviously ONLY a placeholder!!!
-  private void releaseLocks(List<DataObject> puts) {}
-
-  // TODO: This is obviously ONLY a placeholder!!!
-  private void waitUntilVersionIsCommitted() {}
 }

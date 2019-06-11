@@ -26,7 +26,7 @@ class Client {
   private long clock;
   private long transactionID;
   private long snapshot;
-  private int nodeId;
+  private int nodeID;
   private List<DataObject> gets;
   private List<DataObject> puts;
   private boolean inTransaction;
@@ -42,7 +42,7 @@ class Client {
     this.clock = 0;
     this.transactionID = UNDEFINED;
     this.snapshot = UNDEFINED;
-    this.nodeId = nodeId;
+    this.nodeID = nodeId;
     this.gets = new ArrayList<>();
     this.puts = new ArrayList<>();
     this.inTransaction = false;
@@ -67,7 +67,7 @@ class Client {
     if (version == UNDEFINED) {
       version = this.clock;
     }
-    Channel.sendMessage(new TransactionalGet(nodeId, node, key, version));
+    Channel.sendMessage(new TransactionalGet(nodeID, node, key, version));
   }
 
   DataObject onTransactionalGetResponse(TransactionalGetResponse response) {
@@ -106,9 +106,9 @@ class Client {
     nodes.addAll(nodePuts.keySet());
 
     if (nodes.size() == 1) {
-      prepare();
-    } else {
       prepareCommit();
+    } else {
+      prepare();
     }
   }
 
@@ -125,7 +125,7 @@ class Client {
       for (Integer node : nodes) {
         Channel.sendMessage(
             new CommitTransaction(
-                nodeId,
+                nodeID,
                 node,
                 transactionID,
                 nodeGets.getOrDefault(node, new ArrayList<>()).stream()
@@ -148,8 +148,8 @@ class Client {
 
   boolean onCommitResult(CommitResult result) {
     if (++receivedCommitResults == nodes.size()) {
+      clock = prepareResult.getTimestamp();
       cleanState();
-      clock = result.getTimestamp();
       return true;
     }
     return false;
@@ -159,7 +159,7 @@ class Client {
     for (Integer node : nodes) {
       Channel.sendMessage(
           new PrepareTransaction(
-              nodeId,
+              nodeID,
               node,
               snapshot == UNDEFINED ? clock : snapshot,
               nodeGets.getOrDefault(node, new ArrayList<>()).stream()
@@ -173,7 +173,7 @@ class Client {
     int node = nodes.iterator().next();
     Channel.sendMessage(
         new PrepareCommitTransaction(
-            nodeId,
+            nodeID,
             node,
             snapshot == UNDEFINED ? clock : snapshot,
             nodeGets.getOrDefault(node, new ArrayList<>()).stream()
@@ -213,5 +213,13 @@ class Client {
     this.prepareResult = null;
     this.receivedPrepareResults = 0;
     this.receivedCommitResults = 0;
+  }
+
+  long getTransactionID() {
+    return transactionID;
+  }
+
+  int getNodeID() {
+    return nodeID;
   }
 }

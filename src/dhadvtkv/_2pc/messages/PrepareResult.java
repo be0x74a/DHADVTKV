@@ -8,7 +8,7 @@ public class PrepareResult extends Message {
   private long timestamp;
 
   public PrepareResult(int from, int to, boolean aborted, long timestamp) {
-    super(from, to, 0);
+    super(from, to, LENGTH_BOOL + LENGTH_LONG);
 
     this.aborted = aborted;
     this.timestamp = timestamp;

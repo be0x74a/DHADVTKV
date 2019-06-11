@@ -1,22 +1,15 @@
 package dhadvtkv._2pc;
 
-import static dhadvtkv._2pc.Client.State.getSent;
-import static dhadvtkv._2pc.Client.State.waitingToFinish;
 import static dhadvtkv._2pc.ProtocolMapperInit.Type.CLIENT;
 import static dhadvtkv._2pc.ProtocolMapperInit.nodeType;
 
-import dhadvtkv.common.Channel;
-import dhadvtkv.messages.CommitMessageRequest;
-import dhadvtkv.messages.CommitMessageResponse;
+import dhadvtkv._2pc.messages.CommitResult;
+import dhadvtkv._2pc.messages.PrepareCommitResult;
+import dhadvtkv._2pc.messages.PrepareResult;
+import dhadvtkv.common.Configurations;
 import dhadvtkv.messages.Message;
-import dhadvtkv.messages.PrepareMessageRequest;
-import dhadvtkv.messages.PrepareMessageResponse;
-import dhadvtkv.messages.TransactionalGetMessageRequest;
-import dhadvtkv.messages.TransactionalGetMessageResponse;
-import java.util.List;
+import dhadvtkv.messages.TransactionalGetResponse;
 import peersim.cdsim.CDProtocol;
-import peersim.config.Configuration;
-import peersim.core.Network;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
 import peersim.edsim.EDSimulator;
@@ -24,50 +17,53 @@ import peersim.edsim.EDSimulator;
 public class ClientProtocol implements CDProtocol, EDProtocol {
 
   private Client client;
-  private int noPartitions;
-  private int nodeId;
   private String prefix;
+  private State state;
+  private int getsSent;
+  private int getsReceived;
 
   public ClientProtocol(String prefix) {
     this.prefix = prefix;
-    this.noPartitions = Configuration.getInt(prefix + "." + "nopartitions");
+    state = State.initialState;
   }
 
   @Override
   public void nextCycle(Node node, int pid) {}
 
-  public void nextCycleCustom(Node node, int pid) {
+  void nextCycleCustom(Node node, int pid) {
 
     if (client == null) {
       int nodeId = Math.toIntExact(node.getID());
-      this.nodeId = nodeId;
-      this.client = new Client(noPartitions, nodeId);
+      this.client = new Client(nodeId);
     }
 
     if (nodeType.get(node.getID()) != CLIENT) {
       return;
     }
 
-    switch (this.client.getState()) {
+    switch (state) {
       case initialState:
-        this.client.begin();
-        break;
-      case transactionCreated:
-        this.client.setGetsSend(noPartitions);
-        for (int i = 0; i < noPartitions; i++) {
-          TransactionalGetMessageRequest getRequest = this.client.get(nodeId * noPartitions + i);
-          sendMessage(getRequest.getPartition(), getRequest, pid);
+        client.beginTransaction();
+        getsSent = Configurations.NO_PARTITIONS;
+        getsReceived = 0;
+        for (int i = 0; i < Configurations.NO_PARTITIONS; i++) {
+          client.get(i, client.getNodeID() * Configurations.NO_PARTITIONS + i);
         }
-        this.client.setState(getSent);
+        state = State.getSent;
         break;
       case getSent:
+        if (getsSent == getsReceived) {
+          for (int i = 0; i < Configurations.NO_PARTITIONS; i++) {
+            client.put(i, client.getNodeID() * Configurations.NO_PARTITIONS + i, i);
+          }
+          state = State.canCommit;
+        }
         break;
       case canCommit:
-        List<PrepareMessageRequest> prepareRequests = this.client.commit();
-        for (PrepareMessageRequest request : prepareRequests) {
-          sendMessage(request.getPartition(), request, pid);
-        }
-        this.client.setState(waitingToFinish);
+        client.commit();
+        state = State.waitingToFinish;
+        break;
+      case waitingToFinish:
         break;
     }
   }
@@ -75,45 +71,55 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
   @Override
   public void processEvent(Node node, int pid, Object event) {}
 
-  public void processEventCustom(Node node, int pid, Object event) {
-
-    Message response;
+  void processEventCustom(Node node, int pid, Object event) {
 
     if (event instanceof Message) {
-      if ((!((Message) event).isForCPU())) {
-        ((Message) event).setForCPU(true);
-        EDSimulator.add(100, event, node, pid);
+      if ((!((Message) event).isCpuReady()) && Configurations.ADD_CPU_DELAY) {
+        ((Message) event).setCpuReady(true);
+        EDSimulator.add(Configurations.CPU_DELAY, event, node, pid);
         return;
       }
+    } else {
+      throw new RuntimeException("Unknown message type: " + event.getClass().getSimpleName());
     }
 
-    if (event instanceof TransactionalGetMessageResponse) {
-      TransactionalGetMessageResponse message = (TransactionalGetMessageResponse) event;
-      this.client.onTransactionalGetResponse(message);
-    } else if (event instanceof PrepareMessageResponse) {
-      PrepareMessageResponse message = (PrepareMessageResponse) event;
-      List<CommitMessageRequest> requests = this.client.onPrepareResponse(message);
-      for (CommitMessageRequest request : requests) {
-        sendMessage(request.getPartition(), request, pid);
-      }
-    } else if (event instanceof CommitMessageResponse) {
-      CommitMessageResponse message = (CommitMessageResponse) event;
-      if (message.getTransactionId() == this.client.getTransactionId()) {
-        this.client.onCommitResult(message);
+    if (event instanceof TransactionalGetResponse) {
+      System.out.println("Received message: TransactionalGetResponse");
+      TransactionalGetResponse message = (TransactionalGetResponse) event;
+      client.onTransactionalGetResponse(message);
+      getsReceived++;
+    } else if (event instanceof PrepareResult) {
+      System.out.println("Received message: PrepareResult");
+      PrepareResult message = (PrepareResult) event;
+      client.onPrepareResult(message);
+    } else if (event instanceof PrepareCommitResult) {
+      System.out.println("Received message: PrepareCommitResult");
+      PrepareCommitResult message = (PrepareCommitResult) event;
+      client.onPrepareCommitResult(message);
+    } else if (event instanceof CommitResult) {
+      System.out.println("Received message: CommitResult");
+      CommitResult message = (CommitResult) event;
+      if (message.getTransactionID() == client.getTransactionID()) {
+        if (client.onCommitResult(message)) {
+          state = State.initialState;
+        }
       }
     } else {
       throw new RuntimeException("Unknown message type: " + event.getClass().getSimpleName());
     }
   }
 
+  @SuppressWarnings("MethodDoesntCallSuperMethod")
   @Override
   public Object clone() {
     return new ClientProtocol(prefix);
   }
 
-  public void sendMessage(int partition, Message message, int pid) {
-    Node dst = Network.get(partition);
-
-    EDSimulator.add(Channel.putMessageInChannel(message.getLength()), message, dst, pid);
+  // About protocol state
+  private enum State {
+    initialState,
+    getSent,
+    canCommit,
+    waitingToFinish
   }
 }

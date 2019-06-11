@@ -48,6 +48,7 @@ public class ProtocolMapper implements CDProtocol, EDProtocol {
     }
   }
 
+  @SuppressWarnings("MethodDoesntCallSuperMethod")
   @Override
   public Object clone() {
     return new ProtocolMapper(prefix);

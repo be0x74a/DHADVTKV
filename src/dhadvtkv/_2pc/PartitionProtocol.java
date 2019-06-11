@@ -1,81 +1,63 @@
 package dhadvtkv._2pc;
 
-import dhadvtkv.common.Channel;
-import dhadvtkv.messages.CommitMessageRequest;
+import dhadvtkv._2pc.messages.CommitTransaction;
+import dhadvtkv._2pc.messages.PrepareTransaction;
+import dhadvtkv.common.Configurations;
 import dhadvtkv.messages.Message;
-import dhadvtkv.messages.PrepareMessageRequest;
-import dhadvtkv.messages.TransactionalGetMessageRequest;
-import peersim.config.Configuration;
-import peersim.core.Network;
+import dhadvtkv.messages.TransactionalGet;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
 import peersim.edsim.EDSimulator;
 
 public class PartitionProtocol implements EDProtocol {
 
-  private final int size;
-  private final int noPartitions;
-  private final boolean countCPU;
   private Partition partition;
-  private int nodeId;
   private String prefix;
 
   public PartitionProtocol(String prefix) {
     this.prefix = prefix;
-    this.noPartitions = Configuration.getInt(prefix + "." + "nopartitions");
-    this.size = Configuration.getInt(prefix + "." + "keyvaluestoresize");
-    this.countCPU = Configuration.getBoolean(prefix + "." + "countcpu");
   }
 
   @Override
   public void processEvent(Node node, int pid, Object event) {}
 
-  public void processEventCustom(Node node, int pid, Object event) {
+  void processEventCustom(Node node, int pid, Object event) {
 
     if (partition == null) {
-      int nodeId = Math.toIntExact(node.getID());
-      this.nodeId = nodeId;
-      partition = new Partition(nodeId, this.noPartitions, size);
+      int nodeID = Math.toIntExact(node.getID());
+      partition = new Partition(nodeID);
     }
 
-    Message response;
-
     if (event instanceof Message) {
-      if ((!((Message) event).isForCPU()) && countCPU) {
-        ((Message) event).setForCPU(true);
-        EDSimulator.add(((Message) event).getCpuTime(), event, node, pid);
+      if ((!((Message) event).isCpuReady()) && Configurations.ADD_CPU_DELAY) {
+        ((Message) event).setCpuReady(true);
+        EDSimulator.add(Configurations.CPU_DELAY, event, node, pid);
         return;
       }
     } else {
       throw new RuntimeException("Unknown message type: " + event.getClass().getSimpleName());
     }
 
-    if (event instanceof TransactionalGetMessageRequest) {
-      TransactionalGetMessageRequest message = (TransactionalGetMessageRequest) event;
-      response = this.partition.transactionalGet(message);
-      sendMessage(message.getClient(), response, pid);
-    } else if (event instanceof PrepareMessageRequest) {
-      PrepareMessageRequest message = (PrepareMessageRequest) event;
-      response = this.partition.prepare(message);
-      sendMessage(message.getClient(), response, pid);
-    } else if (event instanceof CommitMessageRequest) {
-      CommitMessageRequest message = (CommitMessageRequest) event;
-      response = this.partition.commit(message);
-      sendMessage(message.getClient(), response, pid);
+    if (event instanceof TransactionalGet) {
+      System.out.println("Received message: TransactionalGet");
+      TransactionalGet message = (TransactionalGet) event;
+      partition.transactionalGet(message);
+    } else if (event instanceof PrepareTransaction) {
+      System.out.println("Received message: PrepareTransaction");
+      PrepareTransaction message = (PrepareTransaction) event;
+      partition.prepareTransaction(message);
+    } else if (event instanceof CommitTransaction) {
+      System.out.println("Received message: CommitTransaction");
+      CommitTransaction message = (CommitTransaction) event;
+      partition.commit(message);
     } else {
       throw new RuntimeException("Unknown message type: " + event.getClass().getSimpleName());
     }
   }
 
+  @SuppressWarnings("MethodDoesntCallSuperMethod")
   @Override
   public Object clone() {
     return new PartitionProtocol(prefix);
-  }
-
-  public void sendMessage(int client, Message message, int pid) {
-
-    Node dst = Network.get(client);
-
-    EDSimulator.add(Channel.putMessageInChannel(message.getLength()), message, dst, pid);
   }
 }
