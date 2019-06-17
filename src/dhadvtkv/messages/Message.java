@@ -6,7 +6,7 @@ public abstract class Message {
   protected static int LENGTH_LONG = 8;
   protected static int LENGTH_INT = 4;
   protected static int LENGTH_BOOL = 1;
-  protected static int LENGTH_OBJ = 2048;
+  protected static int LENGTH_OBJ = 1024 + 24 + 4 * LENGTH_LONG + LENGTH_INT;
 
   private final int from;
   private final int to;
