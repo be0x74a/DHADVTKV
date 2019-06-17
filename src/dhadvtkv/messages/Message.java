@@ -1,10 +1,12 @@
 package dhadvtkv.messages;
 
+import dhadvtkv.common.Configurations;
+
 public abstract class Message {
   protected static int LENGTH_LONG = 8;
   protected static int LENGTH_INT = 4;
   protected static int LENGTH_BOOL = 1;
-  protected static int LENGTH_OBJ = 1024;
+  protected static int LENGTH_OBJ = 2048;
 
   private final int from;
   private final int to;
@@ -14,7 +16,7 @@ public abstract class Message {
   public Message(int from, int to, long size) {
     this.from = from;
     this.to = to;
-    this.size = size;
+    this.size = size + Configurations.HEADER_SIZE;
     this.cpuReady = false;
   }
 

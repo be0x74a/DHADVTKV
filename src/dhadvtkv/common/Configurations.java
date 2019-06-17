@@ -10,6 +10,7 @@ public class Configurations {
   public static long CPU_DELAY;
   public static boolean ADD_CPU_DELAY;
   public static long BATCH_TIMEOUT;
+  public static long HEADER_SIZE;
   static int PID;
   static double BANDWIDTH;
   static long MIN;
@@ -26,7 +27,8 @@ public class Configurations {
       long cpuDelay,
       boolean addCPUDelay,
       long batchTimeout,
-      long delayPerDistance) {
+      long delayPerDistance,
+      long headerSize) {
     ROOT_ID = NO_PARTITIONS = rootID;
     BATCH_SIZE = batchSize;
     PID = pid;
@@ -37,5 +39,6 @@ public class Configurations {
     ADD_CPU_DELAY = addCPUDelay;
     BATCH_TIMEOUT = batchTimeout;
     DELAY_PER_DISTANCE = delayPerDistance;
+    HEADER_SIZE = headerSize;
   }
 }

@@ -42,7 +42,8 @@ public class ProtocolMapperInit implements Control {
           Configuration.getLong(prefix + "." + "cpuDelay", 1),
           Configuration.getBoolean(prefix + "." + "addCPUDelay", true),
           Configuration.getLong(prefix + "." + "batchTimeout", 500),
-          Configuration.getLong(prefix + "." + "delayPerDistance", 1));
+          Configuration.getLong(prefix + "." + "delayPerDistance", 1),
+          Configuration.getLong(prefix + "." + "headerSize", 0));
       new Channel();
 
       String latenciesInfoFilePath = Configuration.getString(prefix + "." + "latenciesFile");
