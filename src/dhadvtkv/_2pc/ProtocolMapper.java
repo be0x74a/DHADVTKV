@@ -3,8 +3,11 @@ package dhadvtkv._2pc;
 import static dhadvtkv._2pc.ProtocolMapperInit.Type;
 import static dhadvtkv._2pc.ProtocolMapperInit.nodeType;
 
+import dhadvtkv.common.Configurations;
 import peersim.cdsim.CDProtocol;
 import peersim.config.Configuration;
+import peersim.core.CommonState;
+import peersim.core.Network;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
 
@@ -13,11 +16,13 @@ public class ProtocolMapper implements CDProtocol, EDProtocol {
   private final String prefix;
   private final int partitionPid;
   private final int clientPid;
+  private boolean printed;
 
   public ProtocolMapper(String prefix) {
     this.prefix = prefix;
     this.clientPid = Configuration.getPid(prefix + "." + "client");
     this.partitionPid = Configuration.getPid(prefix + "." + "partition");
+    this.printed = false;
   }
 
   @Override
@@ -31,6 +36,11 @@ public class ProtocolMapper implements CDProtocol, EDProtocol {
       return;
     } else {
       throw new RuntimeException("Unknown node type.");
+    }
+
+    if (CommonState.getTime() == CommonState.getEndTime() - 1 && !Configurations.getPrinted()) {
+      ((PartitionProtocol) Network.get(1).getProtocol(partitionPid)).printTransactionsDone();
+      Configurations.setPrinted(true);
     }
   }
 

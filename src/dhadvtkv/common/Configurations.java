@@ -17,6 +17,8 @@ public class Configurations {
   static long RANGE;
   static long DELAY_PER_DISTANCE;
 
+  private static boolean printed;
+
   public Configurations(
       int rootID,
       int batchSize,
@@ -40,5 +42,14 @@ public class Configurations {
     BATCH_TIMEOUT = batchTimeout;
     DELAY_PER_DISTANCE = delayPerDistance;
     HEADER_SIZE = headerSize;
+    printed = false;
+  }
+
+  public static boolean getPrinted() {
+    return printed;
+  }
+
+  public static void setPrinted(boolean printed) {
+    Configurations.printed = printed;
   }
 }

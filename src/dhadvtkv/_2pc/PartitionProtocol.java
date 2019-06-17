@@ -67,4 +67,12 @@ public class PartitionProtocol implements EDProtocol {
               "Received %s @ %s", obj.getClass().getSimpleName(), this.getClass().getSimpleName()));
     }
   }
+
+  void printTransactionsDone() {
+    if (partition == null) {
+      System.out.println(0);
+    } else {
+      partition.printTransactionsDone();
+    }
+  }
 }

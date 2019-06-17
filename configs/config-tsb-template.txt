@@ -1,23 +1,23 @@
+TEMPLATE_SIZE 188
+MIN 0
+RANGE 1
+HEADER_SIZE 2000
+BATCH_TIMEOUT 900000
+
 ################### TEMPLATE MEMBERS INITIALIZED ABOVE ^^^ ===========================
 
 # network size
 SIZE TEMPLATE_SIZE
 
 # number of partitions
-NPARTITIONS 8
+NO_PARTITIONS 8
 
 # parameters of periodic execution
-CYCLES 10000
+CYCLES 100000
 CYCLE 1
 
 network.size SIZE
 simulation.endtime CYCLE*CYCLES
-
-################### channel =============================
-
-bandwidth TEMPLATE_MAX_MSG_COUNT
-mindelay TEMPLATE_MIN_DELAY
-maxdelay TEMPLATE_MAX_DELAY
 
 ################### protocols ===========================
 
@@ -27,21 +27,14 @@ protocol.partition dhadvtkv.proposed_tsb.PartitionProtocol
 protocol.partition.step CYCLE
 protocol.partition.transport urt
 protocol.partition.linkable link
-protocol.partition.keyvaluestoresize 1000
-protocol.partition.nopartitions NPARTITIONS
-protocol.partition.countcpu TEMPLATE_COUNT_CPU
 
 protocol.client dhadvtkv.proposed_tsb.ClientProtocol
 protocol.client.step CYCLE
 protocol.client.linkable link
-protocol.client.nopartitions NPARTITIONS
-protocol.client.countcpu TEMPLATE_COUNT_CPU
 
 protocol.validator dhadvtkv.proposed_tsb.ValidatorProtocol
 protocol.validator.step CYCLE
 protocol.validator.linkable link
-protocol.validator.nopartitions NPARTITIONS
-protocol.validator.countcpu TEMPLATE_COUNT_CPU
 
 protocol.mapper dhadvtkv.proposed_tsb.ProtocolMapper
 protocol.mapper.step CYCLE
@@ -54,7 +47,18 @@ protocol.mapper.validator validator
 
 ### Set node type
 init.0 dhadvtkv.proposed_tsb.ProtocolMapperInit
-init.0.nopartitions NPARTITIONS
+init.0.noPartitions NO_PARTITIONS
+init.0.batchSize BATCH_SIZE
+init.0.protocolMapper mapper
+init.0.bandwidth BANDWIDTH
+init.0.min MIN
+init.0.range RANGE
+init.0.cpuDelay CPU_DELAY
+init.0.addCPUDelay true
+init.0.batchTimeout BATCH_TIMEOUT
+init.0.delayPerDistance DELAY_PER_DISTANCE
+init.0.headerSize HEADER_SIZE
+init.0.latenciesFile ./configs/latencies/not-so-close.tsb.latencies
 
 init.sch CDScheduler
 init.sch.protocol mapper

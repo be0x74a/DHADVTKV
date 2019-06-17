@@ -126,7 +126,10 @@ class Partition {
   }
 
   private void logTransaction() {
-    this.transactionsDone++;
-    System.out.println(this.transactionsDone);
+    transactionsDone++;
+  }
+
+  public void printTransactionsDone() {
+    System.out.println(transactionsDone);
   }
 }

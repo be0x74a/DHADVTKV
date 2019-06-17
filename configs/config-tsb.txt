@@ -1,11 +1,12 @@
-BANDWIDTH 100000
-MIN 1
-RANGE 10
-CPU_DELAY 2000
-DELAY_PER_DISTANCE 10
-BATCH_SIZE 20
-BATCH_TIMEOUT 100000
 TEMPLATE_SIZE 188
+BANDWIDTH 20000
+MIN 0
+RANGE 1
+CPU_DELAY 1000
+DELAY_PER_DISTANCE 10000
+HEADER_SIZE 2000
+BATCH_SIZE 1
+BATCH_TIMEOUT 900000
 
 ################### TEMPLATE MEMBERS INITIALIZED ABOVE ^^^ ===========================
 
@@ -60,6 +61,7 @@ init.0.cpuDelay CPU_DELAY
 init.0.addCPUDelay true
 init.0.batchTimeout BATCH_TIMEOUT
 init.0.delayPerDistance DELAY_PER_DISTANCE
+init.0.headerSize HEADER_SIZE
 init.0.latenciesFile ./configs/latencies/not-so-close.tsb.latencies
 
 init.sch CDScheduler

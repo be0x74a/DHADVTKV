@@ -3,9 +3,12 @@ package dhadvtkv.proposed_tsb;
 import static dhadvtkv.proposed_tsb.ProtocolMapperInit.Type;
 import static dhadvtkv.proposed_tsb.ProtocolMapperInit.nodeType;
 
+import dhadvtkv.common.Configurations;
 import dhadvtkv.proposed_tsb.messages.ValidatorMessage;
 import peersim.cdsim.CDProtocol;
 import peersim.config.Configuration;
+import peersim.core.CommonState;
+import peersim.core.Network;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
 
@@ -38,6 +41,11 @@ public class ProtocolMapper implements CDProtocol, EDProtocol {
       validator.nextCycleCustom(node);
     } else {
       throw new RuntimeException("Unknown node type.");
+    }
+
+    if (CommonState.getTime() == CommonState.getEndTime() - 1 && !Configurations.getPrinted()) {
+      ((PartitionProtocol) Network.get(1).getProtocol(partitionPid)).printTransactionsDone();
+      Configurations.setPrinted(true);
     }
   }
 

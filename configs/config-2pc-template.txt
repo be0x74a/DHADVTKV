@@ -1,23 +1,22 @@
+TEMPLATE_SIZE 188
+MIN 0
+RANGE 1
+HEADER_SIZE 2000
+
 ################### TEMPLATE MEMBERS INITIALIZED ABOVE ^^^ ===========================
 
 # network size
 SIZE TEMPLATE_SIZE
 
 # number of partitions
-NPARTITIONS 8
+NO_PARTITIONS 8
 
 # parameters of periodic execution
-CYCLES 10000
+CYCLES 100000
 CYCLE 1
 
 network.size SIZE
 simulation.endtime CYCLE*CYCLES
-
-################### channel =============================
-
-bandwidth TEMPLATE_MAX_MSG_COUNT
-mindelay TEMPLATE_MIN_DELAY
-maxdelay TEMPLATE_MAX_DELAY
 
 ################### protocols ===========================
 
@@ -27,16 +26,10 @@ protocol.partition dhadvtkv._2pc.PartitionProtocol
 protocol.partition.step CYCLE
 protocol.partition.transport urt
 protocol.partition.linkable link
-protocol.partition.keyvaluestoresize 1000
-protocol.partition.nopartitions NPARTITIONS
-protocol.partition.countcpu TEMPLATE_COUNT_CPU
-
 
 protocol.client dhadvtkv._2pc.ClientProtocol
 protocol.client.step CYCLE
 protocol.client.linkable link
-protocol.client.nopartitions NPARTITIONS
-protocol.client.countcpu TEMPLATE_COUNT_CPU
 
 protocol.mapper dhadvtkv._2pc.ProtocolMapper
 protocol.mapper.step CYCLE
@@ -48,7 +41,16 @@ protocol.mapper.partition partition
 
 ### Set node type
 init.0 dhadvtkv._2pc.ProtocolMapperInit
-init.0.nopartitions NPARTITIONS
+init.0.noPartitions NO_PARTITIONS
+init.0.protocolMapper mapper
+init.0.bandwidth BANDWIDTH
+init.0.min MIN
+init.0.range RANGE
+init.0.cpuDelay CPU_DELAY
+init.0.addCPUDelay true
+init.0.delayPerDistance DELAY_PER_DISTANCE
+init.0.headerSize HEADER_SIZE
+init.0.latenciesFile ./configs/latencies/not-so-close.2pc.latencies
 
 init.sch CDScheduler
 init.sch.protocol mapper
