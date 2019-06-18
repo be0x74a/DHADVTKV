@@ -19,9 +19,16 @@ tests_done = 0
 def simulate(args):
     global tests_done
     tests_done += 1
-    print(f'Tests done: {tests_done}/1000')
-    bandwidth, cpu_delay, distance_delay = args
+
     thread_name = threading.current_thread().name
+    print(f'{thread_name} : Tests done: {tests_done}/1000')
+    bandwidth, cpu_delay, distance_delay = args
+
+    # checks if tests was already saved
+    if len(list(filter(lambda e: e["bandwidht"] == bandwidth and e["cpu_delay"] == cpu_delay and e["distance_delay"] == distance_delay, performance_data))) != 0:
+        print(f'Test (bandwidth={bandwidht}, cpu_delay={cpu_delay}, distance_delay={distance_delay}) was already done', flush=True)
+        return
+
     config_2pc_file = f'{PERFOMANCE_FOLDER}/{thread_name}-2pc.config'
     config_tsb_file = f'{PERFOMANCE_FOLDER}/{thread_name}-tsb.config'
     data = {"bandwidht": bandwidth, "cpu_delay" : cpu_delay, "distance_delay" : distance_delay}
@@ -49,6 +56,12 @@ def simulate(args):
         file.close()
 
 if __name__ == "__main__":
+
+    # loads saved results
+    with open(PERFOMANCE_RESULT, 'r') as file:
+        performance_data = json.load(file)
+        file.close()
+
     pool = mp.Pool(4)
     # bandwidth = [250_000, 2_500_000], cpu_delay = [0, 500], distance_delay = [16, 8192]
     pool.map(simulate, product(range(250_000, 2_750_000, 250_000), range(0, 550, 50), [16 * (2 ** i) for i in range(10)]))
