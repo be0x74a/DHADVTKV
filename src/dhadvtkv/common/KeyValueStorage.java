@@ -63,6 +63,10 @@ public class KeyValueStorage {
           object.getMetadata().put("version", lsn);
           object.getMetadata().remove("tentativeVersion");
           committedVersions.computeIfAbsent(key, k -> new ArrayList<>()).add(0, object);
+          int size = committedVersions.get(key).size();
+          if (size > Configurations.MAX_VERSIONS) {
+            committedVersions.get(key).remove(size - 1);
+          }
         }
       }
     }

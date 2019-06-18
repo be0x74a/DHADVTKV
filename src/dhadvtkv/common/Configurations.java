@@ -4,6 +4,7 @@ public class Configurations {
 
   public static final long UNDEFINED = -1;
   public static final boolean DEBUG = false;
+  static final int MAX_VERSIONS = 188;
   public static int NO_PARTITIONS;
   public static int ROOT_ID;
   public static int BATCH_SIZE;
