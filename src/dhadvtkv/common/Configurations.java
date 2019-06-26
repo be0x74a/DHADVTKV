@@ -13,7 +13,7 @@ public class Configurations {
   public static long BATCH_TIMEOUT;
   public static long HEADER_SIZE;
   static int PID;
-  static double BANDWIDTH;
+  public static double BANDWIDTH;
   static long DELAY_PER_DISTANCE;
 
   private static boolean printed;

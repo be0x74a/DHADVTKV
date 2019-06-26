@@ -16,12 +16,12 @@ public class Coordinate {
 
     int x =
         coordinate0.getX() < coordinate1.getX()
-            ? coordinate0.getX() + CommonState.r.nextInt(coordinate1.getX() - coordinate0.getX())
-            : coordinate1.getX() + CommonState.r.nextInt(coordinate0.getX() - coordinate1.getX());
+            ? coordinate0.getX() + CommonState.r.nextInt(coordinate1.getX() - coordinate0.getX() + 1) - 1
+            : coordinate1.getX() + CommonState.r.nextInt(coordinate0.getX() - coordinate1.getX() + 1) - 1;
     int y =
         coordinate0.getY() < coordinate1.getY()
-            ? coordinate0.getY() + CommonState.r.nextInt(coordinate1.getY() - coordinate0.getY())
-            : coordinate1.getY() + CommonState.r.nextInt(coordinate0.getY() - coordinate1.getY());
+            ? coordinate0.getY() + CommonState.r.nextInt(coordinate1.getY() - coordinate0.getY() + 1) - 1
+            : coordinate1.getY() + CommonState.r.nextInt(coordinate0.getY() - coordinate1.getY() + 1) - 1;
     return new Coordinate(x, y);
   }
 

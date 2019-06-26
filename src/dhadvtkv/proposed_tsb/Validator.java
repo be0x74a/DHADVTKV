@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import peersim.config.Configuration;
 
 class Validator {
 
@@ -291,12 +292,12 @@ class Validator {
   private void sendBatch() {
     if (validatorID != Configurations.ROOT_ID) {
       if (leafBatch.size() >= Configurations.BATCH_SIZE) {
-        doSendBatch();
+        doSendBatch(false);
       }
     } else {
       for (Integer node : rootBatch.keySet()) {
         if (rootBatch.get(node).size() >= Configurations.BATCH_SIZE) {
-          doSendBatch();
+          doSendBatch(false);
           return;
         }
       }
@@ -304,24 +305,24 @@ class Validator {
 
   }
 
-  void doSendBatch() {
+  void doSendBatch(boolean force) {
     if (validatorID != Configurations.ROOT_ID) {
-      leafBatchSend();
+      leafBatchSend(force);
     } else {
-      rootBatchSend();
+      rootBatchSend(force);
     }
   }
 
-  private void leafBatchSend() {
-    if (leafBatch.size() > 0) {
+  private void leafBatchSend(boolean force) {
+    if (leafBatch.size() > Configurations.BATCH_SIZE || (force && leafBatch.size() > 0)) {
       Channel.sendMessage(new BatchValidate(validatorID, Configurations.ROOT_ID, leafBatch));
       leafBatch = new ArrayList<>();
     }
   }
 
-  private void rootBatchSend() {
+  private void rootBatchSend(boolean force) {
     for (Integer node : rootBatch.keySet()) {
-      if (rootBatch.get(node).size() >= Configurations.BATCH_SIZE) {
+      if (rootBatch.get(node).size() >= Configurations.BATCH_SIZE || (force && rootBatch.get(node).size() > 0)) {
         Channel.sendMessage(new TransactionValidationBatch(validatorID, node, rootBatch.get(node)));
         rootBatch.put(node, new ArrayList<>());
       }

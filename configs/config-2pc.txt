@@ -1,8 +1,8 @@
 HEADER_SIZE 2000
-TEMPLATE_SIZE 99
+TEMPLATE_SIZE 9
 BANDWIDTH 10000
 CPU_DELAY 0
-DELAY_PER_DISTANCE 1
+DELAY_PER_DISTANCE 12
 
 ################### TEMPLATE MEMBERS INITIALIZED ABOVE ^^^ ===========================
 
@@ -13,7 +13,7 @@ SIZE TEMPLATE_SIZE
 NO_PARTITIONS 8
 
 # parameters of periodic execution
-CYCLES 5000
+CYCLES 1000000
 CYCLE 1
 
 network.size SIZE
@@ -25,16 +25,12 @@ protocol.link peersim.core.IdleProtocol
 
 protocol.partition dhadvtkv._2pc.PartitionProtocol
 protocol.partition.step CYCLE
-protocol.partition.transport urt
-protocol.partition.linkable link
 
 protocol.client dhadvtkv._2pc.ClientProtocol
 protocol.client.step CYCLE
-protocol.client.linkable link
 
 protocol.mapper dhadvtkv._2pc.ProtocolMapper
 protocol.mapper.step CYCLE
-protocol.mapper.linkable link
 protocol.mapper.client client
 protocol.mapper.partition partition
 
@@ -51,7 +47,7 @@ init.0.cpuDelay CPU_DELAY
 init.0.addCPUDelay true
 init.0.delayPerDistance DELAY_PER_DISTANCE
 init.0.headerSize HEADER_SIZE
-init.0.latenciesFile ./configs/latencies/not-so-close.2pc.latencies
+init.0.latenciesFile ./configs/latencies/unit.2pc.latencies
 
 init.sch CDScheduler
 init.sch.protocol mapper

@@ -11,11 +11,13 @@ import peersim.edsim.EDSimulator;
 public class Channel {
 
   private static double nextAvailableStep;
+  private static long totalBandwidthUsed;
   private static Map<String, Double> deliveryTimes;
   private static Map<Integer, Coordinate> nodesPositions;
 
   public Channel() {
     nextAvailableStep = 0;
+    totalBandwidthUsed = 0;
     deliveryTimes = new HashMap<>();
     nodesPositions = new HashMap<>();
   }
@@ -40,10 +42,10 @@ public class Channel {
             + message.getSize() / Configurations.BANDWIDTH
             + min
             + (getDistance(message.getFrom(), message.getTo())
-                * Configurations.DELAY_PER_DISTANCE
-                / 1000);
+                * Configurations.DELAY_PER_DISTANCE);
 
     deliveryTimes.put(message.getFrom() + "->" + message.getTo(), deliveryTime);
+    totalBandwidthUsed += message.getSize();
     message.setReceivedTime(deliveryTime);
 
     EDSimulator.add((long) deliveryTime - CommonState.getTime(), message, dst, Configurations.PID);
@@ -57,5 +59,9 @@ public class Channel {
     Coordinate pos0 = nodesPositions.get(node0);
     Coordinate pos1 = nodesPositions.get(node1);
     return pos0.distance(pos1);
+  }
+
+  public static long getTotalBandwidthUsed() {
+    return totalBandwidthUsed;
   }
 }

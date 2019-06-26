@@ -3,6 +3,7 @@ package dhadvtkv.proposed_tsb;
 import static dhadvtkv.proposed_tsb.ProtocolMapperInit.Type;
 import static dhadvtkv.proposed_tsb.ProtocolMapperInit.nodeType;
 
+import dhadvtkv.common.Channel;
 import dhadvtkv.common.Configurations;
 import dhadvtkv.proposed_tsb.messages.ValidatorMessage;
 import peersim.cdsim.CDProtocol;
@@ -45,6 +46,7 @@ public class ProtocolMapper implements CDProtocol, EDProtocol {
 
     if (CommonState.getTime() == CommonState.getEndTime() - 1 && !Configurations.getPrinted()) {
       ((PartitionProtocol) Network.get(1).getProtocol(partitionPid)).printTransactionsDone();
+      System.out.println("Percentage used of bandwidth: " + Channel.getTotalBandwidthUsed()/(Configurations.BANDWIDTH*CommonState.getEndTime()));
       Configurations.setPrinted(true);
     }
   }
