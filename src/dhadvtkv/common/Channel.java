@@ -31,11 +31,14 @@ public class Channel {
     double nextAvailable = Math.max(nextAvailableStep, CommonState.getTime());
     double lastMessageDelivery =
         deliveryTimes.getOrDefault(message.getFrom() + "->" + message.getTo(), 0d);
+    double min = Math.max(lastMessageDelivery - nextAvailableStep, 0);
+
     nextAvailableStep = nextAvailable + message.getSize() / Configurations.BANDWIDTH;
 
     double deliveryTime =
         nextAvailable
             + message.getSize() / Configurations.BANDWIDTH
+            + min
             + (getDistance(message.getFrom(), message.getTo())
                 * Configurations.DELAY_PER_DISTANCE
                 / 1000);
