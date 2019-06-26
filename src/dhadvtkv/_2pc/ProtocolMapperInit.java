@@ -37,8 +37,6 @@ public class ProtocolMapperInit implements Control {
           Configuration.getInt(prefix + "." + "batchSize", 1),
           Configuration.getPid(prefix + "." + "protocolMapper"),
           Configuration.getDouble(prefix + "." + "bandwidth", 1),
-          Configuration.getLong(prefix + "." + "min", 0),
-          Configuration.getLong(prefix + "." + "range", 1),
           Configuration.getLong(prefix + "." + "cpuDelay", 1),
           Configuration.getBoolean(prefix + "." + "addCPUDelay", true),
           Configuration.getLong(prefix + "." + "batchTimeout", 500),

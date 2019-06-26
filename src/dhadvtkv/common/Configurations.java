@@ -14,8 +14,6 @@ public class Configurations {
   public static long HEADER_SIZE;
   static int PID;
   static double BANDWIDTH;
-  static long MIN;
-  static long RANGE;
   static long DELAY_PER_DISTANCE;
 
   private static boolean printed;
@@ -25,8 +23,6 @@ public class Configurations {
       int batchSize,
       int pid,
       double bandwidth,
-      long min,
-      long range,
       long cpuDelay,
       boolean addCPUDelay,
       long batchTimeout,
@@ -36,8 +32,6 @@ public class Configurations {
     BATCH_SIZE = batchSize;
     PID = pid;
     BANDWIDTH = bandwidth;
-    MIN = min;
-    RANGE = range;
     CPU_DELAY = cpuDelay;
     ADD_CPU_DELAY = addCPUDelay;
     BATCH_TIMEOUT = batchTimeout;

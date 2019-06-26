@@ -21,7 +21,8 @@ public class ValidateAndCommit extends ValidatorMessage {
       List<Long> getKeys,
       List<DataObject> puts,
       int nValidations,
-      int client) {
+      int client,
+      boolean ready) {
     super(from, to, (2 + getKeys.size()) * LENGTH_LONG + puts.size() * LENGTH_OBJ + 2 * LENGTH_INT);
 
     this.transactionID = transactionID;
@@ -30,6 +31,8 @@ public class ValidateAndCommit extends ValidatorMessage {
     this.puts = puts;
     this.nValidations = nValidations;
     this.client = client;
+
+    setCpuReady(ready);
   }
 
   public long getTransactionID() {

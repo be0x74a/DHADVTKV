@@ -1,9 +1,72 @@
 [
   {
+    "bandwidth": 2500000,
+    "cpu_delay": 0,
+    "distance_delay": 8192,
+    "ratio": 0.5314661905824593,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 0,
+    "distance_delay": 4096,
+    "ratio": 0.5225225225225225,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 0,
+    "distance_delay": 4096,
+    "ratio": 0.5150085275724844,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 0,
+    "distance_delay": 8192,
+    "ratio": 0.5134573177775211,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1000000,
+    "cpu_delay": 0,
+    "distance_delay": 8192,
+    "ratio": 0.5116412432618419,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 0,
+    "distance_delay": 1024,
+    "ratio": 0.5090499013250634,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 0,
     "distance_delay": 8192,
     "ratio": 0.508410138248848,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2250000,
+    "cpu_delay": 0,
+    "distance_delay": 4096,
+    "ratio": 0.5080695396115296,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 0,
+    "distance_delay": 2048,
+    "ratio": 0.502163639469339,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 0,
+    "distance_delay": 4096,
+    "ratio": 0.5014514201149752,
     "batch_size": 1
   },
   {
@@ -14,10 +77,45 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2250000,
+    "cpu_delay": 0,
+    "distance_delay": 8192,
+    "ratio": 0.49758342922899884,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 0,
+    "distance_delay": 1024,
+    "ratio": 0.49742085423575094,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 0,
+    "distance_delay": 4096,
+    "ratio": 0.49658547689506033,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2250000,
+    "cpu_delay": 0,
+    "distance_delay": 2048,
+    "ratio": 0.49576462615766886,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 0,
     "distance_delay": 2048,
     "ratio": 0.49152300897563755,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 0,
+    "distance_delay": 2048,
+    "ratio": 0.4902260751317355,
     "batch_size": 1
   },
   {
@@ -28,10 +126,171 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1750000,
+    "cpu_delay": 0,
+    "distance_delay": 4096,
+    "ratio": 0.4837684449489217,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 0,
+    "distance_delay": 8192,
+    "ratio": 0.48306217963004233,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1000000,
+    "cpu_delay": 0,
+    "distance_delay": 1024,
+    "ratio": 0.48211098835727034,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 0,
+    "distance_delay": 1024,
+    "ratio": 0.47522770211206045,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 0,
+    "distance_delay": 2048,
+    "ratio": 0.4705534598277124,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1000000,
+    "cpu_delay": 0,
+    "distance_delay": 4096,
+    "ratio": 0.47011929981045825,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 0,
+    "distance_delay": 1024,
+    "ratio": 0.46934250547201456,
+    "batch_size": 10
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 0,
+    "distance_delay": 512,
+    "ratio": 0.4690222686894119,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 0,
+    "distance_delay": 1024,
+    "ratio": 0.4689652276163279,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 0,
+    "distance_delay": 8192,
+    "ratio": 0.4688484030589294,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 0,
+    "distance_delay": 512,
+    "ratio": 0.46709213635784735,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2250000,
+    "cpu_delay": 0,
+    "distance_delay": 1024,
+    "ratio": 0.46703953007967847,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 0,
+    "distance_delay": 2048,
+    "ratio": 0.46153846153846156,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 0,
+    "distance_delay": 512,
+    "ratio": 0.46076106157321717,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 0,
     "distance_delay": 4096,
     "ratio": 0.45984869711403753,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 0,
+    "distance_delay": 2048,
+    "ratio": 0.45961300483743955,
+    "batch_size": 10
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 0,
+    "distance_delay": 4096,
+    "ratio": 0.4593459513943331,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 0,
+    "distance_delay": 256,
+    "ratio": 0.4593007282445417,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 0,
+    "distance_delay": 2048,
+    "ratio": 0.45930023509887985,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 0,
+    "distance_delay": 8192,
+    "ratio": 0.458272492418286,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1000000,
+    "cpu_delay": 0,
+    "distance_delay": 2048,
+    "ratio": 0.4578440647782292,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 0,
+    "distance_delay": 1024,
+    "ratio": 0.4572962895977963,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 0,
+    "distance_delay": 512,
+    "ratio": 0.45670667672204174,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 0,
+    "distance_delay": 256,
+    "ratio": 0.4540412191366613,
     "batch_size": 1
   },
   {
@@ -42,10 +301,52 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2250000,
+    "cpu_delay": 0,
+    "distance_delay": 256,
+    "ratio": 0.4493058536775741,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 0,
+    "distance_delay": 512,
+    "ratio": 0.44889148273413165,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1000000,
+    "cpu_delay": 0,
+    "distance_delay": 512,
+    "ratio": 0.4460143943035902,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 50,
+    "distance_delay": 8192,
+    "ratio": 0.44148227139429486,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 0,
     "distance_delay": 1024,
     "ratio": 0.4408685482393721,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 0,
+    "distance_delay": 8192,
+    "ratio": 0.44019510032147213,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2250000,
+    "cpu_delay": 0,
+    "distance_delay": 512,
+    "ratio": 0.440088186145788,
     "batch_size": 1
   },
   {
@@ -56,11 +357,39 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2000000,
+    "cpu_delay": 0,
+    "distance_delay": 256,
+    "ratio": 0.4334091278219912,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 500000,
     "cpu_delay": 0,
     "distance_delay": 512,
     "ratio": 0.43257448125908965,
     "batch_size": 10
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 0,
+    "distance_delay": 512,
+    "ratio": 0.4272891612515966,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 0,
+    "distance_delay": 256,
+    "ratio": 0.42436802436945115,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 0,
+    "distance_delay": 256,
+    "ratio": 0.41549726309803087,
+    "batch_size": 1
   },
   {
     "bandwidth": 250000,
@@ -70,11 +399,81 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1250000,
+    "cpu_delay": 0,
+    "distance_delay": 256,
+    "ratio": 0.4115365184120064,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 50,
+    "distance_delay": 8192,
+    "ratio": 0.4075197889182058,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1000000,
+    "cpu_delay": 0,
+    "distance_delay": 256,
+    "ratio": 0.40418364400526163,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 0,
+    "distance_delay": 128,
+    "ratio": 0.39685774292092585,
+    "batch_size": 10
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 50,
+    "distance_delay": 8192,
+    "ratio": 0.3965338851526125,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 0,
+    "distance_delay": 128,
+    "ratio": 0.39538479576731983,
+    "batch_size": 10
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 50,
+    "distance_delay": 8192,
+    "ratio": 0.3943094712225542,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 50,
+    "distance_delay": 8192,
+    "ratio": 0.3937059284408462,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 50,
+    "distance_delay": 8192,
+    "ratio": 0.38949585362643147,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 500000,
     "cpu_delay": 50,
     "distance_delay": 8192,
     "ratio": 0.3885003885003885,
     "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 0,
+    "distance_delay": 128,
+    "ratio": 0.3851198309577209,
+    "batch_size": 10
   },
   {
     "bandwidth": 1000000,
@@ -98,11 +497,46 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2250000,
+    "cpu_delay": 0,
+    "distance_delay": 128,
+    "ratio": 0.36184104916282334,
+    "batch_size": 10
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 50,
+    "distance_delay": 4096,
+    "ratio": 0.36161676201798054,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 50,
+    "distance_delay": 4096,
+    "ratio": 0.3598419915033167,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1000000,
+    "cpu_delay": 0,
+    "distance_delay": 128,
+    "ratio": 0.35823249526182555,
+    "batch_size": 10
+  },
+  {
     "bandwidth": 500000,
     "cpu_delay": 0,
     "distance_delay": 256,
     "ratio": 0.35674732554099114,
     "batch_size": 10
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 0,
+    "distance_delay": 128,
+    "ratio": 0.3562688492339671,
+    "batch_size": 1
   },
   {
     "bandwidth": 1000000,
@@ -119,10 +553,38 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 100,
+    "distance_delay": 8192,
+    "ratio": 0.3487786824574389,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 2250000,
     "cpu_delay": 50,
     "distance_delay": 4096,
     "ratio": 0.3464905772369788,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 50,
+    "distance_delay": 4096,
+    "ratio": 0.3462682129051442,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 0,
+    "distance_delay": 128,
+    "ratio": 0.3459865660799924,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 50,
+    "distance_delay": 4096,
+    "ratio": 0.34097995545657017,
     "batch_size": 1
   },
   {
@@ -147,6 +609,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1250000,
+    "cpu_delay": 100,
+    "distance_delay": 8192,
+    "ratio": 0.33298585256887564,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1750000,
     "cpu_delay": 150,
     "distance_delay": 8192,
@@ -154,10 +623,45 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1750000,
+    "cpu_delay": 100,
+    "distance_delay": 8192,
+    "ratio": 0.33112582781456956,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 100,
+    "distance_delay": 8192,
+    "ratio": 0.33001781472684083,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 50,
     "distance_delay": 4096,
     "ratio": 0.32649446494464945,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 100,
+    "distance_delay": 8192,
+    "ratio": 0.32539102470399067,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 50,
+    "distance_delay": 4096,
+    "ratio": 0.324604671405774,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 100,
+    "distance_delay": 8192,
+    "ratio": 0.3216503992901508,
     "batch_size": 1
   },
   {
@@ -175,11 +679,46 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 150,
+    "distance_delay": 8192,
+    "ratio": 0.3109593604263824,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 500000,
     "cpu_delay": 150,
     "distance_delay": 8192,
     "ratio": 0.2997184964398079,
     "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 150,
+    "distance_delay": 8192,
+    "ratio": 0.29937561616825503,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 150,
+    "distance_delay": 8192,
+    "ratio": 0.29735537190082645,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 150,
+    "distance_delay": 8192,
+    "ratio": 0.2964915170482622,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 0,
+    "distance_delay": 64,
+    "ratio": 0.29527932569341314,
+    "batch_size": 10
   },
   {
     "bandwidth": 1000000,
@@ -190,10 +729,31 @@
   },
   {
     "bandwidth": 2250000,
+    "cpu_delay": 0,
+    "distance_delay": 64,
+    "ratio": 0.29155482404360356,
+    "batch_size": 10
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 50,
+    "distance_delay": 4096,
+    "ratio": 0.29045405791919915,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2250000,
     "cpu_delay": 150,
     "distance_delay": 8192,
     "ratio": 0.28693649226719314,
     "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 0,
+    "distance_delay": 64,
+    "ratio": 0.28639740705068,
+    "batch_size": 10
   },
   {
     "bandwidth": 1750000,
@@ -203,10 +763,24 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2500000,
+    "cpu_delay": 0,
+    "distance_delay": 64,
+    "ratio": 0.28513604568303996,
+    "batch_size": 10
+  },
+  {
     "bandwidth": 1000000,
     "cpu_delay": 200,
     "distance_delay": 8192,
     "ratio": 0.2848719366132301,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 150,
+    "distance_delay": 8192,
+    "ratio": 0.28021886917592437,
     "batch_size": 1
   },
   {
@@ -231,6 +805,20 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1750000,
+    "cpu_delay": 100,
+    "distance_delay": 4096,
+    "ratio": 0.2705105875882299,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 200,
+    "distance_delay": 8192,
+    "ratio": 0.26939970717423134,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 2250000,
     "cpu_delay": 50,
     "distance_delay": 2048,
@@ -238,10 +826,59 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2000000,
+    "cpu_delay": 200,
+    "distance_delay": 8192,
+    "ratio": 0.2669329943708008,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 0,
+    "distance_delay": 64,
+    "ratio": 0.26551855976514194,
+    "batch_size": 10
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 100,
+    "distance_delay": 4096,
+    "ratio": 0.26458825668060354,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 500000,
     "cpu_delay": 100,
     "distance_delay": 4096,
     "ratio": 0.26450157870996843,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 100,
+    "distance_delay": 4096,
+    "ratio": 0.264275987290059,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 50,
+    "distance_delay": 2048,
+    "ratio": 0.26248009101251424,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 100,
+    "distance_delay": 4096,
+    "ratio": 0.2583386061646931,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 50,
+    "distance_delay": 2048,
+    "ratio": 0.258000090781172,
     "batch_size": 1
   },
   {
@@ -259,6 +896,27 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 200,
+    "distance_delay": 8192,
+    "ratio": 0.2544529262086514,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 50,
+    "distance_delay": 2048,
+    "ratio": 0.2535768919283722,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 50,
+    "distance_delay": 2048,
+    "ratio": 0.2523880664584182,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 2250000,
     "cpu_delay": 100,
     "distance_delay": 4096,
@@ -273,10 +931,45 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1750000,
+    "cpu_delay": 50,
+    "distance_delay": 2048,
+    "ratio": 0.25084653934714884,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 100,
+    "distance_delay": 4096,
+    "ratio": 0.24823911865631207,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 0,
+    "distance_delay": 128,
+    "ratio": 0.2479765987093714,
+    "batch_size": 10
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 50,
+    "distance_delay": 2048,
+    "ratio": 0.24732353474868446,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 200,
     "distance_delay": 8192,
     "ratio": 0.24564240790655886,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 100,
+    "distance_delay": 4096,
+    "ratio": 0.24463169339494428,
     "batch_size": 1
   },
   {
@@ -291,6 +984,13 @@
     "cpu_delay": 200,
     "distance_delay": 8192,
     "ratio": 0.23976186180768536,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 250,
+    "distance_delay": 8192,
+    "ratio": 0.2327483047467092,
     "batch_size": 1
   },
   {
@@ -399,10 +1099,38 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2500000,
+    "cpu_delay": 150,
+    "distance_delay": 4096,
+    "ratio": 0.2104641168886979,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1750000,
     "cpu_delay": 300,
     "distance_delay": 8192,
     "ratio": 0.20917590780604478,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 150,
+    "distance_delay": 4096,
+    "ratio": 0.20872374798061388,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 150,
+    "distance_delay": 4096,
+    "ratio": 0.20843217597584646,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 150,
+    "distance_delay": 4096,
+    "ratio": 0.20775294244682,
     "batch_size": 1
   },
   {
@@ -462,6 +1190,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 300,
+    "distance_delay": 8192,
+    "ratio": 0.198666953343367,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1250000,
     "cpu_delay": 350,
     "distance_delay": 8192,
@@ -476,11 +1211,25 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 750000,
+    "cpu_delay": 150,
+    "distance_delay": 4096,
+    "ratio": 0.1926536731634183,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 350,
     "distance_delay": 8192,
     "ratio": 0.19114219114219114,
     "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 0,
+    "distance_delay": 32,
+    "ratio": 0.19080442567490094,
+    "batch_size": 10
   },
   {
     "bandwidth": 2250000,
@@ -518,6 +1267,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1250000,
+    "cpu_delay": 50,
+    "distance_delay": 1024,
+    "ratio": 0.1829807093963908,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 750000,
     "cpu_delay": 350,
     "distance_delay": 8192,
@@ -536,6 +1292,13 @@
     "cpu_delay": 350,
     "distance_delay": 8192,
     "ratio": 0.1821786797294145,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 100,
+    "distance_delay": 2048,
+    "ratio": 0.1813011686769577,
     "batch_size": 1
   },
   {
@@ -574,6 +1337,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1250000,
+    "cpu_delay": 100,
+    "distance_delay": 2048,
+    "ratio": 0.17650372410339862,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1000000,
     "cpu_delay": 200,
     "distance_delay": 4096,
@@ -585,6 +1355,13 @@
     "cpu_delay": 400,
     "distance_delay": 8192,
     "ratio": 0.17615927419354838,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2250000,
+    "cpu_delay": 50,
+    "distance_delay": 1024,
+    "ratio": 0.1752744510978044,
     "batch_size": 1
   },
   {
@@ -602,6 +1379,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 50,
+    "distance_delay": 1024,
+    "ratio": 0.17452668884260267,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1000000,
     "cpu_delay": 350,
     "distance_delay": 8192,
@@ -616,10 +1400,31 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 750000,
+    "cpu_delay": 200,
+    "distance_delay": 4096,
+    "ratio": 0.17366388439018313,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 100,
+    "distance_delay": 2048,
+    "ratio": 0.17311747922094034,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1000000,
     "cpu_delay": 400,
     "distance_delay": 8192,
     "ratio": 0.171875,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 50,
+    "distance_delay": 1024,
+    "ratio": 0.1713551025466262,
     "batch_size": 1
   },
   {
@@ -644,6 +1449,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 100,
+    "distance_delay": 2048,
+    "ratio": 0.16999068033550793,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 100,
     "distance_delay": 2048,
@@ -665,6 +1477,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2000000,
+    "cpu_delay": 100,
+    "distance_delay": 2048,
+    "ratio": 0.1683878548018057,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1250000,
     "cpu_delay": 450,
     "distance_delay": 8192,
@@ -673,9 +1492,44 @@
   },
   {
     "bandwidth": 2000000,
+    "cpu_delay": 50,
+    "distance_delay": 1024,
+    "ratio": 0.16700219902747235,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 100,
+    "distance_delay": 2048,
+    "ratio": 0.16659427933238197,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 200,
+    "distance_delay": 4096,
+    "ratio": 0.16629353233830846,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 50,
+    "distance_delay": 1024,
+    "ratio": 0.16522034526419815,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
     "cpu_delay": 450,
     "distance_delay": 8192,
     "ratio": 0.1650981446625437,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 200,
+    "distance_delay": 4096,
+    "ratio": 0.164924072691063,
     "batch_size": 1
   },
   {
@@ -690,6 +1544,13 @@
     "cpu_delay": 400,
     "distance_delay": 8192,
     "ratio": 0.1633416458852868,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 50,
+    "distance_delay": 1024,
+    "ratio": 0.1625224222180986,
     "batch_size": 1
   },
   {
@@ -805,6 +1666,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2250000,
+    "cpu_delay": 0,
+    "distance_delay": 32,
+    "ratio": 0.15276064757714147,
+    "batch_size": 20
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 450,
     "distance_delay": 8192,
@@ -875,6 +1743,20 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 250,
+    "distance_delay": 4096,
+    "ratio": 0.14553395322626092,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 0,
+    "distance_delay": 64,
+    "ratio": 0.14461209602389974,
+    "batch_size": 20
+  },
+  {
     "bandwidth": 2250000,
     "cpu_delay": 500,
     "distance_delay": 8192,
@@ -924,6 +1806,27 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2000000,
+    "cpu_delay": 150,
+    "distance_delay": 2048,
+    "ratio": 0.13148104171614028,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 150,
+    "distance_delay": 2048,
+    "ratio": 0.13123669898321116,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 300,
+    "distance_delay": 4096,
+    "ratio": 0.131168417701369,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 2500000,
     "cpu_delay": 300,
     "distance_delay": 4096,
@@ -959,6 +1862,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 750000,
+    "cpu_delay": 150,
+    "distance_delay": 2048,
+    "ratio": 0.12642413766009272,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 2250000,
     "cpu_delay": 300,
     "distance_delay": 4096,
@@ -980,10 +1890,24 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 150,
+    "distance_delay": 2048,
+    "ratio": 0.12467326732673267,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 2250000,
     "cpu_delay": 350,
     "distance_delay": 4096,
     "ratio": 0.12444680474420251,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 150,
+    "distance_delay": 2048,
+    "ratio": 0.12349563438999449,
     "batch_size": 1
   },
   {
@@ -1013,6 +1937,13 @@
     "distance_delay": 4096,
     "ratio": 0.12042253521126761,
     "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 0,
+    "distance_delay": 32,
+    "ratio": 0.11995502480577107,
+    "batch_size": 20
   },
   {
     "bandwidth": 2000000,
@@ -1057,10 +1988,24 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2000000,
+    "cpu_delay": 100,
+    "distance_delay": 1024,
+    "ratio": 0.11144766575316122,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 750000,
     "cpu_delay": 350,
     "distance_delay": 4096,
     "ratio": 0.11015460295151089,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 200,
+    "distance_delay": 2048,
+    "ratio": 0.10971153846153846,
     "batch_size": 1
   },
   {
@@ -1082,6 +2027,20 @@
     "cpu_delay": 400,
     "distance_delay": 4096,
     "ratio": 0.10807669959325973,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 200,
+    "distance_delay": 2048,
+    "ratio": 0.1066180001921045,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 200,
+    "distance_delay": 2048,
+    "ratio": 0.10652027352402967,
     "batch_size": 1
   },
   {
@@ -1120,6 +2079,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2500000,
+    "cpu_delay": 100,
+    "distance_delay": 1024,
+    "ratio": 0.10256900009550186,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 500000,
     "cpu_delay": 50,
     "distance_delay": 512,
@@ -1155,6 +2121,20 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 100,
+    "distance_delay": 1024,
+    "ratio": 0.10017692344474728,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 50,
+    "distance_delay": 512,
+    "ratio": 0.10013175230566534,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1250000,
     "cpu_delay": 400,
     "distance_delay": 4096,
@@ -1183,6 +2163,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1250000,
+    "cpu_delay": 100,
+    "distance_delay": 1024,
+    "ratio": 0.09851558398167153,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1750000,
     "cpu_delay": 200,
     "distance_delay": 2048,
@@ -1205,9 +2192,30 @@
   },
   {
     "bandwidth": 1500000,
+    "cpu_delay": 50,
+    "distance_delay": 512,
+    "ratio": 0.09731327627720696,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 50,
+    "distance_delay": 512,
+    "ratio": 0.09716165010366769,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
     "cpu_delay": 450,
     "distance_delay": 4096,
     "ratio": 0.09669960058860626,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 100,
+    "distance_delay": 1024,
+    "ratio": 0.09655895529501478,
     "batch_size": 1
   },
   {
@@ -1246,6 +2254,27 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 750000,
+    "cpu_delay": 100,
+    "distance_delay": 1024,
+    "ratio": 0.09480705097665555,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2250000,
+    "cpu_delay": 50,
+    "distance_delay": 512,
+    "ratio": 0.09470514310103621,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 50,
+    "distance_delay": 512,
+    "ratio": 0.09407333237972632,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 2500000,
     "cpu_delay": 500,
     "distance_delay": 4096,
@@ -1267,10 +2296,24 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1250000,
+    "cpu_delay": 50,
+    "distance_delay": 512,
+    "ratio": 0.09249199383228561,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1750000,
     "cpu_delay": 450,
     "distance_delay": 4096,
     "ratio": 0.09109991603694374,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 50,
+    "distance_delay": 512,
+    "ratio": 0.08944666556267891,
     "batch_size": 1
   },
   {
@@ -1393,6 +2436,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 250,
+    "distance_delay": 2048,
+    "ratio": 0.08393501805054152,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 250,
     "distance_delay": 2048,
@@ -1411,6 +2461,13 @@
     "cpu_delay": 500,
     "distance_delay": 4096,
     "ratio": 0.0814982973893303,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 250,
+    "distance_delay": 2048,
+    "ratio": 0.08093201260693382,
     "batch_size": 1
   },
   {
@@ -1442,10 +2499,24 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1250000,
+    "cpu_delay": 150,
+    "distance_delay": 1024,
+    "ratio": 0.07280610924152213,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 2000000,
     "cpu_delay": 300,
     "distance_delay": 2048,
     "ratio": 0.07273671905442265,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 150,
+    "distance_delay": 1024,
+    "ratio": 0.0724011098922372,
     "batch_size": 1
   },
   {
@@ -1477,6 +2548,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 300,
+    "distance_delay": 2048,
+    "ratio": 0.0706050006477523,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 2500000,
     "cpu_delay": 300,
     "distance_delay": 2048,
@@ -1505,10 +2583,31 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 750000,
+    "cpu_delay": 150,
+    "distance_delay": 1024,
+    "ratio": 0.06764062298880165,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 150,
+    "distance_delay": 1024,
+    "ratio": 0.06744981604595623,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 500000,
     "cpu_delay": 300,
     "distance_delay": 2048,
     "ratio": 0.06735617323852618,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 150,
+    "distance_delay": 1024,
+    "ratio": 0.06652471286617628,
     "batch_size": 1
   },
   {
@@ -1590,9 +2689,23 @@
   },
   {
     "bandwidth": 1250000,
+    "cpu_delay": 100,
+    "distance_delay": 512,
+    "ratio": 0.058337404331542095,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
     "cpu_delay": 350,
     "distance_delay": 2048,
     "ratio": 0.05812417437252312,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 200,
+    "distance_delay": 1024,
+    "ratio": 0.057874918140144074,
     "batch_size": 1
   },
   {
@@ -1680,6 +2793,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2000000,
+    "cpu_delay": 200,
+    "distance_delay": 1024,
+    "ratio": 0.053295362082994305,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1750000,
     "cpu_delay": 400,
     "distance_delay": 2048,
@@ -1694,6 +2814,20 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 750000,
+    "cpu_delay": 200,
+    "distance_delay": 1024,
+    "ratio": 0.052224843406816886,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 50,
+    "distance_delay": 256,
+    "ratio": 0.05187588724396674,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 50,
     "distance_delay": 256,
@@ -1705,6 +2839,13 @@
     "cpu_delay": 50,
     "distance_delay": 256,
     "ratio": 0.051330451196492724,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 100,
+    "distance_delay": 512,
+    "ratio": 0.05126541207008436,
     "batch_size": 1
   },
   {
@@ -1729,10 +2870,66 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2000000,
+    "cpu_delay": 100,
+    "distance_delay": 512,
+    "ratio": 0.05060103963612735,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2250000,
+    "cpu_delay": 50,
+    "distance_delay": 256,
+    "ratio": 0.05057522482378676,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 100,
+    "distance_delay": 512,
+    "ratio": 0.05037343724630622,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 50,
+    "distance_delay": 256,
+    "ratio": 0.05028102996976645,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 100,
+    "distance_delay": 512,
+    "ratio": 0.05016030193579806,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 100,
+    "distance_delay": 512,
+    "ratio": 0.04998177325934627,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 50,
+    "distance_delay": 256,
+    "ratio": 0.04981448816981936,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 2500000,
     "cpu_delay": 400,
     "distance_delay": 2048,
     "ratio": 0.04944516971279373,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 50,
+    "distance_delay": 256,
+    "ratio": 0.04929292110701406,
     "batch_size": 1
   },
   {
@@ -1747,6 +2944,20 @@
     "cpu_delay": 100,
     "distance_delay": 512,
     "ratio": 0.04883777435814368,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 50,
+    "distance_delay": 256,
+    "ratio": 0.048225253897143786,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 50,
+    "distance_delay": 256,
+    "ratio": 0.047973464930021845,
     "batch_size": 1
   },
   {
@@ -1771,6 +2982,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1000000,
+    "cpu_delay": 50,
+    "distance_delay": 256,
+    "ratio": 0.04608294930875576,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 2000000,
     "cpu_delay": 450,
     "distance_delay": 2048,
@@ -1785,6 +3003,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 250,
+    "distance_delay": 1024,
+    "ratio": 0.04461296040969076,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1750000,
     "cpu_delay": 450,
     "distance_delay": 2048,
@@ -1796,6 +3021,13 @@
     "cpu_delay": 250,
     "distance_delay": 1024,
     "ratio": 0.04302131421274924,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 250,
+    "distance_delay": 1024,
+    "ratio": 0.042726647677045475,
     "batch_size": 1
   },
   {
@@ -1953,6 +3185,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 150,
+    "distance_delay": 512,
+    "ratio": 0.03558493820063237,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1250000,
     "cpu_delay": 300,
     "distance_delay": 1024,
@@ -1988,6 +3227,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2000000,
+    "cpu_delay": 150,
+    "distance_delay": 512,
+    "ratio": 0.034387737527986684,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 2500000,
     "cpu_delay": 300,
     "distance_delay": 1024,
@@ -2016,6 +3262,27 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 750000,
+    "cpu_delay": 150,
+    "distance_delay": 512,
+    "ratio": 0.03391289378550525,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 300,
+    "distance_delay": 1024,
+    "ratio": 0.033747984335406586,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 0,
+    "distance_delay": 32,
+    "ratio": 0.033346603727084874,
+    "batch_size": 30
+  },
+  {
     "bandwidth": 1000000,
     "cpu_delay": 150,
     "distance_delay": 512,
@@ -2027,6 +3294,13 @@
     "cpu_delay": 300,
     "distance_delay": 1024,
     "ratio": 0.03282275711159737,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 150,
+    "distance_delay": 512,
+    "ratio": 0.03267786504615032,
     "batch_size": 1
   },
   {
@@ -2048,6 +3322,13 @@
     "cpu_delay": 300,
     "distance_delay": 1024,
     "ratio": 0.03233229777931193,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 150,
+    "distance_delay": 512,
+    "ratio": 0.03121055651176133,
     "batch_size": 1
   },
   {
@@ -2114,6 +3395,20 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1250000,
+    "cpu_delay": 100,
+    "distance_delay": 256,
+    "ratio": 0.024647496391695348,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 200,
+    "distance_delay": 512,
+    "ratio": 0.02454943261885337,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 500000,
     "cpu_delay": 200,
     "distance_delay": 512,
@@ -2125,6 +3420,27 @@
     "cpu_delay": 350,
     "distance_delay": 1024,
     "ratio": 0.024393459915611815,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 200,
+    "distance_delay": 512,
+    "ratio": 0.02433776062922015,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 100,
+    "distance_delay": 256,
+    "ratio": 0.024137420405745593,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 100,
+    "distance_delay": 256,
+    "ratio": 0.024095495029380243,
     "batch_size": 1
   },
   {
@@ -2146,6 +3462,13 @@
     "cpu_delay": 350,
     "distance_delay": 1024,
     "ratio": 0.023856596810333464,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1000000,
+    "cpu_delay": 50,
+    "distance_delay": 128,
+    "ratio": 0.023822766036336672,
     "batch_size": 1
   },
   {
@@ -2184,6 +3507,20 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1750000,
+    "cpu_delay": 100,
+    "distance_delay": 256,
+    "ratio": 0.02312010636726252,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 100,
+    "distance_delay": 256,
+    "ratio": 0.0230692447040556,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 2250000,
     "cpu_delay": 100,
     "distance_delay": 256,
@@ -2191,10 +3528,24 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2000000,
+    "cpu_delay": 50,
+    "distance_delay": 128,
+    "ratio": 0.022857988275109573,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1250000,
     "cpu_delay": 400,
     "distance_delay": 1024,
     "ratio": 0.022788203753351208,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 100,
+    "distance_delay": 256,
+    "ratio": 0.022755864722859467,
     "batch_size": 1
   },
   {
@@ -2209,6 +3560,13 @@
     "cpu_delay": 400,
     "distance_delay": 1024,
     "ratio": 0.022486969471332836,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 50,
+    "distance_delay": 128,
+    "ratio": 0.022408601355969778,
     "batch_size": 1
   },
   {
@@ -2254,10 +3612,45 @@
     "batch_size": 50
   },
   {
+    "bandwidth": 2500000,
+    "cpu_delay": 50,
+    "distance_delay": 128,
+    "ratio": 0.021674803965083592,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 0,
+    "distance_delay": 16,
+    "ratio": 0.021658319948807608,
+    "batch_size": 50
+  },
+  {
     "bandwidth": 500000,
     "cpu_delay": 0,
     "distance_delay": 16,
     "ratio": 0.021652924204509715,
+    "batch_size": 50
+  },
+  {
+    "bandwidth": 1000000,
+    "cpu_delay": 0,
+    "distance_delay": 16,
+    "ratio": 0.021649387037486482,
+    "batch_size": 50
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 0,
+    "distance_delay": 32,
+    "ratio": 0.021640937287772506,
+    "batch_size": 50
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 0,
+    "distance_delay": 16,
+    "ratio": 0.021639385109040135,
     "batch_size": 50
   },
   {
@@ -2266,6 +3659,13 @@
     "distance_delay": 512,
     "ratio": 0.021623222748815167,
     "batch_size": 1
+  },
+  {
+    "bandwidth": 1000000,
+    "cpu_delay": 0,
+    "distance_delay": 32,
+    "ratio": 0.021605022674961828,
+    "batch_size": 50
   },
   {
     "bandwidth": 250000,
@@ -2303,6 +3703,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 0,
+    "distance_delay": 16,
+    "ratio": 0.02143862005262614,
+    "batch_size": 50
+  },
+  {
     "bandwidth": 750000,
     "cpu_delay": 400,
     "distance_delay": 1024,
@@ -2314,6 +3721,34 @@
     "cpu_delay": 400,
     "distance_delay": 1024,
     "ratio": 0.020994639666468137,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 50,
+    "distance_delay": 128,
+    "ratio": 0.02095393094264948,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 200,
+    "distance_delay": 512,
+    "ratio": 0.020893531895976883,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 50,
+    "distance_delay": 128,
+    "ratio": 0.020660241497729034,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 50,
+    "distance_delay": 128,
+    "ratio": 0.0204579475522537,
     "batch_size": 1
   },
   {
@@ -2352,11 +3787,32 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 750000,
+    "cpu_delay": 0,
+    "distance_delay": 64,
+    "ratio": 0.019226970935444173,
+    "batch_size": 50
+  },
+  {
     "bandwidth": 1500000,
     "cpu_delay": 450,
     "distance_delay": 1024,
     "ratio": 0.019109338650714524,
     "batch_size": 1
+  },
+  {
+    "bandwidth": 2250000,
+    "cpu_delay": 50,
+    "distance_delay": 128,
+    "ratio": 0.01884946276261862,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 0,
+    "distance_delay": 16,
+    "ratio": 0.018398680618359226,
+    "batch_size": 50
   },
   {
     "bandwidth": 1000000,
@@ -2384,6 +3840,20 @@
     "cpu_delay": 250,
     "distance_delay": 512,
     "ratio": 0.017665270442542343,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 250,
+    "distance_delay": 512,
+    "ratio": 0.017665270442542343,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 250,
+    "distance_delay": 512,
+    "ratio": 0.017575812767507512,
     "batch_size": 1
   },
   {
@@ -2464,6 +3934,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 750000,
+    "cpu_delay": 250,
+    "distance_delay": 512,
+    "ratio": 0.015279672578444748,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1000000,
     "cpu_delay": 250,
     "distance_delay": 512,
@@ -2520,6 +3997,20 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 300,
+    "distance_delay": 512,
+    "ratio": 0.013700107874865156,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 0,
+    "distance_delay": 32,
+    "ratio": 0.013457292716854478,
+    "batch_size": 50
+  },
+  {
     "bandwidth": 2000000,
     "cpu_delay": 450,
     "distance_delay": 1024,
@@ -2569,6 +4060,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1000000,
+    "cpu_delay": 0,
+    "distance_delay": 64,
+    "ratio": 0.011964869351438598,
+    "batch_size": 30
+  },
+  {
     "bandwidth": 1750000,
     "cpu_delay": 400,
     "distance_delay": 512,
@@ -2587,6 +4085,13 @@
     "cpu_delay": 150,
     "distance_delay": 256,
     "ratio": 0.011830501183050119,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 150,
+    "distance_delay": 256,
+    "ratio": 0.011657891909315569,
     "batch_size": 1
   },
   {
@@ -2653,10 +4158,38 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2500000,
+    "cpu_delay": 150,
+    "distance_delay": 256,
+    "ratio": 0.010965973230124174,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 0,
+    "distance_delay": 16,
+    "ratio": 0.010956093019970045,
+    "batch_size": 40
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 150,
+    "distance_delay": 256,
+    "ratio": 0.01091221845938827,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1000000,
     "cpu_delay": 150,
     "distance_delay": 256,
     "ratio": 0.010847384813661261,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 150,
+    "distance_delay": 256,
+    "ratio": 0.010691452210820395,
     "batch_size": 1
   },
   {
@@ -2681,6 +4214,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2500000,
+    "cpu_delay": 200,
+    "distance_delay": 256,
+    "ratio": 0.010038173335218436,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 2250000,
     "cpu_delay": 300,
     "distance_delay": 512,
@@ -2692,6 +4232,20 @@
     "cpu_delay": 400,
     "distance_delay": 512,
     "ratio": 0.009652235628105039,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 200,
+    "distance_delay": 256,
+    "ratio": 0.009544683257918553,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 150,
+    "distance_delay": 256,
+    "ratio": 0.009440540685511988,
     "batch_size": 1
   },
   {
@@ -2751,6 +4305,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2000000,
+    "cpu_delay": 200,
+    "distance_delay": 256,
+    "ratio": 0.007982480926815484,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 100,
     "distance_delay": 128,
@@ -2779,11 +4340,39 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 750000,
+    "cpu_delay": 200,
+    "distance_delay": 256,
+    "ratio": 0.007407930012699309,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 100,
+    "distance_delay": 128,
+    "ratio": 0.007324975348640654,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1000000,
     "cpu_delay": 350,
     "distance_delay": 512,
     "ratio": 0.007111665626949469,
     "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 100,
+    "distance_delay": 128,
+    "ratio": 0.00710517059444249,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2250000,
+    "cpu_delay": 0,
+    "distance_delay": 16,
+    "ratio": 0.007053216130838982,
+    "batch_size": 40
   },
   {
     "bandwidth": 500000,
@@ -2797,6 +4386,13 @@
     "cpu_delay": 200,
     "distance_delay": 256,
     "ratio": 0.0067753546474698285,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 100,
+    "distance_delay": 128,
+    "ratio": 0.00675818373812038,
     "batch_size": 1
   },
   {
@@ -2835,10 +4431,52 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1750000,
+    "cpu_delay": 100,
+    "distance_delay": 128,
+    "ratio": 0.006124172884696607,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 50,
+    "distance_delay": 64,
+    "ratio": 0.006040540302555342,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 100,
+    "distance_delay": 128,
+    "ratio": 0.005945679707289615,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 50,
+    "distance_delay": 64,
+    "ratio": 0.005934038844183057,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2250000,
+    "cpu_delay": 50,
+    "distance_delay": 64,
+    "ratio": 0.005804238853223112,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 2000000,
     "cpu_delay": 350,
     "distance_delay": 512,
     "ratio": 0.005735660847880299,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 50,
+    "distance_delay": 64,
+    "ratio": 0.005686219280332371,
     "batch_size": 1
   },
   {
@@ -2849,6 +4487,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2000000,
+    "cpu_delay": 100,
+    "distance_delay": 128,
+    "ratio": 0.0056654233232458304,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1750000,
     "cpu_delay": 350,
     "distance_delay": 512,
@@ -2856,10 +4501,24 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1000000,
+    "cpu_delay": 50,
+    "distance_delay": 64,
+    "ratio": 0.005525542435813962,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 500000,
     "cpu_delay": 50,
     "distance_delay": 64,
     "ratio": 0.005389126644476145,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 50,
+    "distance_delay": 64,
+    "ratio": 0.0051038366772263285,
     "batch_size": 1
   },
   {
@@ -2877,6 +4536,27 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 50,
+    "distance_delay": 64,
+    "ratio": 0.004731666989147069,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 250,
+    "distance_delay": 256,
+    "ratio": 0.004724822819144282,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 250,
+    "distance_delay": 256,
+    "ratio": 0.004467414155571128,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 2000000,
     "cpu_delay": 300,
     "distance_delay": 256,
@@ -2889,6 +4569,20 @@
     "distance_delay": 256,
     "ratio": 0.0039603960396039604,
     "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 50,
+    "distance_delay": 64,
+    "ratio": 0.0037993386336452545,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 0,
+    "distance_delay": 32,
+    "ratio": 0.003703940032025864,
+    "batch_size": 30
   },
   {
     "bandwidth": 2250000,
@@ -2916,6 +4610,13 @@
     "cpu_delay": 250,
     "distance_delay": 256,
     "ratio": 0.003147128245476003,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 300,
+    "distance_delay": 256,
+    "ratio": 0.003127280308558324,
     "batch_size": 1
   },
   {
@@ -2975,6 +4676,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2000000,
+    "cpu_delay": 250,
+    "distance_delay": 256,
+    "ratio": 0.002010665267943002,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 150,
     "distance_delay": 128,
@@ -2986,6 +4694,13 @@
     "cpu_delay": 250,
     "distance_delay": 256,
     "ratio": 0.0013105014852350166,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 150,
+    "distance_delay": 128,
+    "ratio": 0.00114125641956736,
     "batch_size": 1
   },
   {
@@ -3021,6 +4736,13 @@
     "cpu_delay": 500,
     "distance_delay": 512,
     "ratio": 0.0008736676568233444,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 150,
+    "distance_delay": 128,
+    "ratio": 0.0007263671266991802,
     "batch_size": 1
   },
   {
@@ -3080,6 +4802,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 150,
+    "distance_delay": 128,
+    "ratio": -0.00020759809009757111,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1750000,
     "cpu_delay": 450,
     "distance_delay": 512,
@@ -3129,6 +4858,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2000000,
+    "cpu_delay": 150,
+    "distance_delay": 128,
+    "ratio": -0.0015032137673647108,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 2500000,
     "cpu_delay": 450,
     "distance_delay": 512,
@@ -3140,6 +4876,13 @@
     "cpu_delay": 500,
     "distance_delay": 512,
     "ratio": -0.0017497812773403325,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 100,
+    "distance_delay": 64,
+    "ratio": -0.0018544592877502662,
     "batch_size": 1
   },
   {
@@ -3157,10 +4900,38 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1250000,
+    "cpu_delay": 100,
+    "distance_delay": 64,
+    "ratio": -0.0019574175824175824,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 100,
     "distance_delay": 64,
     "ratio": -0.0019925109072795356,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 100,
+    "distance_delay": 64,
+    "ratio": -0.0020242220468658866,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 150,
+    "distance_delay": 128,
+    "ratio": -0.002283223496445436,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 100,
+    "distance_delay": 64,
+    "ratio": -0.0028838231255149684,
     "batch_size": 1
   },
   {
@@ -3185,6 +4956,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 750000,
+    "cpu_delay": 100,
+    "distance_delay": 64,
+    "ratio": -0.003603912819632744,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 2000000,
     "cpu_delay": 350,
     "distance_delay": 128,
@@ -3196,6 +4974,13 @@
     "cpu_delay": 200,
     "distance_delay": 128,
     "ratio": -0.003850914592215651,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 100,
+    "distance_delay": 64,
+    "ratio": -0.0038800947704563404,
     "batch_size": 1
   },
   {
@@ -3269,6 +5054,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 750000,
+    "cpu_delay": 200,
+    "distance_delay": 128,
+    "ratio": -0.005362298913790733,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 50,
     "distance_delay": 32,
@@ -3320,6 +5112,13 @@
   {
     "bandwidth": 2500000,
     "cpu_delay": 450,
+    "distance_delay": 128,
+    "ratio": -0.005555555555555556,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 250,
     "distance_delay": 128,
     "ratio": -0.005555555555555556,
     "batch_size": 1
@@ -3381,6 +5180,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2500000,
+    "cpu_delay": 200,
+    "distance_delay": 128,
+    "ratio": -0.006327372764786795,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 500000,
     "cpu_delay": 350,
     "distance_delay": 256,
@@ -3402,6 +5208,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 200,
+    "distance_delay": 128,
+    "ratio": -0.006738173817381738,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 300,
     "distance_delay": 128,
@@ -3420,6 +5233,13 @@
     "cpu_delay": 350,
     "distance_delay": 256,
     "ratio": -0.006885721188692921,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 200,
+    "distance_delay": 128,
+    "ratio": -0.0069430123049426,
     "batch_size": 1
   },
   {
@@ -3479,10 +5299,24 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 300,
+    "distance_delay": 128,
+    "ratio": -0.007610037021801728,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 350,
     "distance_delay": 256,
     "ratio": -0.007611453425154041,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 150,
+    "distance_delay": 64,
+    "ratio": -0.007764213107217653,
     "batch_size": 1
   },
   {
@@ -3535,6 +5369,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2500000,
+    "cpu_delay": 0,
+    "distance_delay": 16,
+    "ratio": -0.008045373500038285,
+    "batch_size": 30
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 150,
     "distance_delay": 64,
@@ -3549,10 +5390,31 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 150,
+    "distance_delay": 64,
+    "ratio": -0.008274171305991113,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 150,
+    "distance_delay": 64,
+    "ratio": -0.00827628486768162,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 500000,
     "cpu_delay": 500,
     "distance_delay": 256,
     "ratio": -0.008327550312283136,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 50,
+    "distance_delay": 32,
+    "ratio": -0.008477048477048476,
     "batch_size": 1
   },
   {
@@ -3574,6 +5436,20 @@
     "cpu_delay": 150,
     "distance_delay": 64,
     "ratio": -0.00857930752732101,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1000000,
+    "cpu_delay": 50,
+    "distance_delay": 32,
+    "ratio": -0.008583985716247768,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 50,
+    "distance_delay": 32,
+    "ratio": -0.008616250729463459,
     "batch_size": 1
   },
   {
@@ -3640,10 +5516,31 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 750000,
+    "cpu_delay": 50,
+    "distance_delay": 32,
+    "ratio": -0.009101212350173438,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 50,
+    "distance_delay": 32,
+    "ratio": -0.009127406238204714,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1250000,
     "cpu_delay": 500,
     "distance_delay": 256,
     "ratio": -0.009191814082552896,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 150,
+    "distance_delay": 64,
+    "ratio": -0.009194462890126168,
     "batch_size": 1
   },
   {
@@ -3665,6 +5562,13 @@
     "cpu_delay": 250,
     "distance_delay": 64,
     "ratio": -0.009294465568229826,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 50,
+    "distance_delay": 32,
+    "ratio": -0.009332807219200878,
     "batch_size": 1
   },
   {
@@ -3717,6 +5621,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2000000,
+    "cpu_delay": 250,
+    "distance_delay": 128,
+    "ratio": -0.009743589743589744,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 2250000,
     "cpu_delay": 150,
     "distance_delay": 64,
@@ -3724,10 +5635,38 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2000000,
+    "cpu_delay": 250,
+    "distance_delay": 64,
+    "ratio": -0.010131712259371834,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 250,
     "distance_delay": 64,
     "ratio": -0.010141130736077072,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2250000,
+    "cpu_delay": 50,
+    "distance_delay": 32,
+    "ratio": -0.010239259068690507,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 150,
+    "distance_delay": 64,
+    "ratio": -0.010260860687120323,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 250,
+    "distance_delay": 64,
+    "ratio": -0.010386758993413275,
     "batch_size": 1
   },
   {
@@ -3794,6 +5733,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2500000,
+    "cpu_delay": 50,
+    "distance_delay": 32,
+    "ratio": -0.0110783372204692,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 500,
     "distance_delay": 128,
@@ -3833,6 +5779,13 @@
     "cpu_delay": 300,
     "distance_delay": 128,
     "ratio": -0.01141388174807198,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 250,
+    "distance_delay": 128,
+    "ratio": -0.011452991452991453,
     "batch_size": 1
   },
   {
@@ -3878,6 +5831,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2000000,
+    "cpu_delay": 200,
+    "distance_delay": 64,
+    "ratio": -0.011924119241192412,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 500000,
     "cpu_delay": 200,
     "distance_delay": 64,
@@ -3899,6 +5859,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 250,
+    "distance_delay": 64,
+    "ratio": -0.012328998479986489,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1000000,
     "cpu_delay": 400,
     "distance_delay": 128,
@@ -3910,6 +5877,13 @@
     "cpu_delay": 300,
     "distance_delay": 128,
     "ratio": -0.012539829376092096,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 200,
+    "distance_delay": 64,
+    "ratio": -0.012601626016260163,
     "batch_size": 1
   },
   {
@@ -3976,6 +5950,20 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 300,
+    "distance_delay": 64,
+    "ratio": -0.013333333333333334,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 200,
+    "distance_delay": 64,
+    "ratio": -0.013346883468834688,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1250000,
     "cpu_delay": 400,
     "distance_delay": 128,
@@ -4012,6 +6000,13 @@
   },
   {
     "bandwidth": 2250000,
+    "cpu_delay": 200,
+    "distance_delay": 64,
+    "ratio": -0.013685636856368564,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
     "cpu_delay": 200,
     "distance_delay": 64,
     "ratio": -0.013685636856368564,
@@ -4067,6 +6062,20 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 750000,
+    "cpu_delay": 50,
+    "distance_delay": 16,
+    "ratio": -0.014393939393939395,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 100,
+    "distance_delay": 32,
+    "ratio": -0.014428939168134399,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 500000,
     "cpu_delay": 500,
     "distance_delay": 64,
@@ -4099,6 +6108,13 @@
     "cpu_delay": 350,
     "distance_delay": 64,
     "ratio": -0.014657210401891253,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 200,
+    "distance_delay": 64,
+    "ratio": -0.01470189701897019,
     "batch_size": 1
   },
   {
@@ -4214,6 +6230,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1250000,
+    "cpu_delay": 50,
+    "distance_delay": 16,
+    "ratio": -0.016178451178451177,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 200,
     "distance_delay": 16,
@@ -4235,10 +6258,31 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1000000,
+    "cpu_delay": 50,
+    "distance_delay": 16,
+    "ratio": -0.016531986531986533,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 500000,
     "cpu_delay": 400,
     "distance_delay": 16,
     "ratio": -0.016666666666666666,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 100,
+    "distance_delay": 32,
+    "ratio": -0.016697148276095645,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 50,
+    "distance_delay": 16,
+    "ratio": -0.0168013468013468,
     "batch_size": 1
   },
   {
@@ -4253,6 +6297,13 @@
     "cpu_delay": 500,
     "distance_delay": 128,
     "ratio": -0.016835016835016835,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 100,
+    "distance_delay": 32,
+    "ratio": -0.016867061812023708,
     "batch_size": 1
   },
   {
@@ -4292,6 +6343,13 @@
   },
   {
     "bandwidth": 2000000,
+    "cpu_delay": 100,
+    "distance_delay": 32,
+    "ratio": -0.017306780464675202,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
     "cpu_delay": 500,
     "distance_delay": 64,
     "ratio": -0.01734006734006734,
@@ -4320,9 +6378,23 @@
   },
   {
     "bandwidth": 1250000,
+    "cpu_delay": 100,
+    "distance_delay": 32,
+    "ratio": -0.017543859649122806,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
     "cpu_delay": 400,
     "distance_delay": 64,
     "ratio": -0.017615176151761516,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 50,
+    "distance_delay": 16,
+    "ratio": -0.017626262626262625,
     "batch_size": 1
   },
   {
@@ -4330,6 +6402,13 @@
     "cpu_delay": 100,
     "distance_delay": 32,
     "ratio": -0.017646660344126812,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 50,
+    "distance_delay": 16,
+    "ratio": -0.017727272727272727,
     "batch_size": 1
   },
   {
@@ -4361,6 +6440,20 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 750000,
+    "cpu_delay": 250,
+    "distance_delay": 16,
+    "ratio": -0.0180976430976431,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 50,
+    "distance_delay": 16,
+    "ratio": -0.018333333333333333,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 500000,
     "cpu_delay": 150,
     "distance_delay": 16,
@@ -4372,6 +6465,20 @@
     "cpu_delay": 350,
     "distance_delay": 64,
     "ratio": -0.018557919621749408,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 100,
+    "distance_delay": 32,
+    "ratio": -0.018596301063613575,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2250000,
+    "cpu_delay": 50,
+    "distance_delay": 16,
+    "ratio": -0.018602693602693603,
     "batch_size": 1
   },
   {
@@ -4438,6 +6545,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 750000,
+    "cpu_delay": 150,
+    "distance_delay": 16,
+    "ratio": -0.02,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 350,
     "distance_delay": 16,
@@ -4463,6 +6577,13 @@
     "cpu_delay": 100,
     "distance_delay": 16,
     "ratio": -0.020219293833618347,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 150,
+    "distance_delay": 32,
+    "ratio": -0.020303030303030302,
     "batch_size": 1
   },
   {
@@ -4494,10 +6615,24 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2500000,
+    "cpu_delay": 200,
+    "distance_delay": 32,
+    "ratio": -0.02174207531834191,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1000000,
     "cpu_delay": 150,
     "distance_delay": 16,
     "ratio": -0.02181818181818182,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 200,
+    "distance_delay": 32,
+    "ratio": -0.021942299878098336,
     "batch_size": 1
   },
   {
@@ -4536,10 +6671,24 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1250000,
+    "cpu_delay": 150,
+    "distance_delay": 32,
+    "ratio": -0.022727272727272728,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1000000,
     "cpu_delay": 100,
     "distance_delay": 16,
     "ratio": -0.022757697456492636,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 200,
+    "distance_delay": 32,
+    "ratio": -0.02282579246816581,
     "batch_size": 1
   },
   {
@@ -4557,10 +6706,38 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1250000,
+    "cpu_delay": 150,
+    "distance_delay": 16,
+    "ratio": -0.02297979797979798,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 200,
+    "distance_delay": 32,
+    "ratio": -0.023092029525292882,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 500000,
     "cpu_delay": 400,
     "distance_delay": 32,
     "ratio": -0.023170731707317073,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 150,
+    "distance_delay": 16,
+    "ratio": -0.023282828282828284,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 100,
+    "distance_delay": 16,
+    "ratio": -0.023326639892904955,
     "batch_size": 1
   },
   {
@@ -4571,6 +6748,27 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 150,
+    "distance_delay": 32,
+    "ratio": -0.023434343434343436,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 200,
+    "distance_delay": 16,
+    "ratio": -0.023493975903614458,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 100,
+    "distance_delay": 16,
+    "ratio": -0.023502628142890624,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 750000,
     "cpu_delay": 350,
     "distance_delay": 16,
@@ -4578,10 +6776,24 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2500000,
+    "cpu_delay": 150,
+    "distance_delay": 32,
+    "ratio": -0.023686868686868687,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1000000,
     "cpu_delay": 450,
     "distance_delay": 64,
     "ratio": -0.02373296585515235,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1250000,
+    "cpu_delay": 100,
+    "distance_delay": 16,
+    "ratio": -0.023795180722891565,
     "batch_size": 1
   },
   {
@@ -4606,10 +6818,31 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 250,
+    "distance_delay": 16,
+    "ratio": -0.023905723905723906,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1750000,
     "cpu_delay": 150,
     "distance_delay": 32,
     "ratio": -0.023989898989898988,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 750000,
+    "cpu_delay": 200,
+    "distance_delay": 16,
+    "ratio": -0.024029451137884874,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 200,
+    "distance_delay": 16,
+    "ratio": -0.024096385542168676,
     "batch_size": 1
   },
   {
@@ -4620,10 +6853,24 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 750000,
+    "cpu_delay": 200,
+    "distance_delay": 32,
+    "ratio": -0.02418043890544568,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 250000,
     "cpu_delay": 500,
     "distance_delay": 16,
     "ratio": -0.02441077441077441,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 150,
+    "distance_delay": 16,
+    "ratio": -0.024595959595959595,
     "batch_size": 1
   },
   {
@@ -4655,7 +6902,35 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2000000,
+    "cpu_delay": 200,
+    "distance_delay": 16,
+    "ratio": -0.025167336010709505,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
+    "cpu_delay": 100,
+    "distance_delay": 16,
+    "ratio": -0.025234270414993307,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1750000,
+    "cpu_delay": 100,
+    "distance_delay": 16,
+    "ratio": -0.025502008032128515,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 2250000,
+    "cpu_delay": 100,
+    "distance_delay": 16,
+    "ratio": -0.025568942436412317,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
     "cpu_delay": 100,
     "distance_delay": 16,
     "ratio": -0.025568942436412317,
@@ -4676,6 +6951,20 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 750000,
+    "cpu_delay": 250,
+    "distance_delay": 32,
+    "ratio": -0.025757575757575757,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 300,
+    "distance_delay": 16,
+    "ratio": -0.02595959595959596,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1250000,
     "cpu_delay": 250,
     "distance_delay": 32,
@@ -4687,6 +6976,13 @@
     "cpu_delay": 350,
     "distance_delay": 32,
     "ratio": -0.02624113475177305,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
+    "cpu_delay": 150,
+    "distance_delay": 32,
+    "ratio": -0.026515151515151516,
     "batch_size": 1
   },
   {
@@ -4746,6 +7042,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2000000,
+    "cpu_delay": 250,
+    "distance_delay": 32,
+    "ratio": -0.027609427609427608,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1000000,
     "cpu_delay": 400,
     "distance_delay": 16,
@@ -4760,7 +7063,21 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 250,
+    "distance_delay": 32,
+    "ratio": -0.028114478114478113,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1750000,
+    "cpu_delay": 200,
+    "distance_delay": 16,
+    "ratio": -0.02817938420348059,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2500000,
     "cpu_delay": 200,
     "distance_delay": 16,
     "ratio": -0.02817938420348059,
@@ -4809,6 +7126,13 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 2500000,
+    "cpu_delay": 150,
+    "distance_delay": 16,
+    "ratio": -0.029343434343434345,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1000000,
     "cpu_delay": 250,
     "distance_delay": 32,
@@ -4830,10 +7154,24 @@
     "batch_size": 1
   },
   {
+    "bandwidth": 1500000,
+    "cpu_delay": 350,
+    "distance_delay": 16,
+    "ratio": -0.030260047281323876,
+    "batch_size": 1
+  },
+  {
     "bandwidth": 1250000,
     "cpu_delay": 450,
     "distance_delay": 64,
     "ratio": -0.030515715593530668,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 1500000,
+    "cpu_delay": 300,
+    "distance_delay": 32,
+    "ratio": -0.031212121212121212,
     "batch_size": 1
   },
   {
@@ -4887,6 +7225,13 @@
   },
   {
     "bandwidth": 2500000,
+    "cpu_delay": 250,
+    "distance_delay": 16,
+    "ratio": -0.031902356902356904,
+    "batch_size": 1
+  },
+  {
+    "bandwidth": 2000000,
     "cpu_delay": 250,
     "distance_delay": 16,
     "ratio": -0.031902356902356904,

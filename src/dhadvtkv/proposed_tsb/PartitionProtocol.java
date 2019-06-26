@@ -1,11 +1,13 @@
 package dhadvtkv.proposed_tsb;
 
+import dhadvtkv.common.CPU;
 import dhadvtkv.proposed_tsb.messages.CommitTransaction;
 import dhadvtkv.messages.Message;
 import dhadvtkv.proposed_tsb.messages.TransactionValidation;
 import dhadvtkv.proposed_tsb.messages.TransactionValidationBatch;
 import dhadvtkv.messages.TransactionalGet;
 import dhadvtkv.common.Configurations;
+import peersim.core.CommonState;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
 import peersim.edsim.EDSimulator;
@@ -13,10 +15,12 @@ import peersim.edsim.EDSimulator;
 public class PartitionProtocol implements EDProtocol {
 
   private Partition partition;
+  private CPU cpu;
   private String prefix;
 
   public PartitionProtocol(String prefix) {
     this.prefix = prefix;
+    this.cpu = new CPU();
   }
 
   @Override
@@ -31,8 +35,7 @@ public class PartitionProtocol implements EDProtocol {
 
     if (event instanceof Message) {
       if ((!((Message) event).isCpuReady()) && Configurations.ADD_CPU_DELAY) {
-        ((Message) event).setCpuReady(true);
-        EDSimulator.add(Configurations.CPU_DELAY, event, node, pid);
+        cpu.processMessage((Message) event);
         return;
       }
     } else {
@@ -68,7 +71,8 @@ public class PartitionProtocol implements EDProtocol {
     if (Configurations.DEBUG) {
       System.err.println(
           String.format(
-              "Received %s @ %s", obj.getClass().getSimpleName(), this.getClass().getSimpleName()));
+              "Received %s @ %s @ %d with size %d", obj.getClass().getSimpleName(), this.getClass().getSimpleName(),
+              CommonState.getTime(), ((Message)obj).getSize()));
     }
   }
 

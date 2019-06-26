@@ -33,19 +33,15 @@ public class Channel {
         deliveryTimes.getOrDefault(message.getFrom() + "->" + message.getTo(), 0d);
     nextAvailableStep = nextAvailable + message.getSize() / Configurations.BANDWIDTH;
 
-    double min = Math.max((lastMessageDelivery - nextAvailableStep) * 1000, Configurations.MIN);
     double deliveryTime =
         nextAvailable
             + message.getSize() / Configurations.BANDWIDTH
-            + ((Configurations.RANGE == 1
-                    ? min
-                    : min + CommonState.r.nextLong(Configurations.RANGE))
-                / 1000)
             + (getDistance(message.getFrom(), message.getTo())
                 * Configurations.DELAY_PER_DISTANCE
                 / 1000);
 
     deliveryTimes.put(message.getFrom() + "->" + message.getTo(), deliveryTime);
+    message.setReceivedTime(deliveryTime);
 
     EDSimulator.add((long) deliveryTime - CommonState.getTime(), message, dst, Configurations.PID);
   }

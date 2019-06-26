@@ -6,10 +6,12 @@ import static dhadvtkv._2pc.ProtocolMapperInit.nodeType;
 import dhadvtkv._2pc.messages.CommitResult;
 import dhadvtkv._2pc.messages.PrepareCommitResult;
 import dhadvtkv._2pc.messages.PrepareResult;
+import dhadvtkv.common.CPU;
 import dhadvtkv.common.Configurations;
 import dhadvtkv.messages.Message;
 import dhadvtkv.messages.TransactionalGetResponse;
 import peersim.cdsim.CDProtocol;
+import peersim.core.CommonState;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
 import peersim.edsim.EDSimulator;
@@ -17,6 +19,7 @@ import peersim.edsim.EDSimulator;
 public class ClientProtocol implements CDProtocol, EDProtocol {
 
   private Client client;
+  private CPU cpu;
   private String prefix;
   private State state;
   private int getsSent;
@@ -24,6 +27,7 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
 
   public ClientProtocol(String prefix) {
     this.prefix = prefix;
+    this.cpu = new CPU();
     state = State.initialState;
   }
 
@@ -52,16 +56,6 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
         state = State.getSent;
         break;
       case getSent:
-        if (getsSent == getsReceived) {
-          for (int i = 0; i < Configurations.NO_PARTITIONS; i++) {
-            client.put(i, client.getNodeID() * Configurations.NO_PARTITIONS + i, i);
-          }
-          state = State.canCommit;
-        }
-        break;
-      case canCommit:
-        client.commit();
-        state = State.waitingToFinish;
         break;
       case waitingToFinish:
         break;
@@ -75,8 +69,7 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
 
     if (event instanceof Message) {
       if ((!((Message) event).isCpuReady()) && Configurations.ADD_CPU_DELAY) {
-        ((Message) event).setCpuReady(true);
-        EDSimulator.add(Configurations.CPU_DELAY, event, node, pid);
+        cpu.processMessage((Message) event);
         return;
       }
     } else {
@@ -89,6 +82,14 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
       TransactionalGetResponse message = (TransactionalGetResponse) event;
       client.onTransactionalGetResponse(message);
       getsReceived++;
+      if (getsSent == getsReceived) {
+        for (int i = 0; i < Configurations.NO_PARTITIONS; i++) {
+          client.put(i, client.getNodeID() * Configurations.NO_PARTITIONS + i, i);
+        }
+
+        client.commit();
+        state = State.waitingToFinish;
+      }
     } else if (event instanceof PrepareResult) {
       PrepareResult message = (PrepareResult) event;
       client.onPrepareResult(message);
@@ -100,6 +101,12 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
       if (message.getTransactionID() == client.getTransactionID()) {
         if (client.onCommitResult(message)) {
           state = State.initialState;
+          if (Configurations.DEBUG) {
+            if (Configurations.DEBUG) {
+              System.err.println(String.format("Transaction done @ %d", CommonState.getTime()));
+            }
+          }
+          nextCycleCustom(node, pid);
         }
       }
     } else {
@@ -125,7 +132,8 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
     if (Configurations.DEBUG) {
       System.err.println(
           String.format(
-              "Received %s @ %s", obj.getClass().getSimpleName(), this.getClass().getSimpleName()));
+              "Received %s @ %s @ %d with size %d", obj.getClass().getSimpleName(), this.getClass().getSimpleName(),
+              CommonState.getTime(), ((Message)obj).getSize()));
     }
   }
 }

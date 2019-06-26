@@ -1,5 +1,6 @@
 package dhadvtkv.proposed_tsb;
 
+import dhadvtkv.common.CPU;
 import dhadvtkv.proposed_tsb.messages.BatchValidate;
 import dhadvtkv.messages.Message;
 import dhadvtkv.proposed_tsb.messages.ValidateAndCommit;
@@ -12,10 +13,12 @@ import peersim.edsim.EDSimulator;
 public class ValidatorProtocol implements EDProtocol {
 
   private Validator validator;
+  private CPU cpu;
   private final String prefix;
 
   public ValidatorProtocol(String prefix) {
     this.prefix = prefix;
+    this.cpu = new CPU();
   }
 
   void nextCycleCustom(Node node) {
@@ -39,8 +42,7 @@ public class ValidatorProtocol implements EDProtocol {
 
     if (event instanceof Message) {
       if ((!((Message) event).isCpuReady()) && Configurations.ADD_CPU_DELAY) {
-        ((Message) event).setCpuReady(true);
-        EDSimulator.add(Configurations.CPU_DELAY, event, node, pid);
+        cpu.processMessage((Message) event);
         return;
       }
     } else {
@@ -70,7 +72,8 @@ public class ValidatorProtocol implements EDProtocol {
     if (Configurations.DEBUG) {
       System.err.println(
           String.format(
-              "Received %s @ %s", obj.getClass().getSimpleName(), this.getClass().getSimpleName()));
+              "Received %s @ %s @ %d with size %d", obj.getClass().getSimpleName(), this.getClass().getSimpleName(),
+              CommonState.getTime(), ((Message)obj).getSize()));
     }
   }
 }

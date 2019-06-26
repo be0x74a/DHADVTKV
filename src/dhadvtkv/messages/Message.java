@@ -12,6 +12,7 @@ public abstract class Message {
   private final int to;
   private final long size;
   private boolean cpuReady;
+  private double receivedTime;
 
   public Message(int from, int to, long size) {
     this.from = from;
@@ -38,5 +39,13 @@ public abstract class Message {
 
   public void setCpuReady(boolean cpuReady) {
     this.cpuReady = cpuReady;
+  }
+
+  public double getReceivedTime() {
+    return receivedTime;
+  }
+
+  public void setReceivedTime(double receivedTime) {
+    this.receivedTime = receivedTime;
   }
 }

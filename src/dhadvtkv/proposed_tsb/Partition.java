@@ -70,7 +70,8 @@ class Partition {
             request.getGetKeys(),
             request.getPuts(),
             request.getnValidations(),
-            request.getFrom()));
+            request.getFrom(),
+            true));
     kv.storeAsTentative(request.getPuts());
   }
 

@@ -24,7 +24,6 @@ class Validator {
   private int validatorID;
   private long next_lsn;
   private long step;
-  private int currentBatchSize;
   private Map<Long, Long> latestObjectVersions;
   private List<Transaction> leafBatch;
   private Map<Integer, List<TransactionValidation>> rootBatch;
@@ -36,7 +35,6 @@ class Validator {
     this.validatorID = validatorID;
     this.next_lsn = 0;
     this.step = 1;
-    this.currentBatchSize = 0;
     this.latestObjectVersions = new HashMap<>();
     this.leafBatch = new ArrayList<>();
     this.rootBatch = new HashMap<>();
@@ -231,7 +229,7 @@ class Validator {
 
   private void leafAddToBatch(Transaction message) {
     leafBatch.add(message);
-    currentBatchSize++;
+    sendBatch();
   }
 
   private void rootCommit(
@@ -268,7 +266,6 @@ class Validator {
                       .collect(Collectors.toList()),
                   conflicts,
                   lsn));
-      currentBatchSize++;
     }
   }
 
@@ -292,9 +289,19 @@ class Validator {
   }
 
   private void sendBatch() {
-    if (currentBatchSize >= Configurations.BATCH_SIZE) {
-      doSendBatch();
+    if (validatorID != Configurations.ROOT_ID) {
+      if (leafBatch.size() >= Configurations.BATCH_SIZE) {
+        doSendBatch();
+      }
+    } else {
+      for (Integer node : rootBatch.keySet()) {
+        if (rootBatch.get(node).size() >= Configurations.BATCH_SIZE) {
+          doSendBatch();
+          return;
+        }
+      }
     }
+
   }
 
   void doSendBatch() {
@@ -303,8 +310,6 @@ class Validator {
     } else {
       rootBatchSend();
     }
-
-    currentBatchSize = 0;
   }
 
   private void leafBatchSend() {
@@ -316,10 +321,10 @@ class Validator {
 
   private void rootBatchSend() {
     for (Integer node : rootBatch.keySet()) {
-      if (rootBatch.get(node).size() > 0) {
+      if (rootBatch.get(node).size() >= Configurations.BATCH_SIZE) {
         Channel.sendMessage(new TransactionValidationBatch(validatorID, node, rootBatch.get(node)));
+        rootBatch.put(node, new ArrayList<>());
       }
-      rootBatch.put(node, new ArrayList<>());
     }
   }
 
