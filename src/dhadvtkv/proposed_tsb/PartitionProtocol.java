@@ -83,4 +83,12 @@ public class PartitionProtocol implements EDProtocol {
       partition.printTransactionsDone();
     }
   }
+
+  long getTransactionsDone() {
+    if (partition == null) {
+      return 0;
+    } else {
+      return partition.getTransactionsDone();
+    }
+  }
 }

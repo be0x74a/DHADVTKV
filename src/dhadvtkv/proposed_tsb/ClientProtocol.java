@@ -12,7 +12,6 @@ import peersim.cdsim.CDProtocol;
 import peersim.core.CommonState;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
-import peersim.edsim.EDSimulator;
 
 public class ClientProtocol implements CDProtocol, EDProtocol {
 
@@ -22,11 +21,16 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
   private State state;
   private int getsSent;
   private int getsReceived;
+  private long transactionStartTime;
+  private long transactionsDone;
+  private long avgTransactionTime;
 
   public ClientProtocol(String prefix) {
     this.prefix = prefix;
-    state = State.initialState;
     cpu = new CPU();
+    state = State.initialState;
+    transactionsDone = 0;
+    avgTransactionTime = 0;
   }
 
   @Override
@@ -45,6 +49,7 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
 
     switch (state) {
       case initialState:
+        transactionStartTime = CommonState.getTime();
         client.beginTransaction();
         getsSent = Configurations.NO_PARTITIONS;
         getsReceived = 0;
@@ -99,6 +104,7 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
           System.err.println(String.format("Transaction done @ %d", CommonState.getTime()));
         }
       }
+      updateAvg();
       nextCycleCustom(node, pid);
     } else {
       throw new RuntimeException("Unknown message type: " + event.getClass().getSimpleName());
@@ -126,5 +132,14 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
               "Received %s @ %s @ %d with size %d", obj.getClass().getSimpleName(), this.getClass().getSimpleName(),
               CommonState.getTime(), ((Message)obj).getSize()));
     }
+  }
+
+  private void updateAvg() {
+    long timeDiff = CommonState.getTime() - transactionStartTime;
+    avgTransactionTime = (avgTransactionTime * transactionsDone + timeDiff) / (transactionsDone + 1);
+  }
+
+  long getAvgTransactionTime() {
+    return avgTransactionTime;
   }
 }

@@ -19,12 +19,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import peersim.config.Configuration;
+import peersim.core.CommonState;
 
 class Validator {
 
   private int validatorID;
   private long next_lsn;
   private long step;
+  private long batchSentTS;
   private Map<Long, Long> latestObjectVersions;
   private List<Transaction> leafBatch;
   private Map<Integer, List<TransactionValidation>> rootBatch;
@@ -36,6 +38,7 @@ class Validator {
     this.validatorID = validatorID;
     this.next_lsn = 0;
     this.step = 1;
+    this.batchSentTS = 0;
     this.latestObjectVersions = new HashMap<>();
     this.leafBatch = new ArrayList<>();
     this.rootBatch = new HashMap<>();
@@ -317,6 +320,7 @@ class Validator {
     if (leafBatch.size() > Configurations.BATCH_SIZE || (force && leafBatch.size() > 0)) {
       Channel.sendMessage(new BatchValidate(validatorID, Configurations.ROOT_ID, leafBatch));
       leafBatch = new ArrayList<>();
+      batchSentTS = CommonState.getTime();
     }
   }
 
@@ -325,6 +329,7 @@ class Validator {
       if (rootBatch.get(node).size() >= Configurations.BATCH_SIZE || (force && rootBatch.get(node).size() > 0)) {
         Channel.sendMessage(new TransactionValidationBatch(validatorID, node, rootBatch.get(node)));
         rootBatch.put(node, new ArrayList<>());
+        batchSentTS = CommonState.getTime();
       }
     }
   }
@@ -358,5 +363,9 @@ class Validator {
     for (Long key : objectKeys) {
       this.latestObjectVersions.put(key, version);
     }
+  }
+
+  long getBatchSentTS() {
+    return batchSentTS;
   }
 }

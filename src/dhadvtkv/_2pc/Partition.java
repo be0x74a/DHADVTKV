@@ -202,7 +202,11 @@ class Partition {
     this.transactionsDone++;
   }
 
-  public void printTransactionsDone() {
+  void printTransactionsDone() {
     System.out.println(transactionsDone);
+  }
+
+  long getTransactionsDone() {
+    return transactionsDone;
   }
 }

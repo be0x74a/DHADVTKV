@@ -11,6 +11,7 @@ import peersim.core.CommonState;
 import peersim.core.Network;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
+import sun.nio.ch.Net;
 
 public class ProtocolMapper implements CDProtocol, EDProtocol {
 
@@ -40,8 +41,11 @@ public class ProtocolMapper implements CDProtocol, EDProtocol {
     }
 
     if (CommonState.getTime() == CommonState.getEndTime() - 1 && !Configurations.getPrinted()) {
-      ((PartitionProtocol) Network.get(1).getProtocol(partitionPid)).printTransactionsDone();
-      System.out.println("Percentage used of bandwidth: " + Channel.getTotalBandwidthUsed()/(Configurations.BANDWIDTH*CommonState.getEndTime()));
+      System.out.print(
+          ((PartitionProtocol) Network.get(1).getProtocol(partitionPid)).getTransactionsDone() + ", " +
+              Channel.getTotalBandwidthUsed()/(Configurations.BANDWIDTH*CommonState.getEndTime()) + ", " +
+              ((ClientProtocol) Network.get(8).getProtocol(clientPid)).getAvgTransactionTime()
+      );
       Configurations.setPrinted(true);
     }
   }
