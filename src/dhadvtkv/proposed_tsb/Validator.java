@@ -317,7 +317,7 @@ class Validator {
   }
 
   private void leafBatchSend(boolean force) {
-    if (leafBatch.size() > Configurations.BATCH_SIZE || (force && leafBatch.size() > 0)) {
+    if (leafBatch.size() >= Configurations.BATCH_SIZE || (force && leafBatch.size() > 0)) {
       Channel.sendMessage(new BatchValidate(validatorID, Configurations.ROOT_ID, leafBatch));
       leafBatch = new ArrayList<>();
       batchSentTS = CommonState.getTime();

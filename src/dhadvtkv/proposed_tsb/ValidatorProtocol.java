@@ -8,7 +8,6 @@ import dhadvtkv.common.Configurations;
 import peersim.core.CommonState;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
-import peersim.edsim.EDSimulator;
 
 public class ValidatorProtocol implements EDProtocol {
 

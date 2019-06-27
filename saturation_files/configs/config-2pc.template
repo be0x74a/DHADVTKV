@@ -1,10 +1,7 @@
 HEADER_SIZE 2000
-TEMPLATE_SIZE 10
-BANDWIDTH 1
+BANDWIDTH 10000
 CPU_DELAY 0
 DELAY_PER_DISTANCE 12
-BATCH_SIZE 1
-BATCH_TIMEOUT 1000
 
 ################### TEMPLATE MEMBERS INITIALIZED ABOVE ^^^ ===========================
 
@@ -15,7 +12,7 @@ SIZE TEMPLATE_SIZE
 NO_PARTITIONS 8
 
 # parameters of periodic execution
-CYCLES 100000
+CYCLES 10000
 CYCLE 1
 
 network.size SIZE
@@ -25,37 +22,31 @@ simulation.endtime CYCLE*CYCLES
 
 protocol.link peersim.core.IdleProtocol
 
-protocol.partition dhadvtkv.proposed_tsb.PartitionProtocol
+protocol.partition dhadvtkv._2pc.PartitionProtocol
 protocol.partition.step CYCLE
 
-protocol.client dhadvtkv.proposed_tsb.ClientProtocol
+protocol.client dhadvtkv._2pc.ClientProtocol
 protocol.client.step CYCLE
 
-protocol.validator dhadvtkv.proposed_tsb.ValidatorProtocol
-protocol.validator.step CYCLE
-
-protocol.mapper dhadvtkv.proposed_tsb.ProtocolMapper
+protocol.mapper dhadvtkv._2pc.ProtocolMapper
 protocol.mapper.step CYCLE
 protocol.mapper.client client
 protocol.mapper.partition partition
-protocol.mapper.validator validator
 
 ################### initialization ======================
 
 ### Set node type
-init.0 dhadvtkv.proposed_tsb.ProtocolMapperInit
+init.0 dhadvtkv._2pc.ProtocolMapperInit
 init.0.noPartitions NO_PARTITIONS
-init.0.batchSize BATCH_SIZE
 init.0.protocolMapper mapper
 init.0.bandwidth BANDWIDTH
 init.0.min MIN
 init.0.range RANGE
 init.0.cpuDelay CPU_DELAY
 init.0.addCPUDelay true
-init.0.batchTimeout BATCH_TIMEOUT
 init.0.delayPerDistance DELAY_PER_DISTANCE
 init.0.headerSize HEADER_SIZE
-init.0.latenciesFile ./configs/latencies/unit.tsb.latencies
+init.0.latenciesFile ./configs/latencies/unit.2pc.latencies
 
 init.sch CDScheduler
 init.sch.protocol mapper
