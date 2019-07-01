@@ -136,7 +136,7 @@ class Client {
   }
 
   long getTransactionID() {
-    return  transactionID;
+    return transactionID;
   }
 
   int getNodeID() {

@@ -1,16 +1,15 @@
 package dhadvtkv.proposed_tsb;
 
 import dhadvtkv.common.CPU;
-import dhadvtkv.proposed_tsb.messages.CommitTransaction;
+import dhadvtkv.common.Configurations;
 import dhadvtkv.messages.Message;
+import dhadvtkv.messages.TransactionalGet;
+import dhadvtkv.proposed_tsb.messages.CommitTransaction;
 import dhadvtkv.proposed_tsb.messages.TransactionValidation;
 import dhadvtkv.proposed_tsb.messages.TransactionValidationBatch;
-import dhadvtkv.messages.TransactionalGet;
-import dhadvtkv.common.Configurations;
 import peersim.core.CommonState;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
-import peersim.edsim.EDSimulator;
 
 public class PartitionProtocol implements EDProtocol {
 
@@ -71,8 +70,11 @@ public class PartitionProtocol implements EDProtocol {
     if (Configurations.DEBUG) {
       System.err.println(
           String.format(
-              "Received %s @ %s @ %d with size %d", obj.getClass().getSimpleName(), this.getClass().getSimpleName(),
-              CommonState.getTime(), ((Message)obj).getSize()));
+              "Received %s @ %s @ %d with size %d",
+              obj.getClass().getSimpleName(),
+              this.getClass().getSimpleName(),
+              CommonState.getTime(),
+              ((Message) obj).getSize()));
     }
   }
 

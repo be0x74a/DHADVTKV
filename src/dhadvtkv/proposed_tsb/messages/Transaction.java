@@ -26,7 +26,13 @@ public class Transaction extends Message {
       int client,
       boolean conflicts,
       long lsn) {
-    super(from, to, (3 + getKeys.size()) * LENGTH_LONG + puts.size() * LENGTH_LONG * 2 + 2 * LENGTH_INT + LENGTH_BOOL);
+    super(
+        from,
+        to,
+        (3 + getKeys.size()) * LENGTH_LONG
+            + puts.size() * LENGTH_LONG * 2
+            + 2 * LENGTH_INT
+            + LENGTH_BOOL);
 
     this.transactionID = transactionID;
     this.snapshot = snapshot;

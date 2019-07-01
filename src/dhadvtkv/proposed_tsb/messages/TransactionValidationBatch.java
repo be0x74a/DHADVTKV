@@ -10,7 +10,12 @@ public class TransactionValidationBatch extends Message {
 
   public TransactionValidationBatch(
       int from, int to, List<TransactionValidation> transactionValidationBatch) {
-    super(from, to, transactionValidationBatch.stream().mapToLong(t -> t.getSize() - Configurations.HEADER_SIZE).sum());
+    super(
+        from,
+        to,
+        transactionValidationBatch.stream()
+            .mapToLong(t -> t.getSize() - Configurations.HEADER_SIZE)
+            .sum());
 
     this.transactionValidationBatch = transactionValidationBatch;
   }

@@ -9,7 +9,6 @@ import dhadvtkv.messages.TransactionalGet;
 import peersim.core.CommonState;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
-import peersim.edsim.EDSimulator;
 
 public class PartitionProtocol implements EDProtocol {
 
@@ -67,8 +66,11 @@ public class PartitionProtocol implements EDProtocol {
     if (Configurations.DEBUG) {
       System.err.println(
           String.format(
-              "Received %s @ %s @ %d with size %d", obj.getClass().getSimpleName(), this.getClass().getSimpleName(),
-              CommonState.getTime(), ((Message)obj).getSize()));
+              "Received %s @ %s @ %d with size %d",
+              obj.getClass().getSimpleName(),
+              this.getClass().getSimpleName(),
+              CommonState.getTime(),
+              ((Message) obj).getSize()));
     }
   }
 

@@ -138,14 +138,18 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
     if (Configurations.DEBUG) {
       System.err.println(
           String.format(
-              "Received %s @ %s @ %d with size %d", obj.getClass().getSimpleName(), this.getClass().getSimpleName(),
-              CommonState.getTime(), ((Message)obj).getSize()));
+              "Received %s @ %s @ %d with size %d",
+              obj.getClass().getSimpleName(),
+              this.getClass().getSimpleName(),
+              CommonState.getTime(),
+              ((Message) obj).getSize()));
     }
   }
 
   private void updateAvg() {
     long timeDiff = CommonState.getTime() - transactionStartTime;
-    avgTransactionTime = (avgTransactionTime * transactionsDone + timeDiff) / (transactionsDone + 1);
+    avgTransactionTime =
+        (avgTransactionTime * transactionsDone + timeDiff) / (transactionsDone + 1);
   }
 
   long getAvgTransactionTime() {

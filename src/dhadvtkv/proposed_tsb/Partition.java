@@ -2,15 +2,15 @@ package dhadvtkv.proposed_tsb;
 
 import static dhadvtkv.common.Configurations.UNDEFINED;
 
-import dhadvtkv.proposed_tsb.messages.CommitTransaction;
-import dhadvtkv.proposed_tsb.messages.TransactionValidation;
-import dhadvtkv.proposed_tsb.messages.TransactionValidationBatch;
-import dhadvtkv.messages.TransactionalGet;
-import dhadvtkv.messages.TransactionalGetResponse;
-import dhadvtkv.proposed_tsb.messages.ValidateAndCommit;
 import dhadvtkv.common.Channel;
 import dhadvtkv.common.DataObject;
 import dhadvtkv.common.KeyValueStorage;
+import dhadvtkv.messages.TransactionalGet;
+import dhadvtkv.messages.TransactionalGetResponse;
+import dhadvtkv.proposed_tsb.messages.CommitTransaction;
+import dhadvtkv.proposed_tsb.messages.TransactionValidation;
+import dhadvtkv.proposed_tsb.messages.TransactionValidationBatch;
+import dhadvtkv.proposed_tsb.messages.ValidateAndCommit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

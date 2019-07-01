@@ -46,10 +46,12 @@ public class ProtocolMapper implements CDProtocol, EDProtocol {
 
     if (CommonState.getTime() == CommonState.getEndTime() - 1 && !Configurations.getPrinted()) {
       System.out.print(
-          ((PartitionProtocol) Network.get(1).getProtocol(partitionPid)).getTransactionsDone() + ", " +
-          Channel.getTotalBandwidthUsed()/(Configurations.BANDWIDTH*CommonState.getEndTime()) + ", " +
-          ((ClientProtocol) Network.get(9).getProtocol(clientPid)).getAvgTransactionTime()
-      );
+          ((PartitionProtocol) Network.get(1).getProtocol(partitionPid)).getTransactionsDone()
+              + ", "
+              + Channel.getTotalBandwidthUsed()
+                  / (Configurations.BANDWIDTH * CommonState.getEndTime())
+              + ", "
+              + ((ClientProtocol) Network.get(9).getProtocol(clientPid)).getAvgTransactionTime());
       Configurations.setPrinted(true);
     }
   }
@@ -71,7 +73,7 @@ public class ProtocolMapper implements CDProtocol, EDProtocol {
     } else if (type == Type.VALIDATOR) {
       ValidatorProtocol validator = (ValidatorProtocol) node.getProtocol(validatorPid);
       validator.processEventCustom(node, pid, event);
-    }  else {
+    } else {
       throw new RuntimeException("Unknown node type.");
     }
   }

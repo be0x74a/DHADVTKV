@@ -1,7 +1,6 @@
 package dhadvtkv.proposed_tsb.messages;
 
 import dhadvtkv.common.DataObject;
-import dhadvtkv.messages.Message;
 import java.util.List;
 
 public class ValidateAndCommit extends ValidatorMessage {

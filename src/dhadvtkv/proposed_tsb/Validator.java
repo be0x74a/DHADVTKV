@@ -1,5 +1,8 @@
 package dhadvtkv.proposed_tsb;
 
+import dhadvtkv.common.Channel;
+import dhadvtkv.common.Configurations;
+import dhadvtkv.common.DataObject;
 import dhadvtkv.proposed_tsb.data_structures.ReceiveBufferTransaction;
 import dhadvtkv.proposed_tsb.data_structures.WaitingStabilityTransaction;
 import dhadvtkv.proposed_tsb.messages.BatchValidate;
@@ -8,9 +11,6 @@ import dhadvtkv.proposed_tsb.messages.TransactionCommitResult;
 import dhadvtkv.proposed_tsb.messages.TransactionValidation;
 import dhadvtkv.proposed_tsb.messages.TransactionValidationBatch;
 import dhadvtkv.proposed_tsb.messages.ValidateAndCommit;
-import dhadvtkv.common.Channel;
-import dhadvtkv.common.Configurations;
-import dhadvtkv.common.DataObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import peersim.config.Configuration;
 import peersim.core.CommonState;
 
 class Validator {
@@ -177,8 +176,6 @@ class Validator {
     } else {
       rootCommit(transactionID, puts, client, conflicts, lsn, informClient);
     }
-
-    sendBatch();
   }
 
   private void leafCommit(
@@ -233,7 +230,7 @@ class Validator {
 
   private void leafAddToBatch(Transaction message) {
     leafBatch.add(message);
-    sendBatch();
+    leafBatchSend(false);
   }
 
   private void rootCommit(
@@ -271,6 +268,8 @@ class Validator {
                   conflicts,
                   lsn));
     }
+
+    rootBatchSend(false);
   }
 
   private void sendValidationResultToVNodes(
@@ -305,7 +304,6 @@ class Validator {
         }
       }
     }
-
   }
 
   void doSendBatch(boolean force) {
@@ -326,7 +324,8 @@ class Validator {
 
   private void rootBatchSend(boolean force) {
     for (Integer node : rootBatch.keySet()) {
-      if (rootBatch.get(node).size() >= Configurations.BATCH_SIZE || (force && rootBatch.get(node).size() > 0)) {
+      if (rootBatch.get(node).size() >= Configurations.BATCH_SIZE
+          || (force && rootBatch.get(node).size() > 0)) {
         Channel.sendMessage(new TransactionValidationBatch(validatorID, node, rootBatch.get(node)));
         rootBatch.put(node, new ArrayList<>());
         batchSentTS = CommonState.getTime();

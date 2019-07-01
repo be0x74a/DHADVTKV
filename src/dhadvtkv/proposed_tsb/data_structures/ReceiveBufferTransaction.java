@@ -1,7 +1,7 @@
 package dhadvtkv.proposed_tsb.data_structures;
 
-import dhadvtkv.proposed_tsb.messages.Transaction;
 import dhadvtkv.common.DataObject;
+import dhadvtkv.proposed_tsb.messages.Transaction;
 import java.util.ArrayList;
 import java.util.List;
 

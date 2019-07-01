@@ -19,6 +19,7 @@ public class CPU {
     message.setCpuReady(true);
     double nextAvailable = Math.max(nextAvailableStep, message.getReceivedTime());
     nextAvailableStep = nextAvailable + Configurations.CPU_DELAY;
-    EDSimulator.add((long) nextAvailableStep - CommonState.getTime(), message, dst, Configurations.PID);
+    EDSimulator.add(
+        (long) nextAvailableStep - CommonState.getTime(), message, dst, Configurations.PID);
   }
 }

@@ -1,10 +1,10 @@
 package dhadvtkv.proposed_tsb;
 
 import dhadvtkv.common.CPU;
-import dhadvtkv.proposed_tsb.messages.BatchValidate;
-import dhadvtkv.messages.Message;
-import dhadvtkv.proposed_tsb.messages.ValidateAndCommit;
 import dhadvtkv.common.Configurations;
+import dhadvtkv.messages.Message;
+import dhadvtkv.proposed_tsb.messages.BatchValidate;
+import dhadvtkv.proposed_tsb.messages.ValidateAndCommit;
 import peersim.core.CommonState;
 import peersim.core.Node;
 import peersim.edsim.EDProtocol;
@@ -71,8 +71,11 @@ public class ValidatorProtocol implements EDProtocol {
     if (Configurations.DEBUG) {
       System.err.println(
           String.format(
-              "Received %s @ %s @ %d with size %d", obj.getClass().getSimpleName(), this.getClass().getSimpleName(),
-              CommonState.getTime(), ((Message)obj).getSize()));
+              "Received %s @ %s @ %d with size %d",
+              obj.getClass().getSimpleName(),
+              this.getClass().getSimpleName(),
+              CommonState.getTime(),
+              ((Message) obj).getSize()));
     }
   }
 }
