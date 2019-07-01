@@ -75,8 +75,8 @@ public class ProtocolMapper implements CDProtocol, EDProtocol {
 
   private double getAvgTransactionTime() {
     double avg = 0;
-    for (int i = 0; i < Network.size() - 9; i++) {
-      long tt = ((ClientProtocol) Network.get(i+9).getProtocol(clientPid)).getAvgTransactionTime();
+    for (int i = 0; i < Network.size() - 8; i++) {
+      long tt = ((ClientProtocol) Network.get(i+8).getProtocol(clientPid)).getAvgTransactionTime();
       avg = (avg * i + tt)/(i + 1);
     }
 
@@ -85,8 +85,8 @@ public class ProtocolMapper implements CDProtocol, EDProtocol {
 
   private double getAvgTransactionsDone() {
     double avg = 0;
-    for (int i = 0; i < Network.size() - 9; i++) {
-      long tt = ((ClientProtocol) Network.get(i+9).getProtocol(clientPid)).getTransactionsDone();
+    for (int i = 0; i < Network.size() - 8; i++) {
+      long tt = ((ClientProtocol) Network.get(i+8).getProtocol(clientPid)).getTransactionsDone();
       avg = (avg * i + tt)/(i + 1);
     }
 
