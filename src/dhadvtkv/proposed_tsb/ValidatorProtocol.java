@@ -26,7 +26,7 @@ public class ValidatorProtocol implements EDProtocol {
     }
 
     if ((CommonState.getTime() - validator.getBatchSentTS()) >= Configurations.BATCH_TIMEOUT) {
-      validator.doSendBatch(true);
+      validator.doSendBatch();
     }
   }
 
