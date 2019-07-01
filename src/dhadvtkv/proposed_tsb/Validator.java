@@ -291,26 +291,11 @@ class Validator {
     }
   }
 
-  private void sendBatch() {
+  void doSendBatch() {
     if (validatorID != Configurations.ROOT_ID) {
-      if (leafBatch.size() >= Configurations.BATCH_SIZE) {
-        doSendBatch(false);
-      }
+      leafBatchSend(true);
     } else {
-      for (Integer node : rootBatch.keySet()) {
-        if (rootBatch.get(node).size() >= Configurations.BATCH_SIZE) {
-          doSendBatch(false);
-          return;
-        }
-      }
-    }
-  }
-
-  void doSendBatch(boolean force) {
-    if (validatorID != Configurations.ROOT_ID) {
-      leafBatchSend(force);
-    } else {
-      rootBatchSend(force);
+      rootBatchSend(true);
     }
   }
 

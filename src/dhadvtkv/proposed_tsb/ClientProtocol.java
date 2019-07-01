@@ -104,6 +104,7 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
           System.err.println(String.format("Transaction done @ %d", CommonState.getTime()));
         }
       }
+      transactionsDone++;
       updateAvg();
       nextCycleCustom(node, pid);
     } else {
@@ -115,6 +116,10 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
   @Override
   public Object clone() {
     return new ClientProtocol(prefix);
+  }
+
+  public long getTransactionsDone() {
+    return transactionsDone;
   }
 
   // About protocol state

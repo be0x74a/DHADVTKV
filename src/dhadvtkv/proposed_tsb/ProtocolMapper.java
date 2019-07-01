@@ -51,7 +51,9 @@ public class ProtocolMapper implements CDProtocol, EDProtocol {
               + Channel.getTotalBandwidthUsed()
                   / (Configurations.BANDWIDTH * CommonState.getEndTime())
               + ", "
-              + ((ClientProtocol) Network.get(9).getProtocol(clientPid)).getAvgTransactionTime());
+              + getAvgTransactionTime()
+              + ", "
+              + getAvgTransactionsDone());
       Configurations.setPrinted(true);
     }
   }
@@ -82,5 +84,25 @@ public class ProtocolMapper implements CDProtocol, EDProtocol {
   @Override
   public Object clone() {
     return new ProtocolMapper(prefix);
+  }
+
+  private double getAvgTransactionTime() {
+    double avg = 0;
+    for (int i = 0; i < Network.size() - 9; i++) {
+      long tt = ((ClientProtocol) Network.get(i+9).getProtocol(clientPid)).getAvgTransactionTime();
+      avg = (avg * i + tt)/(i + 1);
+    }
+
+    return avg;
+  }
+
+  private double getAvgTransactionsDone() {
+    double avg = 0;
+    for (int i = 0; i < Network.size() - 9; i++) {
+      long tt = ((ClientProtocol) Network.get(i+9).getProtocol(clientPid)).getTransactionsDone();
+      avg = (avg * i + tt)/(i + 1);
+    }
+
+    return avg;
   }
 }

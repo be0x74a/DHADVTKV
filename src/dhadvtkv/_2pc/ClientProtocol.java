@@ -112,6 +112,7 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
             }
           }
           updateAvg();
+          transactionsDone++;
           nextCycleCustom(node, pid);
         }
       }
@@ -124,6 +125,10 @@ public class ClientProtocol implements CDProtocol, EDProtocol {
   @Override
   public Object clone() {
     return new ClientProtocol(prefix);
+  }
+
+  public long getTransactionsDone() {
+    return transactionsDone;
   }
 
   // About protocol state
