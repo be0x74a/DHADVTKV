@@ -46,7 +46,7 @@ public class ProtocolMapper implements CDProtocol, EDProtocol {
 
     if (CommonState.getTime() == CommonState.getEndTime() - 1 && !Configurations.getPrinted()) {
       System.out.print(
-          ((PartitionProtocol) Network.get(1).getProtocol(partitionPid)).getTransactionsDone()
+          getAvgTransactionsDone() * (Network.size() - Configurations.NO_PARTITIONS - 1)
               + ", "
               + Channel.getTotalBandwidthUsed()
                   / (Configurations.BANDWIDTH * CommonState.getEndTime())
