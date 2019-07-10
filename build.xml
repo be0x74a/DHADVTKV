@@ -1,17 +1,17 @@
-<project name="Peersim" default="compile" basedir=".">
+<project name="DHADVTKV" default="compile" basedir=".">
 
 	<!-- set global properties for this build -->
 	<property name="src" location="src" />
-	<property name="build" location="classes" />
+	<property name="build" location="build" />
 	<property name="doc" location="doc" />
 
 	<!-- Packages to be included in the Javadoc generation -->
-	<property name="packages" value="peersim.*,example.*"/>
+	<property name="packages" value="peersim.*,dhadvtkv.*"/>
 		
 	<!-- Path for compilation -->
 	<path id="compile.path">
-		<pathelement location="jep-2.3.0.jar" />
-		<pathelement location="djep-1.0.0.jar" />
+		<pathelement location="lib/jep-2.3.0.jar" />
+		<pathelement location="lib/djep-1.0.0.jar" />
 	</path>
 
 	<target name="compile">
@@ -25,12 +25,14 @@
 		<!-- Create the doc directory structure used by javadoc -->
 		<mkdir dir="${doc}" />
 		<!-- Compile the javadoc from ${src} into ${doc} -->
-	    <javadoc sourcepath="${src}" destdir="${doc}" packagenames="${packages}" use="true" />
+	    <javadoc sourcepath="${src}" destdir="${doc}" packagenames="${packages}" use="true" classpathref="compile.path" />
 	</target>
 			
 	<target name="clean" description="clean up">
 		<!-- Delete the ${build} directory tree -->
 		<delete dir="${build}" />
+		<!-- Delete the ${doc} directory tree -->
+		<delete dir="${doc}" />
 	</target>
 
 </project>

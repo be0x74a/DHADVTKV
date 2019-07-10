@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ ! -d "./build" ] 
+    then
+        make build > /dev/null
+fi
+
+java -classpath build/:lib/jep-2.3.0.jar:lib/djep-1.0.0.jar peersim.Simulator $1
