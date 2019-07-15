@@ -1,0 +1,3 @@
+To benchmark the system against 2-phase commit type: $ ./saturation MAX_NUMBER_OF_CLIENTS STEP
+Edit the files in ./templates to change the simulation configurations
+On running the script and to save the configurations of such simulation, it's created a folder inside ./experiments with both the results (CSV and plots) and the templates used

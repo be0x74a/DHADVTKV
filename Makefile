@@ -1,16 +1,20 @@
 VER=1.0.4
 
-.PHONY: all clean doc release
+.PHONY: build clean doc release
 
-all:
-	javac -classpath src:jep-2.3.0.jar:djep-1.0.0.jar `find src -name "*.java"`
+build:
+	rm -fr build
+	mkdir build
+	javac -classpath src:lib/jep-2.3.0.jar:lib/djep-1.0.0.jar `find src -name "*.java"` -d ./build
 clean:
-	rm -f `find -name "*.class"`
+	rm -rf build
+	rm -rf doc
+	rm -fr peersim-$(VER)
 doc:
 	rm -rf doc/*
-	javadoc -overview overview.html -classpath src:jep-2.3.0.jar:djep-1.0.0.jar -d doc \
+	javadoc -overview overview.html -classpath src:lib/jep-2.3.0.jar:lib/djep-1.0.0.jar -d doc \
                 -group "Peersim" "peersim*" \
-                -group "Examples" "example.*" \
+                -group "DHADVTKV" "dhadvtkv.*" \
 		peersim \
 		peersim.cdsim \
 		peersim.config \
@@ -22,18 +26,13 @@ doc:
 		peersim.reports \
 		peersim.transport \
 		peersim.util \
-		peersim.vector \
-		example.aggregation \
-		example.loadbalance \
-		example.edaggregation \
-		example.hot \
-		example.newscast 
+		peersim.vector
 
 docnew:
 	rm -rf doc/*
-	javadoc -overview overview.html -docletpath peersim-doclet.jar -doclet peersim.tools.doclets.standard.Standard -classpath src:jep-2.3.0.jar:djep-1.0.0.jar -d doc \
+	javadoc -docletpath lib/peersim-doclet.jar -doclet peersim.tools.doclets.standard.Standard -classpath src:lib/jep-2.3.0.jar:lib/djep-1.0.0.jar -d doc \
                 -group "Peersim" "peersim*" \
-                -group "Examples" "example.*" \
+                -group "DHADVTKV" "dhadvtkv.*" \
 		peersim \
 		peersim.cdsim \
 		peersim.config \
@@ -45,24 +44,22 @@ docnew:
 		peersim.reports \
 		peersim.transport \
 		peersim.util \
-		peersim.vector \
-		example.aggregation \
-		example.loadbalance \
-		example.hot \
-		example.edaggregation \
-		example.newscast 
+		peersim.vector
 
 
-release: clean all docnew
+release: clean build docnew
 	rm -fr peersim-$(VER)
 	mkdir peersim-$(VER)
 	cp -r doc peersim-$(VER)
-	cp Makefile overview.html README CHANGELOG RELEASE-NOTES build.xml peersim-doclet.jar peersim-$(VER)
-	mkdir peersim-$(VER)/example
-	cp example/*.txt peersim-$(VER)/example
+	cp Makefile README build.xml lib/peersim-doclet.jar peersim-$(VER)
+	mkdir peersim-$(VER)/configs
+	mkdir peersim-$(VER)/configs/latencies
+	mkdir peersim-$(VER)/configs/simulation_params
+	cp configs/latencies/*.latencies peersim-$(VER)/configs/latencies
+	cp configs/simulation_params/*.config peersim-$(VER)/configs/simulation_params
 	mkdir peersim-$(VER)/src
-	cp --parents `find src/peersim src/example -name "*.java"` peersim-$(VER)
-	cd src ; jar cf ../peersim-$(VER).jar `find peersim example -name "*.class"`
+	cp --parents `find src/peersim src/dhadvtkv -name "*.java"` peersim-$(VER)
+	cd build ; jar cf ../peersim-$(VER).jar `find peersim dhadvtkv -name "*.class"`
 	mv peersim-$(VER).jar peersim-$(VER)
-	cp jep-2.3.0.jar peersim-$(VER)
-	cp djep-1.0.0.jar peersim-$(VER)
+	cp lib/jep-2.3.0.jar peersim-$(VER)
+	cp lib/djep-1.0.0.jar peersim-$(VER)
